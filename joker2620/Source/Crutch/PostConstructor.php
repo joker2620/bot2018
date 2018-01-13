@@ -8,7 +8,7 @@
  * PHP version  5.6;
  *
  * @category Cructh
- * @package  JokerSourceCrutch
+ * @package  Joker2620\Source\Crutch
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://habrahabr.ru/sandbox/103022/ Взято от сюда
@@ -21,7 +21,7 @@ use joker2620\Source\Exception\BotError;
  * Class PostConstructor
  *
  * @category Cructh
- * @package  JokerSourceCrutch
+ * @package  Joker2620\Source\Crutch
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://habrahabr.ru/sandbox/103022/ Взято от сюда

@@ -6,8 +6,8 @@
  * Time: 7:55;
  * PHP version 5.6;
  *
- * @category Bot2018
- * @package  Bot2018
+ * @category Joker2620
+ * @package  Joker2620
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT

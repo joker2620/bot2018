@@ -8,7 +8,7 @@
  * PHP version 5.6;
  *
  * @category API
- * @package  Joker2620SourceAPI
+ * @package  Joker2620\Source\API
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
@@ -26,7 +26,7 @@ use joker2620\Source\Exception\BotError;
  * Класс для работы с API YANDEX.RU
  *
  * @category API
- * @package  Joker2620SourceAPI
+ * @package  Joker2620\Source\API
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT

@@ -8,7 +8,7 @@
  * PHP version 5.6;
  *
  * @category Commands
- * @package  Joker2620SourceEngineCommands
+ * @package  Joker2620\Source\Engine\Commands
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
@@ -21,7 +21,7 @@ use joker2620\Source\Engine\ModuleCommand\CommandsTemplate;
  * Class CEncode
  *
  * @category Commands
- * @package  Joker2620SourceEngineCommands
+ * @package  Joker2620\Source\Engine\Commands
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT

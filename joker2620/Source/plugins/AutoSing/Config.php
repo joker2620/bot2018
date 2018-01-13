@@ -8,7 +8,7 @@
  * PHP version 5.6;
  *
  * @category AutoSing
- * @package  Joker2620SourcepluginsAutoSing
+ * @package  Joker2620\Source\plugins\AutoSing
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT

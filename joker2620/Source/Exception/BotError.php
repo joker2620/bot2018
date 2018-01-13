@@ -8,7 +8,7 @@
  * PHP version 5.6;
  *
  * @category Exception
- * @package  Joker2620SourceException
+ * @package  Joker2620\Source\Exception
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
@@ -20,7 +20,7 @@ namespace joker2620\Source\Exception;
  * Class BotError
  *
  * @category Exception
- * @package  Joker2620SourceException
+ * @package  Joker2620\Source\Exception
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
