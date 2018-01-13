@@ -22,6 +22,7 @@ const SECRET = '';//Секретный ключ
 /**
  * Адрс к файлу index.php бота
  */
+const URLADR = '';//Адрс к файлу index.php бота.
 
 $request = [
     [
