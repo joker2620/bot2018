@@ -50,17 +50,20 @@ final class CKurs extends CommandsTemplate implements CommandIntefce
             ->curl('http://www.cbr.ru/scripts/XML_daily.asp');
         preg_match(
             '/\<Valute ID=\"R01235\".*?\>(.*?)\<\/Valute\>/is',
-            $filekurs, $array
+            $filekurs,
+            $array
         );
         preg_match('/<Value>(.*?)<\/Value>/is', $array[1], $rouble);
         preg_match(
             '/\<Valute ID=\"R01239\".*?\>(.*?)\<\/Valute\>/is',
-            $filekurs, $euros
+            $filekurs,
+            $euros
         );
         preg_match('/<Value>(.*?)<\/Value>/is', $euros[1], $euroc);
         preg_match(
             '/\<Valute ID=\"R01720\".*?\>(.*?)\<\/Valute\>/is',
-            $filekurs, $ukraines
+            $filekurs,
+            $ukraines
         );
         preg_match('/<Value>(.*?)<\/Value>/is', $ukraines[1], $ukraine);
         $message = [

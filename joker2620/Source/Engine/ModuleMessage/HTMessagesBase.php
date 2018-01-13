@@ -29,90 +29,7 @@ use joker2620\Source\Engine\Setting\UserConfig;
  */
 class HTMessagesBase extends TrainingEdit
 {
-    /**
-     * Сканер Training
-     *
-     * Служит для добавления ответа в базу.
-     *
-     * @param array $msgsx Даннык
-     *
-     * @return bool|string
-     */
-    public function training($msgsx)
-    {
-        $return = false;
-        if (UserConfig::getConfig()['USER_TRAINING']) {
-            if (preg_match('/^(\!наобучение)$/iu', $msgsx['body'])) {
-                $return = $this->addTraining($msgsx);
-            } elseif ($this->scanMsgUser($msgsx)) {
-                if (preg_match('/^(нет)$/iu', $msgsx['body'])) {
-                    $this->addAnswer($msgsx, true);
-                    $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][6];
-                } elseif (preg_match('/^(!мусор)$/iu', $msgsx['body'])) {
-                    $this->delAnswer($msgsx);
-                    $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][9];
-                } else {
-                    if (mb_strlen($msgsx['body']) > 5) {
-                        $this->addAnswer($msgsx);
-                        $return
-                            = SustemConfig::getConfig()['MESSAGE']['TextMessage'][4];
-                    } else {
-                        $return
-                            = SustemConfig::getConfig()['MESSAGE']['TextMessage'][2];
-                    }
-                }
-            }
-        }
-        return $return;
-    }
-
-
-    /**
-     * Сканер Schooling
-     *
-     * Ищет ответы в пользовательской базе
-     * (в базе, где ответы на вопросы создают сами пользователи)
-     *
-     * @param array $msgsx Данык
-     *
-     * @return bool|string
-     */
-    public function schooling($msgsx)
-    {
-        $answer = [];
-        $return = false;
-        $height = UserConfig::getConfig()['MIN_PERCENT'];
-        $result = file(SustemConfig::getConfig()['FILE_TRAINING']);
-        if (!empty($result)) {
-            $base_data = json_decode($result[0], true);
-            if (!empty($base_data)) {
-                foreach ($base_data as $lines) {
-                    if (similar_text($msgsx['body'], $lines[0], $percent)) {
-                        $arraykey = array_keys($answer);
-                        if (count($answer) > 1) {
-                            $maxkey = max($arraykey);
-                        } else {
-                            $maxkey = array_shift($arraykey);
-                        }
-                        if ($height < $maxkey) {
-                            $height = $maxkey;
-                        }
-                        $percent = intval($percent);
-                        if ($percent >= $height) {
-                            $answer[$percent][] = $lines[1];
-                        }
-                    }
-                }
-            }
-        }
-        if (isset($answer)) {
-            krsort($answer);
-            $answer = array_shift($answer);
-            $answer = $answer[rand(0, count($answer) - 1)];
-            $return = $answer;
-        }
-        return $return;
-    }
+    private $database = [];
 
     /**
      * Сканер Prehistoric
@@ -121,45 +38,97 @@ class HTMessagesBase extends TrainingEdit
      *
      * @param array $msgsx Данные пользователя
      *
-     * @see \similar_text() Функция для определения процента схожести текста,
+     * @param bool  $file_base
      *
      * @return bool|string
+     * @see \similar_text() Функция для определения процента схожести текста,
+     *
      */
-    public function prehistoric($msgsx)
+    public function prehistoric(&$msgsx, $file_base = false)
     {
-        $answer = [];
-        $return = false;
-        $height = UserConfig::getConfig()['MIN_PERCENT'];
-        $result = fopen(SustemConfig::getConfig()['FILE_BASE'], 'r');
-        if (!empty($result)) {
-            while (false !== ($lines = fgets($result))) {
-                $lines = explode('\\', $lines);
-                if (similar_text($msgsx['body'], $lines[0], $percent)) {
-                    $arraykey = array_keys($answer);
-                    if (count($answer) > 1) {
-                        $maxkey = max($arraykey);
-                    } else {
-                        $maxkey = array_shift($arraykey);
-                    }
-                    if ($height < $maxkey) {
-                        $height = $maxkey;
-                    }
-                    $percent = intval($percent);
-                    if ($percent >= $height) {
-                        $answer[$percent][] = $lines[1];
-                    }
+        //$this->database = [];
+        $return         = false;
+        $height         = UserConfig::getConfig()['MIN_PERCENT'];
+        if ($file_base) {
+            $fname     = SustemConfig::getConfig()['FILE_TRAINING'];
+            $results   = fopen($fname, 'r+');
+            $result    = fread($results, filesize($fname));
+            $base_data = json_decode($result, true);
+            if (!empty($result)) {
+                foreach ($base_data as $lines) {
+                    $height = $this->scanBase($msgsx, $lines, $height);
                 }
+                unset($result);
             }
-            fclose($result);
+            fclose($results);
+        } else {
+            $fname  = SustemConfig::getConfig()['FILE_BASE'];
+            $result = file(
+                $fname,
+                FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES
+            );
+            if (!empty($result)) {
+                foreach ($result as $lines) {
+                    $lines  = explode('\\', $lines);
+                    $height = $this->scanBase($msgsx, $lines, $height);
+                }
+                unset($result);
+            }
         }
-        if (isset($answer)) {
-            krsort($answer);
-            // Loger::getInstance()->logger($answer);
-            $answer = array_shift($answer);
-            //  Loger::getInstance()->logger($answer);
+        if ($this->database != []) {
+            ksort($this->database);
+            $answer = end($this->database);
             $answer = $answer[rand(0, count($answer) - 1)];
             $return = $answer;
         }
         return $return;
+    }
+
+    /**
+     * _scanBase()
+     *
+     * @param $msgsx
+     * @param $lines
+     *
+     * @param $height
+     *
+     * @return mixed
+     */
+    private function scanBase($msgsx, $lines, $height)
+    {
+        $height = $this->getHeight($height);
+        if (similar_text($msgsx['body'], $lines[0], $percent)) {
+            $percent = intval($percent);
+            if ($percent >= $height) {
+                $this->setDatabase($percent, $lines[1]);
+            }
+        }
+        return $height;
+    }
+
+    /**
+     * _getHeight()
+     *
+     * @param $height
+     *
+     * @return mixed
+     */
+    private function getHeight(&$height)
+    {
+        $arraykey = array_keys($this->database);
+        sort($arraykey);
+        $maxkey = end($arraykey);
+        return $height < $maxkey ? $maxkey : $height;
+    }
+
+    /**
+     * setDatabase()
+     *
+     * @param $per
+     * @param $value
+     */
+    private function setDatabase($per, $value)
+    {
+        $this->database[$per][] = $value;
     }
 }

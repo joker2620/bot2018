@@ -32,7 +32,7 @@ class FileInMemory
      *
      * @ignore
      */
-    private static $_instance;
+    private static $instance;
 
     /**
      * ConfigCommands constructor.
@@ -41,7 +41,6 @@ class FileInMemory
      */
     private function __construct()
     {
-
     }
 
     /**
@@ -52,10 +51,10 @@ class FileInMemory
      */
     public static function getInstance()
     {
-        if (self::$_instance == null) {
-            self::$_instance = new FileInMemory;
+        if (self::$instance == null) {
+            self::$instance = new FileInMemory;
         }
-        return self::$_instance;
+        return self::$instance;
     }
 
     /**

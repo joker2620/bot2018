@@ -32,7 +32,7 @@ final class Loger
     /**
      * Копия класса
      */
-    private static $_instance;
+    private static $instance;
 
     /**
      * Loger constructor.
@@ -48,11 +48,11 @@ final class Loger
      */
     public static function getInstance()
     {
-        if (self::$_instance == null) {
-            self::$_instance = new Loger();
+        if (self::$instance == null) {
+            self::$instance = new Loger();
         }
 
-        return self::$_instance;
+        return self::$instance;
     }
 
     /**
@@ -72,7 +72,7 @@ final class Loger
             }
             $log_file = SustemConfig::getConfig()['DIR_LOG'] .
                 '/ErrorLog/log_' . date('j-m-Y') . '.log';
-            self::_writeLog($log_file, "{$message}\n");
+            self::writeLog($log_file, "{$message}\n");
         }
         return $this;
     }
@@ -85,7 +85,7 @@ final class Loger
      *
      * @return void
      */
-    private function _writeLog($file, $message)
+    private function writeLog($file, $message)
     {
         $datetime = date('d-m-Y H:i:s');
         $logger   = fopen($file, 'a+');
@@ -113,7 +113,7 @@ final class Loger
             $answer        = BotFunction::getInstance()->filterString($answer);
             $log_file_chat = SustemConfig::getConfig()['DIR_LOG'] .
                 "/chats/chat_id{$uid}.chat";
-            self::_writeLog($log_file_chat, "[{$message}]=>[{$answer}]" . "\n");
+            self::writeLog($log_file_chat, "[{$message}]=>[{$answer}]" . "\n");
         }
     }
 }

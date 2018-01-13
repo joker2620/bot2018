@@ -37,7 +37,15 @@ class HandlersEvent extends Modules
     /**
      * Параметры
      */
-    protected $data, $moduleCommand, $moduleMessage;
+    protected $data;
+    /**
+     * Параметры
+     */
+    protected $moduleCommand;
+    /**
+     * Параметры
+     */
+    protected $moduleMessage;
 
     /**
      * HandlersEvent constructor.
@@ -64,7 +72,6 @@ class HandlersEvent extends Modules
     {
         DataOperations::putData(UserConfig::getConfig()['CONFIRMATION_TOKEN']);
         Loger::getInstance()->logger('confirmation send');
-
     }
 
 
@@ -82,7 +89,8 @@ class HandlersEvent extends Modules
             $this->data['object']['user_id']
         );
         $this->data['object']         = array_merge(
-            $this->data['object'], max($users)
+            $this->data['object'],
+            max($users)
         );
         $this->data['object']['body'] = BotFunction::getInstance()
             ->filterString($this->data['object']['body']);
@@ -142,9 +150,7 @@ class HandlersEvent extends Modules
                 'Ты не прикрепил ни одного вложения к посту! Исправь этот недочет!',
                 $postx
             );
-
         } elseif ($this->data['object']['text'] == '') {
-
             $postx = [
                 'wall' . $this->data['object']['owner_id'] . '_' .
                 $this->data['object']['id']
@@ -152,10 +158,10 @@ class HandlersEvent extends Modules
             VKAPI::getInstance()->messagesSend(
                 $this->data['object']['created_by'],
                 'Ты не написал ни слова... разве тебе нечего сказать?!
-                 - Не думаю, напиши хотя-бы пару слов к посту!', $postx
+                 - Не думаю, напиши хотя-бы пару слов к посту!',
+                $postx
             );
         } elseif (!empty($this->data['object']['text'])) {
-
             $array = [
                 'Воу воу, это шедевр!',
                 'Умничка, у тебя получился хороший пост!',
@@ -170,12 +176,9 @@ class HandlersEvent extends Modules
                 $array[rand(0, count($array) - 1)],
                 $postx
             );
-
         } else {
-
             Loger::getInstance()->logger($this->data);
             throw new BotError('the secret key does not match or is missing');
-
         }
         DataOperations::putData();
     }

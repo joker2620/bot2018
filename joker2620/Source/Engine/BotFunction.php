@@ -32,7 +32,7 @@ final class BotFunction
     /**
      * Копия класса
      */
-    private static $_instance;
+    private static $instance;
 
     /**
      * BotFunction constructor.
@@ -48,11 +48,11 @@ final class BotFunction
      */
     public static function getInstance()
     {
-        if (self::$_instance == null) {
-            self::$_instance = new BotFunction();
+        if (self::$instance == null) {
+            self::$instance = new BotFunction();
         }
 
-        return self::$_instance;
+        return self::$instance;
     }
 
     /**
@@ -82,15 +82,15 @@ final class BotFunction
     public function replace($message, $user_data)
     {
         switch ($user_data['sex']) {
-        case'1':
+            case '1':
                 $sex_description = 'девушка';
-            break;
-        case'2':
+                break;
+            case '2':
                 $sex_description = 'парень';
-            break;
-        default:
+                break;
+            default:
                 $sex_description = 'WTF?';
-            break;
+                break;
         }
 
         $trans = [
@@ -137,7 +137,6 @@ final class BotFunction
         ];
         $string = strtr($string, $chars);
         return $string;
-
     }
 
     /**

@@ -33,7 +33,7 @@ final class ConfigCommands
     /**
      * Копия класса
      */
-    private static $_instance;
+    private static $instance;
 
     /**
      * ConfigCommands constructor.
@@ -42,7 +42,6 @@ final class ConfigCommands
      */
     private function __construct()
     {
-
     }
 
     /**
@@ -53,11 +52,11 @@ final class ConfigCommands
      */
     public static function getConfig()
     {
-        if (self::$_instance == null) {
-            $conf_dir        = dirname(dirname(dirname(__DIR__)));
-            self::$_instance = include $conf_dir .
+        if (self::$instance == null) {
+            $conf_dir       = dirname(dirname(dirname(__DIR__)));
+            self::$instance = include $conf_dir .
                 '/Configuration/CommandsConfig.php';
         }
-        return self::$_instance;
+        return self::$instance;
     }
 }

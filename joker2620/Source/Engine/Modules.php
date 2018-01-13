@@ -16,7 +16,6 @@
 
 namespace joker2620\Source\Engine;
 
-
 use joker2620\Source\Engine\Setting\ConfigValidation;
 use joker2620\Source\Exception\BotError;
 
@@ -34,7 +33,7 @@ class Modules extends ConfigValidation
     /**
      * Модули
      */
-    private static $_modules;
+    private static $modules;
 
     /**
      * Получение модуля
@@ -43,7 +42,7 @@ class Modules extends ConfigValidation
      */
     protected function getModule()
     {
-        return self::$_modules;
+        return self::$modules;
     }
 
     /**
@@ -57,15 +56,15 @@ class Modules extends ConfigValidation
     protected function addModule($class)
     {
         $no_register = false;
-        if (count(self::$_modules) > 1) {
-            foreach (self::$_modules as $module) {
+        if (count(self::$modules) > 1) {
+            foreach (self::$modules as $module) {
                 if ($module instanceof $class) {
                     $no_register = true;
                 }
             }
         }
         if (!$no_register) {
-            self::$_modules [] = $class;
+            self::$modules [] = $class;
         }
         return $this;
     }

@@ -15,7 +15,6 @@
  */
 namespace joker2620\Source\Engine\Interfaces;
 
-
 /**
  * Interface CommandIntefce
  *

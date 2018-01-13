@@ -32,15 +32,15 @@ class ObjectFile
     /**
      * Имя файла или путь к файлу
      */
-    private $_name;
+    private $name;
     /**
      * Тип содержимого
      */
-    private $_mime;
+    private $mime;
     /**
      * Содержимое файла
      */
-    private $_content;
+    private $content;
 
     /**
      * ObjectFile constructor.
@@ -50,18 +50,17 @@ class ObjectFile
      * @param string $content  Содержимое
      *
      * @throws   Exception
-     * @internal param null $mime
      */
     public function __construct($name, $mimetype = null, $content = null)
     {
         if (is_null($content)) {
             $information = pathinfo($name);
             if (!empty($information['basename']) && is_readable($name)) {
-                $this->_name = $information['basename'];
-                $this->_mime = mime_content_type($name);
-                $content     = file_get_contents($name);
+                $this->name = $information['basename'];
+                $this->mime = mime_content_type($name);
+                $content    = file_get_contents($name);
                 if ($content !== false) {
-                    $this->_content = $content;
+                    $this->content = $content;
                 } else {
                     throw new Exception('Don`t get content - "' . $name . '"');
                 }
@@ -69,12 +68,12 @@ class ObjectFile
                 throw new Exception('Error param');
             }
         } else {
-            $this->_name = $name;
+            $this->name = $name;
             if (is_null($mimetype)) {
                 $mimetype = mime_content_type($name);
             }
-            $this->_mime    = $mimetype;
-            $this->_content = $content;
+            $this->mime    = $mimetype;
+            $this->content = $content;
         };
     }
 
@@ -85,7 +84,7 @@ class ObjectFile
      */
     public function name()
     {
-        return $this->_name;
+        return $this->name;
     }
 
     /**
@@ -95,7 +94,7 @@ class ObjectFile
      */
     public function mime()
     {
-        return $this->_mime;
+        return $this->mime;
     }
 
     /**
@@ -105,7 +104,6 @@ class ObjectFile
      */
     public function content()
     {
-        return $this->_content;
+        return $this->content;
     }
-
 }

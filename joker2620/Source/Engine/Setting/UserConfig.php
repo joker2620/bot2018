@@ -31,7 +31,7 @@ class UserConfig
     /**
      * Копия класса
      */
-    private static $_instance;
+    private static $instance;
 
     /**
      * UserConfig constructor.
@@ -40,7 +40,6 @@ class UserConfig
      */
     private function __construct()
     {
-
     }
 
     /**
@@ -50,11 +49,11 @@ class UserConfig
      */
     public static function getConfig()
     {
-        if (self::$_instance == null) {
-            $conf_dir        = dirname(dirname(dirname(__DIR__)));
-            self::$_instance = include $conf_dir .
+        if (self::$instance == null) {
+            $conf_dir       = dirname(dirname(dirname(__DIR__)));
+            self::$instance = include $conf_dir .
                 '/Configuration/UserConfig.php';
         }
-        return self::$_instance;
+        return self::$instance;
     }
 }

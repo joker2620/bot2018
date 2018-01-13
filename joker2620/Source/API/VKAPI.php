@@ -37,7 +37,7 @@ final class VKAPI extends Curl
     /**
      * Копия класса
      */
-    private static $_instance;
+    private static $instance;
 
     /**
      * VKAPI constructor.
@@ -53,11 +53,11 @@ final class VKAPI extends Curl
      */
     public static function getInstance()
     {
-        if (self::$_instance == null) {
-            self::$_instance = new VKAPI();
+        if (self::$instance == null) {
+            self::$instance = new VKAPI();
         }
 
-        return self::$_instance;
+        return self::$instance;
     }
 
     /**
@@ -97,7 +97,8 @@ final class VKAPI extends Curl
             throw new BotError('Error: call docs_GetUploadServer.');
         }
         return $this->methodAPI(
-            'docs.getMessagesUploadServer', [
+            'docs.getMessagesUploadServer',
+            [
                 'peer_id' => $peer_id,
                 'type' => $type,
             ]
@@ -129,8 +130,8 @@ final class VKAPI extends Curl
         $params['lang'] = 'ru';
         $params['v']    = SustemConfig::getConfig()['VK_VERSION'];
 
-        $query        = http_build_query($params);
-        $curlurl      = SustemConfig::getConfig()['VK_ENDPOINT'] .
+        $query   = http_build_query($params);
+        $curlurl = SustemConfig::getConfig()['VK_ENDPOINT'] .
             $method . '?' . $query;
 
         $responsejson = $this->curl($curlurl);
@@ -175,7 +176,6 @@ final class VKAPI extends Curl
         }
 
         return $response;
-
     }
 
     /**
@@ -193,7 +193,8 @@ final class VKAPI extends Curl
             throw new BotError('Error: call docs_Save.');
         }
         return $this->methodAPI(
-            'docs.save', [
+            'docs.save',
+            [
                 'file' => $file,
                 'title' => $title,
             ]
@@ -238,7 +239,8 @@ final class VKAPI extends Curl
             throw new BotError('Error: call photos_GetUploadServer.');
         }
         return $this->methodAPI(
-            'photos.getMessagesUploadServer', [
+            'photos.getMessagesUploadServer',
+            [
                 'peer_id' => $peer_id,
             ]
         );
@@ -260,7 +262,8 @@ final class VKAPI extends Curl
             throw new BotError('Error: call photo_Save.');
         }
         return $this->methodAPI(
-            'photos.saveMessagesPhoto', [
+            'photos.saveMessagesPhoto',
+            [
                 'photo' => $photo,
                 'server' => $server,
                 'hash' => $hash,
@@ -284,7 +287,8 @@ final class VKAPI extends Curl
             throw new BotError('Error: call messagesSend.');
         }
         return $this->methodAPI(
-            'messages.send', [
+            'messages.send',
+            [
                 'peer_id' => $peer_id,
                 'message' => !empty($message) ? $message :
                     'Крякнула уточка, крякнул и бот :)',
@@ -309,7 +313,8 @@ final class VKAPI extends Curl
             throw new BotError('Error: call usersGet.');
         }
         return $this->methodAPI(
-            'users.get', [
+            'users.get',
+            [
                 'user_id' => $peer_id,
                 'fields' => 'sex',
                 'name_case' => $name_case

@@ -34,7 +34,7 @@ final class ErrorScaner
      *
      * @var array Коды ошибок
      */
-    private $_errors
+    private $errors
         = [
             1 => 'Произошла неизвестная ошибка. Попробуйте повторить запрос позже.',//Текст
             2 => 'Приложение выключено. Необходимо включить приложение в настройках https://vk.com/editapp?id={Ваш API_ID} или использовать тестовый режим (test_mode=1)',//Текст
@@ -91,20 +91,21 @@ final class ErrorScaner
                 $params = "Отправлено: " . json_encode($params);
             }
             $responce = "Получено: " . json_encode($data);
-            foreach ($this->_errors as $err_code => $description) {
-                if (isset($data['error']['error_code'])
-                    and $err_code == $data['error']['error_code']
-                ) {
-                    Loger::getInstance()->logger($description)
-                        ->logger($params)
-                        ->logger($responce);
-                    throw new BotError($text_error);
-                } else {
-                    Loger::getInstance()->logger($text_error)
-                        ->logger($params)
-                        ->logger($responce);
-                    throw new BotError($text_error);
+            if (isset($data['error']['error_code'])) {
+                foreach ($this->errors as $err_code => $description) {
+                    if ($err_code == $data['error']['error_code']
+                    ) {
+                        Loger::getInstance()->logger($description)
+                            ->logger($params)
+                            ->logger($responce);
+                        throw new BotError($text_error);
+                    }
                 }
+            } else {
+                Loger::getInstance()->logger($text_error)
+                    ->logger($params)
+                    ->logger($responce);
+                throw new BotError($text_error);
             }
         }
     }

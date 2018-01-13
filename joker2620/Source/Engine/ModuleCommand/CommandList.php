@@ -33,8 +33,10 @@ class CommandList
 
     /**
      * Команды
+     *
+     * @var array Массив
      */
-    static $commands;
+    private static $commands;
 
     /**
      * Список комманд
@@ -52,12 +54,12 @@ class CommandList
         $command = [];
         foreach (self::$commands as $commands) {
             switch ($commands[2]) {
-            case 0:
+                case 0:
                     $command[0][] = $commands[3];
-                break;
-            case 1:
+                    break;
+                case 1:
                     $command[1][] = $commands[3];
-                break;
+                    break;
             }
         }
         $ucomm = array_merge(["--- Команды бота ---\n"], $command[0]);
@@ -66,15 +68,15 @@ class CommandList
             $command[1]
         );
         switch ($mode) {
-        case 0:
+            case 0:
                 $command = $ucomm;
-            break;
-        case 1:
+                break;
+            case 1:
                 $command = $acomm;
-            break;
-        case 2:
+                break;
+            case 2:
                 $command = array_merge($ucomm, $acomm);
-            break;
+                break;
         }
         return $command;
     }
@@ -144,5 +146,4 @@ class CommandList
         self::$commands [] = [$regexp, $class, $rule, $print];
         return $this;
     }
-
 }

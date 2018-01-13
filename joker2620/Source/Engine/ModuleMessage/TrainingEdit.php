@@ -31,30 +31,33 @@ class TrainingEdit
     /**
      * Файл базы пользовательских сообщений
      */
-    private $_baseName;
+    private $baseName;
     /**
      * Массив из базы пользовательских сообщений
      */
-    private $_baseData;
+    private $baseData;
 
     /**
      * TrainingEdit constructor.
      */
     public function __construct()
     {
-        $this->_baseName = SustemConfig::getConfig()['FILE_TRAINING'];
-        if (file_exists($this->_baseName)) {
-            $file_base = file($this->_baseName);
+        $this->baseName = SustemConfig::getConfig()['FILE_TRAINING'];
+        if (file_exists($this->baseName)) {
+            $file_name     = $this->baseName;
+            $file_resource = fopen($file_name, "r+");
+            $file_base     = fread($file_resource, filesize($file_name));
             if (!empty($file_base)) {
-                $resource = json_decode($file_base[0], true);
+                $resource = json_decode($file_base, true);
                 if ($resource !== false) {
-                    $this->_baseData = $resource;
+                    $this->baseData = $resource;
                 } else {
-                    $this->_baseData = [];
+                    $this->baseData = [];
                 }
             } else {
-                $this->_baseData = [];
+                $this->baseData = [];
             }
+            fclose($file_resource);
         }
     }
 
@@ -63,8 +66,8 @@ class TrainingEdit
      */
     public function __destruct()
     {
-        $data_to_write = json_encode($this->_baseData, JSON_UNESCAPED_UNICODE);
-        $resource      = fopen($this->_baseName, 'w+');
+        $data_to_write = json_encode($this->baseData, JSON_UNESCAPED_UNICODE);
+        $resource      = fopen($this->baseName, 'w+');
         fwrite($resource, $data_to_write);
         fclose($resource);
     }
@@ -79,9 +82,9 @@ class TrainingEdit
      */
     protected function addAnswer($msg, $no = false)
     {
-        foreach ($this->_baseData as $key_base => $data_base) {
+        foreach ($this->baseData as $key_base => $data_base) {
             if ($data_base[2] == $msg['user_id'] && $data_base[1] == false) {
-                $this->_baseData[$key_base] = [
+                $this->baseData[$key_base] = [
                     $data_base[0],
                     $no == false ? $msg['body'] : false,
                     false,
@@ -100,9 +103,9 @@ class TrainingEdit
      */
     protected function delAnswer($msg)
     {
-        foreach ($this->_baseData as $key_base => $data_base) {
+        foreach ($this->baseData as $key_base => $data_base) {
             if ($data_base[2] == $msg['user_id'] && $data_base[1] == false) {
-                unset($this->_baseData[$key_base]);
+                unset($this->baseData[$key_base]);
             }
         }
     }
@@ -117,13 +120,13 @@ class TrainingEdit
     protected function addTraining($msg)
     {
         $message = SustemConfig::getConfig()['MESSAGE']['TextMessage'][8];
-        foreach ($this->_baseData as $key_base => $data_base) {
+        foreach ($this->baseData as $key_base => $data_base) {
             if ($data_base[2] == 0 && $data_base[1] == false) {
-                $this->_baseData[$key_base] = [
+                $this->baseData[$key_base] = [
                     $data_base[0], $data_base[1],
                     $msg['user_id'], $data_base[3]
                 ];
-                $message                    = sprintf(
+                $message                   = sprintf(
                     SustemConfig::getConfig()['MESSAGE']['TextMessage'][7],
                     $data_base[0]
                 );
@@ -142,9 +145,9 @@ class TrainingEdit
      */
     protected function addQuestion($msg, $no = false)
     {
-        $this->_baseData   = $this->uniqueMultiArray($this->_baseData, 0);
-        $this->_baseData   = $this->uniqueMultiArray($this->_baseData, 2);
-        $this->_baseData[] = [
+        $this->baseData   = $this->uniqueMultiArray($this->baseData, 0);
+        $this->baseData   = $this->uniqueMultiArray($this->baseData, 2);
+        $this->baseData[] = [
             $msg['body'],
             false,
             $no == false ? $msg['user_id'] : false,
@@ -188,8 +191,8 @@ class TrainingEdit
      */
     protected function scanMsgUser($msg)
     {
-        if (!empty($this->_baseData)) {
-            foreach ($this->_baseData as $key_base => $data_base) {
+        if (!empty($this->baseData)) {
+            foreach ($this->baseData as $key_base => $data_base) {
                 if ($data_base[2] == $msg['user_id']) {
                     return true;
                 }

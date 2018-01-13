@@ -19,7 +19,6 @@ use joker2620\Source\Engine\Interfaces\ModuleInterface;
 use joker2620\Source\Engine\Setting\SustemConfig;
 use joker2620\Source\Engine\Setting\UserConfig;
 
-
 /**
  * Class HTMessages
  *
@@ -50,18 +49,66 @@ final class HTMessages extends HTMessagesBase implements ModuleInterface
      */
     public function getAnwser($item)
     {
-        $return  = false;
-        $scaners = ['training', 'prehistoric', 'schooling'];//
-        foreach ($scaners as $scaner) {
-            if (empty($return)) {
-                $scanner = $this->$scaner($item);
-                if (!empty($scanner)) {
-                    $return = $scanner;
-                    break;
+        $return = $this->scanAnswer($item);
+        if (empty($return)) {
+            $return = $this->prehistoric($item, true);
+        }
+        if (empty($return)) {
+            $return = $this->prehistoric($item);
+        }
+        if (empty($return)) {
+            $return = $this->noAnswer($return, $item);
+        }
+        return [$return, false];
+    }
+
+
+    /**
+     * _noAnswer()
+     *
+     * @param $item
+     *
+     * @return string
+     */
+    private function scanAnswer($item)
+    {
+        $return = false;
+        if (UserConfig::getConfig()['USER_TRAINING']) {
+            if (preg_match('/^(\!наобучение)$/iu', $item['body'])) {
+                $return = $this->addTraining($item);
+            } elseif ($this->scanMsgUser($item)) {
+                if (preg_match('/^(нет)$/iu', $item['body'])) {
+                    $this->addAnswer($item, true);
+                    $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][6];
+                } elseif (preg_match('/^(!мусор)$/iu', $item['body'])) {
+                    $this->delAnswer($item);
+                    $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][9];
+                } else {
+                    if (mb_strlen($item['body']) > 5) {
+                        $this->addAnswer($item);
+                        $return
+                            = SustemConfig::getConfig()['MESSAGE']['TextMessage'][4];
+                    } else {
+                        $return
+                            = SustemConfig::getConfig()['MESSAGE']['TextMessage'][2];
+                    }
                 }
             }
         }
-        if (empty($return) && UserConfig::getConfig()['USER_TRAINING']) {
+        return $return;
+    }
+
+    /**
+     * _noAnswer()
+     *
+     * @param $return
+     * @param $item
+     *
+     * @return string
+     */
+    private function noAnswer($return, $item)
+    {
+        if (UserConfig::getConfig()['USER_TRAINING']) {
             $this->addQuestion($item);
             $return = sprintf(
                 SustemConfig::getConfig()['MESSAGE']['TextMessage'][1],
@@ -76,6 +123,6 @@ final class HTMessages extends HTMessagesBase implements ModuleInterface
         } elseif (empty($return)) {
             $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][0];
         }
-        return [$return, false];
+        return $return;
     }
 }

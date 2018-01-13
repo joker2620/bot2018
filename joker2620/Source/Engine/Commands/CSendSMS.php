@@ -39,7 +39,7 @@ final class CSendSMS extends CommandsTemplate implements CommandIntefce
      *
      * В этом режиме сообщения не уйдут дальше сервиса sms.ru
      */
-    private $_testMode = true;//Тестовый режим
+    private $testMode = true;//Тестовый режим
 
     /**
      * CSendSMS constructor.
@@ -67,7 +67,7 @@ final class CSendSMS extends CommandsTemplate implements CommandIntefce
                         implode(',', ConfigCommands::getConfig()['PHONE_NUMBER']),
                     'msg' => $item['matches'][2][0],
                     'json' => 1,
-                    'test' => $this->_testMode //тестовый режим.
+                    'test' => $this->testMode //тестовый режим.
                 ]
             );
             $jsonc     = $this->getCost($dataquery);
@@ -139,8 +139,10 @@ final class CSendSMS extends CommandsTemplate implements CommandIntefce
             VKAPI::getInstance()
                 ->curl(
                     'https://sms.ru/sms/cost',
-                    3, $dataquery
-                ), true
+                    3,
+                    $dataquery
+                ),
+            true
         );
     }
 
@@ -156,8 +158,10 @@ final class CSendSMS extends CommandsTemplate implements CommandIntefce
         return json_decode(
             VKAPI::getInstance()->curl(
                 'https://sms.ru/sms/send',
-                3, $dataquery
-            ), true
+                3,
+                $dataquery
+            ),
+            true
         );
     }
 }

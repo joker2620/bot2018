@@ -13,9 +13,7 @@
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-
 namespace joker2620\Source\API;
-
 
 use joker2620\Source\Engine\Loger;
 use joker2620\Source\Exception\BotError;
@@ -51,42 +49,42 @@ class Curl
             CURLOPT_RETURNTRANSFER => true
         ];
         switch ($curlmode) {
-        case 0:
-            $curl_setopt += [
-                CURLOPT_HEADER => false,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_URL => $url,
-                CURLOPT_REFERER => $url
-            ];
-            break;
-        case 1:
-            $curl_setopt += [
-                CURLOPT_URL => $url,
-                CURLOPT_POST => true,
-                CURLOPT_HTTPHEADER => [
-                    'Content-Type: multipart/form-data; boundary=' .
-                    $file_name[1],
-                    'Content-Length: ' . strlen($file_name[0])
-                ],
-                CURLOPT_POSTFIELDS => $file_name[0]
-            ];
-            break;
-        case 2:
-            $curl_setopt += [
-                CURLOPT_POST => true,
-                CURLOPT_POSTFIELDS => ['file' => new \CURLFile($file_name)]
-            ];
-            break;
-        case 3:
-            $curl_setopt += [
-                CURLOPT_POST => true,
-                CURLOPT_TIMEOUT, 30,
-                CURLOPT_POSTFIELDS => $file_name
-            ];
-            break;
-        case 4:
-            $curl_setopt += [CURLOPT_FILE => $file_name];
-            break;
+            case 0:
+                $curl_setopt += [
+                    CURLOPT_HEADER => false,
+                    CURLOPT_FOLLOWLOCATION => true,
+                    CURLOPT_URL => $url,
+                    CURLOPT_REFERER => $url
+                ];
+                break;
+            case 1:
+                $curl_setopt += [
+                    CURLOPT_URL => $url,
+                    CURLOPT_POST => true,
+                    CURLOPT_HTTPHEADER => [
+                        'Content-Type: multipart/form-data; boundary=' .
+                        $file_name[1],
+                        'Content-Length: ' . strlen($file_name[0])
+                    ],
+                    CURLOPT_POSTFIELDS => $file_name[0]
+                ];
+                break;
+            case 2:
+                $curl_setopt += [
+                    CURLOPT_POST => true,
+                    CURLOPT_POSTFIELDS => ['file' => new \CURLFile($file_name)]
+                ];
+                break;
+            case 3:
+                $curl_setopt += [
+                    CURLOPT_POST => true,
+                    CURLOPT_TIMEOUT, 30,
+                    CURLOPT_POSTFIELDS => $file_name
+                ];
+                break;
+            case 4:
+                $curl_setopt += [CURLOPT_FILE => $file_name];
+                break;
         }
         $curlh = curl_init($url);
         curl_setopt_array($curlh, $curl_setopt);

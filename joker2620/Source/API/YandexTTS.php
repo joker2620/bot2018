@@ -31,13 +31,12 @@ use joker2620\Source\Exception\BotError;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-
 final class YandexTTS extends Curl
 {
     /**
      * Копия класса
      */
-    private static $_instance;
+    private static $instance;
 
     /**
      * YandexTTS constructor.
@@ -53,11 +52,11 @@ final class YandexTTS extends Curl
      */
     public static function getInstance()
     {
-        if (self::$_instance == null) {
-            self::$_instance = new YandexTTS();
+        if (self::$instance == null) {
+            self::$instance = new YandexTTS();
         }
 
-        return self::$_instance;
+        return self::$instance;
     }
 
     /**
@@ -87,7 +86,7 @@ final class YandexTTS extends Curl
         $file_name = SustemConfig::getConfig()['DIR_AUDIO'] .
             '/aud_' . md5($text) . '.ogg';
         if (file_exists($file_name)) {
-            $this->_validFile($file_name);
+            $this->validFile($file_name);
             return $file_name;
         }
 
@@ -105,7 +104,7 @@ final class YandexTTS extends Curl
 
         $urladress = SustemConfig::getConfig()['YA_ENDPOINT'] . '?' . $query;
         $this->curl($urladress, 4, $filevoice);
-        $this->_validFile($file_name);
+        $this->validFile($file_name);
         return $file_name;
     }
 
@@ -119,7 +118,7 @@ final class YandexTTS extends Curl
      * @throws BotError
      * @return void
      */
-    private function _validFile($file_name)
+    private function validFile($file_name)
     {
         $read_file = fopen($file_name, 'r');
         $get_data  = fread($read_file, filesize($file_name));
@@ -130,5 +129,4 @@ final class YandexTTS extends Curl
             );
         }
     }
-
 }

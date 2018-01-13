@@ -49,7 +49,10 @@ final class HTCommands extends CommandList implements ModuleInterface
             foreach ($commands as $value) {
                 if (preg_match(
                     '/^' . $value[0] . '$/iu',
-                    $item['body'], $matches, PREG_OFFSET_CAPTURE, 0
+                    $item['body'],
+                    $matches,
+                    PREG_OFFSET_CAPTURE,
+                    0
                 )
                 ) {
                     if (!BotFunction::getInstance()->scanAdm($item['user_id'])

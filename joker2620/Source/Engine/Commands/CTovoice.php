@@ -15,7 +15,6 @@
  */
 namespace joker2620\Source\Engine\Commands;
 
-
 use joker2620\Source\API\VKAPI;
 use joker2620\Source\API\YandexTTS;
 use joker2620\Source\Engine\Interfaces\CommandIntefce;

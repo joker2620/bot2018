@@ -33,23 +33,23 @@ final class SignArt
     /**
      * Папка с картинками
      */
-    private $_imgDir;
+    private $imgDir;
     /**
      * Картинка
      */
-    private $_image;
+    private $image;
     /**
      * Данные
      */
-    private $_data;
+    private $data;
 
     /**
      * SignArt constructor.
      */
     public function __construct()
     {
-        $this->_imgDir = SustemConfig::getConfig()['DIR_IMAGES'] . '/sign/';
-        $this->_image  = null;
+        $this->imgDir = SustemConfig::getConfig()['DIR_IMAGES'] . '/sign/';
+        $this->image  = null;
     }
 
 
@@ -68,20 +68,22 @@ final class SignArt
         $fonts = 'PFKidsPro-GradeOne.ttf'
     ) {
 
-        $fonts = $this->_imgDir . $fonts;
+        $fonts = $this->imgDir . $fonts;
         $this->getRandImg();
         $color = $this->colors($color[0], $color[1], $color[2]);
         $this->setText(
             [$text, $fonts, $color],
-            $this->_data[5],
-            [$this->_data[3], $this->_data[4]],
-            [$this->_data[1], $this->_data[2]]
+            $this->data[5],
+            [$this->data[3], $this->data[4]],
+            [$this->data[1], $this->data[2]]
         );
         ob_start();
-        imagepng($this->_image, null, 6);
+        imagepng($this->image, null, 6);
         $result = ob_get_clean();
         $result = new ObjectFile(
-            'image' . rand(0, 1000) . '.png', 'image/png', $result
+            'image' . rand(0, 1000) . '.png',
+            'image/png',
+            $result
         );
         return $result;
     }
@@ -93,11 +95,11 @@ final class SignArt
      */
     public function getRandImg()
     {
-        $base_art     = include 'Config.php';
-        $datas        = $base_art[rand(0, count($base_art) - 1)];
-        $files        = $this->_imgDir . $datas[0];
-        $this->_image = imagecreatefrompng($files);
-        $this->_data  = $datas;
+        $base_art    = include 'Config.php';
+        $datas       = $base_art[rand(0, count($base_art) - 1)];
+        $files       = $this->imgDir . $datas[0];
+        $this->image = imagecreatefrompng($files);
+        $this->data  = $datas;
     }
 
     /**
@@ -111,7 +113,7 @@ final class SignArt
      */
     public function colors($r, $g, $b)
     {
-        return imagecolorallocate($this->_image, $r, $g, $b);
+        return imagecolorallocate($this->image, $r, $g, $b);
     }
 
     /**
@@ -128,7 +130,7 @@ final class SignArt
     {
         $sizof = round($maxsize[0] / mb_strlen($text[0]));
         imagettftext(
-            $this->_image,
+            $this->image,
             $sizof > $maxsize[0] ? $maxsize[1] : $sizof,
             $rota,
             $pos[0],

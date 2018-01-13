@@ -42,28 +42,28 @@ final class Core extends HandlersEvent
     {
         switch ($this->data['type']) {
             //Подтверждение сервера
-        case 'confirmation':
+            case 'confirmation':
                 $this->handConfirmation();
-            break;
+                break;
             //Получение нового сообщения
-        case 'message_new':
+            case 'message_new':
                 $this->handMessage();
-            break;
+                break;
             //Новый пост
-        case 'wall_post_new':
+            case 'wall_post_new':
                 $this->wallPostNew();
-            break;
+                break;
             //Новый голос
-        case 'poll_vote_new':
+            case 'poll_vote_new':
                 $this->pollVoteNew();
-            break;
-        default:
-            DataOperations::putData();
-            throw new BotError(
-                '"' . $this->data['type'] .
+                break;
+            default:
+                DataOperations::putData();
+                throw new BotError(
+                    '"' . $this->data['type'] .
                     '"- Этот метод не подерживаеться'
-            );
-            break;
+                );
+                break;
         }
     }
 }
