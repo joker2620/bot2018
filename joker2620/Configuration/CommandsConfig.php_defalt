@@ -1,0 +1,35 @@
+<?php
+
+/**
+ * Проект: joker2620/bot2018
+ * Author: Joker2620;
+ * Date: 12.01.2018;
+ * Time: 7:55;
+ * PHP version 5.6;
+ *
+ * @category Config
+ * @package  Configuration
+ * @author   Joker2620 <joker2000joker@list.ru>
+ * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
+ * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ */
+
+/**
+ * Конфиурация
+ */
+return [
+    /**
+     * Телефонные номера
+     *
+     * Номера на которые будут отправляться СМС.
+     */
+    'PHONE_NUMBER' => [
+        'Вася Василевский' => 912346789
+    ],
+    /**
+     * API-key
+     *
+     * Ключ для отправки смс через сервис https;//SMS.RU
+     */
+    'SMSRU_API' => ''
+];

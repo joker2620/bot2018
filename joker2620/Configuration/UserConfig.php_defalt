@@ -1,0 +1,88 @@
+<?php
+
+/**
+ * Проект: joker2620/bot2018
+ * Author: Joker2620;
+ * Date: 12.01.2018;
+ * Time: 7:55;
+ * PHP version 5.6;
+ *
+ * @category Config
+ * @package  Configuration
+ * @author   Joker2620 <joker2000joker@list.ru>
+ * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
+ * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ */
+
+/**
+ * Конфиурация
+ */
+return [
+    /**
+     * Имя бота
+     */
+    'BOT_NAME' => 'Бот', //Имя бота
+    /**
+     * Список администраторов бота
+     */
+    'ADMINISTRATORS' => [211984675], //Список администраторов
+    /**
+     * Строка для подтверждения адреса сервера
+     *
+     * Строка используемая для подтверждения адреса сервера.
+     */
+    'CONFIRMATION_TOKEN' => '',
+    /**
+     * Ключ доступа сообщества
+     *
+     * Его можно получить в настройках сообщества.
+     */
+    'ACCESS_TOKEN' => '', //Ключ доступа сообщества
+    /**
+     * Ключ доступа администратора сообщества
+     *
+     * Данная крайность необходима для получения данных,
+     * об прохождении опросов в группе.
+     * Получить токен: https://oauth.vk.com/authorize?client_id=АЙДИ_ПРИЛОЖЕНИЯ&scope=friends,photos,audio,video,docs,notes,pages,status,offers,questions,wall,groups,messages,notifications,stats,ads,market,offline&redirect_uri=https://oauth.vk.com/blank.html&display=page&response_type=token
+     * АЙДИ_ПРИЛОЖЕНИЯ - брать в vk.com/dev (создать Standalone-приложение).
+     */
+    'ADMIN_TOKEN' => '', //Токен администратора
+    /**
+     * Ключ для доступа к Yandex Speech Kit
+     *
+     * Данный ключ можно получить в документации Yandex Speech Kit
+     * https://tech.yandex.ru/speechkit/cloud/
+     */
+    'SPEECH_KEY' => '',
+    /**
+     * API_KEY - ключ доступа.
+     *
+     * Ключ доступа к API-интерфейсу.
+     * Его можно получить в личном кабинете http://antigate.com/
+     */
+    'AG_API_KEY' => '',//API-интерфейсу.
+    /**
+     * Обучение пользователями
+     *
+     * Данные настройки,
+     * служат для включения\выключения функции обучения пользователями
+     */
+    'USER_TRAINING' => true, //ВСЕГО 2 значения - TRUE [Включен] и FALSE [Выклюен];
+    /**
+     * Сохранять вопросы без ответа
+     *
+     * Работает даже когда обучение выключенно!
+     */
+    'SAVE_TRAINING_FALSE' => false,
+    /**
+     * Минимальный процнт схожести
+     *
+     * Выбирает сообщения строго выше данного процента
+     */
+    'MIN_PERCENT' => 60,
+    /**
+     * Сохранять полученные сообщения (вместе с ответом бота)
+     * в папку joker2620/data/log/chats/
+     */
+     'SAVE_MESSAGE' => true
+]; //Выбирает сообщения строго выше

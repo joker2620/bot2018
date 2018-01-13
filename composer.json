@@ -1,0 +1,17 @@
+{
+  "name": "joker2620/bot2018",
+  "description": "Chat-bot for VK.COM",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "joker2620",
+      "email": "joker2000joker@mail.ru"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "joker2620\\": "joker2620/"
+    }
+  }
+}
