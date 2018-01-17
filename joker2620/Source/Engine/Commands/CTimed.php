@@ -17,7 +17,6 @@ namespace joker2620\Source\Engine\Commands;
 
 use joker2620\Source\Engine\Interfaces\CommandIntefce;
 use joker2620\Source\Engine\ModuleCommand\CommandsTemplate;
-use joker2620\Source\Engine\Setting\SustemConfig;
 
 /**
  * Class CTimed
@@ -46,13 +45,16 @@ final class CTimed extends CommandsTemplate implements CommandIntefce
      */
     public function runCom($item)
     {
-        $datatime = date('d.m.Y H:i:s');
         $return   = [
-            "Время: {$datatime}",
-            "Ваш айди: @id{$item['user_id']}",
-            "Автор бота @joker2620 (Назым Бавбеков)",
-            "Версия бота: " . SustemConfig::getConfig()['VERSION'] . " (b" .
-            SustemConfig::getConfig()['BUILD'] . ")."
+            'Время: #what_dey# #what_time#',
+            '---------------',
+            'Вы: #first_name# #last_name#',
+            'Ваш пол: #sex_dis#',
+            'Ваш айди: @id#uid#',
+            '---------------',
+            "Имя бота: #neme_bot#",
+            'Автор бота @joker2620 (Назым Бавбеков)',
+            'Версия бота: #version# (b#build#)',
         ];
         return implode("\n", $return);
     }

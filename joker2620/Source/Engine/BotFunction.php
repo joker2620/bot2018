@@ -70,6 +70,16 @@ final class BotFunction
     /**
      * Функция замены специальных тегов на соответствующую информацию
      *
+     * Можно использовать падеж для склонения имени и фамилии пользователя.
+     * Используется как приставка в теге, пример: #first_name_gen#
+     * Возможные значения:
+     * именительный – по умолчанию,
+     * родительный – "_gen",
+     * дательный – "_dat",
+     * винительный – "_acc",
+     * творительный – "_ins",
+     * предложный – "_abl".
+     *
      * @param string $message   Строка сообщения
      * @param int    $user_data Данные пользователя
      *
@@ -92,51 +102,31 @@ final class BotFunction
                 $sex_description = 'WTF?';
                 break;
         }
-
         $trans = [
             '#uid#' => $user_data['user_id'],
-            '#name_one#' => $user_data['first_name'],
-            '#name_two#' => $user_data['last_name'],
-            '#sex#' => $user_data['sex'],
+            '#first_name#' => $user_data['first_name'],
+            '#last_name#' => $user_data['last_name'],
+            //Склонение имени
+            '#first_name_abl#' => $user_data['first_name_abl'],
+            '#first_name_ins#' => $user_data['first_name_ins'],
+            '#first_name_acc#' => $user_data['first_name_acc'],
+            '#first_name_dat#' => $user_data['first_name_dat'],
+            '#first_name_gen#' => $user_data['first_name_gen'],
+            //Склонение фамилии
+            '#last_name_abl#' => $user_data['last_name_abl'],
+            '#last_name_ins#' => $user_data['last_name_ins'],
+            '#last_name_acc#' => $user_data['last_name_acc'],
+            '#last_name_dat#' => $user_data['last_name_dat'],
+            '#last_name_gen#' => $user_data['last_name_gen'],
+
             '#sex_dis#' => $sex_description,
             '#neme_bot#' => UserConfig::getConfig()['BOT_NAME'],
+            '#what_dey#' => date('d.m.Y'),
+            '#what_time#' => date('H:i:s'),
             '#version#' => SustemConfig::getConfig()['VERSION'],
             '#build#' => SustemConfig::getConfig()['BUILD']
         ];
         return strtr($message, $trans);
-    }
-
-    /**
-     * Функция перевода символов в нижний регистр
-     *
-     * @param string $string Строка
-     *
-     * @return string
-     */
-    public function lower(
-        $string
-    ) {
-        $chars  = [
-            'A' => 'a', 'B' => 'b', 'C' => 'c', 'D' => 'd',
-            'E' => 'e', 'F' => 'f', 'G' => 'g',
-            'H' => 'h', 'I' => 'i', 'J' => 'j', 'K' => 'k',
-            'L' => 'l', 'M' => 'm', 'N' => 'n',
-            'O' => 'o', 'P' => 'p', 'Q' => 'q', 'R' => 'r',
-            'S' => 's', 'T' => 't', 'U' => 'u',
-            'V' => 'v', 'W' => 'w', 'X' => 'x', 'Y' => 'y',
-            'Z' => 'z', 'А' => 'а', 'Б' => 'б',
-            'В' => 'в', 'Г' => 'г', 'Д' => 'д', 'Е' => 'е',
-            'Ё' => 'ё', 'Ж' => 'ж', 'З' => 'з',
-            'И' => 'и', 'Й' => 'й', 'К' => 'к', 'Л' => 'л',
-            'М' => 'м', 'Н' => 'н', 'О' => 'о',
-            'П' => 'п', 'Р' => 'р', 'С' => 'с', 'Т' => 'т',
-            'У' => 'у', 'Ф' => 'ф', 'Х' => 'х',
-            'Ц' => 'ц', 'Ч' => 'ч', 'Ш' => 'ш', 'Щ' => 'щ',
-            'Ъ' => 'ъ', 'Ы' => 'ы', 'Ь' => 'ь',
-            'Э' => 'э', 'Ю' => 'ю', 'Я' => 'я'
-        ];
-        $string = strtr($string, $chars);
-        return $string;
     }
 
     /**

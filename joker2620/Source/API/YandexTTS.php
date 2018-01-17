@@ -80,7 +80,9 @@ final class YandexTTS extends Curl
         $emoticon = 'good',
         $lang = 'ru-RU'
     ) {
-        if (!is_string($text)) {
+        if (!is_string($text) || !is_string($speaker) ||
+            !is_string($emoticon) || !is_string($lang)
+        ) {
             throw new BotError('Error: call getVoice().');
         };
         $file_name = SustemConfig::getConfig()['DIR_AUDIO'] .

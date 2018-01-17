@@ -17,6 +17,7 @@ namespace joker2620\Source\API;
 
 use joker2620\Source\Crutch\FileInMemory;
 use joker2620\Source\Crutch\ObjectFile;
+use joker2620\Source\Engine\BotFunction;
 use joker2620\Source\Engine\Setting\SustemConfig;
 use joker2620\Source\Engine\Setting\UserConfig;
 use joker2620\Source\Exception\BotError;
@@ -71,7 +72,7 @@ final class VKAPI extends Curl
      */
     public function uploadVoice($user_id, $file_name)
     {
-        if (!is_int($user_id) && !is_string($file_name)) {
+        if (!is_int($user_id) || !is_string($file_name)) {
             throw new BotError('Error: call uploadVoice.');
         }
         $server_response = $this->docsGUServer($user_id, 'audio_message');
@@ -93,7 +94,7 @@ final class VKAPI extends Curl
      */
     public function docsGUServer($peer_id, $type)
     {
-        if (!is_int($peer_id) && !is_string($type)) {
+        if (!is_int($peer_id) || !is_string($type)) {
             throw new BotError('Error: call docs_GetUploadServer.');
         }
         return $this->methodAPI(
@@ -121,7 +122,7 @@ final class VKAPI extends Curl
      */
     public function methodAPI($method, $params = [])
     {
-        if (!is_string($method) && !is_array($params)) {
+        if (!is_string($method) || !is_array($params)) {
             throw new BotError('Error: call api.');
         }
         if (!isset($params['access_token'])) {
@@ -157,7 +158,7 @@ final class VKAPI extends Curl
      */
     public function upload($url, $file_name = '')
     {
-        if (!is_string($url) && !is_string($file_name)) {
+        if (!is_string($url) || !is_string($file_name) && !is_object($file_name)) {
             throw new BotError('Error: call api.');
         }
         if ($file_name instanceof ObjectFile) {
@@ -189,7 +190,7 @@ final class VKAPI extends Curl
      */
     public function docsSave($file, $title)
     {
-        if (!is_string($file) && !is_string($title)) {
+        if (!is_string($file) || !is_string($title)) {
             throw new BotError('Error: call docs_Save.');
         }
         return $this->methodAPI(
@@ -212,7 +213,7 @@ final class VKAPI extends Curl
      */
     public function uploadPhoto($peer_id, $file_name)
     {
-        if (!is_int($peer_id) && !is_string($file_name)) {
+        if (!is_int($peer_id) || !is_string($file_name) && !is_object($file_name)) {
             throw new BotError('Error: call uploadPhoto.');
         }
         $server_response = $this->photosGUServer($peer_id);
@@ -250,7 +251,7 @@ final class VKAPI extends Curl
      * Функция сохранения фотографий
      *
      * @param string $photo  Фото
-     * @param string $server Сервер
+     * @param int    $server Сервер
      * @param string $hash   Хеш
      *
      * @return mixed
@@ -258,7 +259,7 @@ final class VKAPI extends Curl
      */
     public function photoSave($photo, $server, $hash)
     {
-        if (!is_string($photo) && !is_string($server) && !is_string($hash)) {
+        if (!is_string($photo) || !is_int($server) || !is_string($hash)) {
             throw new BotError('Error: call photo_Save.');
         }
         return $this->methodAPI(
@@ -283,15 +284,16 @@ final class VKAPI extends Curl
      */
     public function messagesSend($peer_id, $message = '', $attachment = [])
     {
-        if (!is_int($peer_id) && !is_string($message) && !is_array($attachment)) {
+        if (!is_int($peer_id) || !is_string($message) || !is_array($attachment) && !is_bool($attachment)) {
             throw new BotError('Error: call messagesSend.');
         }
         return $this->methodAPI(
             'messages.send',
             [
                 'peer_id' => $peer_id,
-                'message' => !empty($message) ? $message :
-                    'Крякнула уточка, крякнул и бот :)',
+                'message' => !empty($message) ?
+                    BotFunction::getInstance()->ucFirst($message) :
+                    SustemConfig::getConfig()['Main'][1],
                 'attachment' => !empty($attachment) ?
                     implode(',', $attachment) : false,
             ]
@@ -309,15 +311,28 @@ final class VKAPI extends Curl
      */
     public function usersGet($peer_id, $name_case = 'nom')
     {
-        if (!is_int($peer_id) && !is_string($name_case)) {
+        if (!is_int($peer_id) || !is_string($name_case)) {
             throw new BotError('Error: call usersGet.');
         }
+        $param = 'timezone,' .
+            'sex,' .
+            'first_name_abl,' .
+            'first_name_ins,' .
+            'first_name_acc,' .
+            'first_name_dat,' .
+            'first_name_gen,' .
+            'last_name_abl,' .
+            'last_name_ins,' .
+            'last_name_acc,' .
+            'last_name_dat,' .
+            'last_name_gen,' .
+            'photo_50,' .
+            'city';
         return $this->methodAPI(
             'users.get',
             [
                 'user_id' => $peer_id,
-                'fields' => 'sex',
-                'name_case' => $name_case
+                'fields' => $param
             ]
         );
     }

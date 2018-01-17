@@ -41,6 +41,9 @@ class Curl
      */
     public function curl($url, $curlmode = 0, $file_name = null)
     {
+        if (!is_string($url) || !is_int($curlmode)) {
+            throw new BotError('cURL: ошибка, не верные данные');
+        }
         if (!function_exists('curl_init')) {
             throw new BotError('cURL Не работает');
         }

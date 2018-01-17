@@ -3,7 +3,7 @@
 [![PHP](https://img.shields.io/badge/PHP-5.6%5E-brightgreen.svg?style=for-the-badge)](https://php.net/)
 [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/blob/master/LICENSE/)
 [![VERSION](https://img.shields.io/badge/LAST%20VERSION-0.2.0-blue.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
-[![BUID](https://img.shields.io/badge/LAST%20BUILD-13-lightgrey.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
+[![BUID](https://img.shields.io/badge/LAST%20BUILD-17.01.18-lightgrey.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 [![PSR](https://img.shields.io/badge/PSR-0--4-orange.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 
 [bot2018][1] - это **Чат-бот** для сообществ [ВК][2], созданный для развлечения посетителей группы.
@@ -63,13 +63,22 @@
 1. Также, вы можете почистить базу, от повторов, и рассортировать ее по алфавиту, запустив скрипт `tools/DeleteRepeats.php`. В ходе работы скрипта могу возникнуть ошибки которые возможно могут приведут к уничтожению базы (такие случаи не наблюдались).
 1. Вы можете использовать ключевые слова в базе данных:
     * **`#uid#`** - Айди пользователя; 
-    * **`#name_one#`** - Имя пользователя; 
-    * **`#name_two#`** - Фамилия пользователя; 
-    * **`#sex#`** - пол пользователя (цифра: 1 - девушка, 2 - парень); 
+    * **`#first_name#`** - Имя пользователя; 
+    * **`#last_name#`** - Фамилия пользователя; 
     * **`#sex_dis#`** - пол пользователя в виде `Парень, Девушка`; 
-    * **`#neme_bot#`** - имя бота; 
+    * **`#neme_bot#`** - имя бота;
+    * **`#what_dey#`** - дата;
+    * **`#what_time#`** - время;
     * **`#version#`** - версия бота; 
     * **`#build#`** - номер сборки бота. 
+1. Можно использовать падеж для склонения имени и фамилии пользователя. Используется как приставка в теге, пример: `#first_name_gen#`.
+ Возможные значения:
+   * `именительный – по умолчанию`;
+   * `родительный – "_gen"`;
+   * `дательный – "_dat"`;
+   * `винительный – "_acc"`;
+   * `творительный – "_ins"`;
+   * `предложный – "_abl"`.
 
 [1]: https://github.com/joker2620/bot2018
 [2]: https://vk.com/

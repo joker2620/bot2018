@@ -18,6 +18,7 @@ namespace joker2620\Source\plugins\AutoSing;
 
 use joker2620\Source\Crutch\ObjectFile;
 use joker2620\Source\Engine\Setting\SustemConfig;
+use joker2620\Source\Exception\BotError;
 
 /**
  * Class signart
@@ -61,13 +62,16 @@ final class SignArt
      * @param string $fonts Шрифт
      *
      * @return string
+     * @throws BotError
      */
     public function generate(
         $text,
         $color = [0, 0, 0],
         $fonts = 'PFKidsPro-GradeOne.ttf'
     ) {
-
+        if (!is_string($text) || !is_array($color) || !is_string($fonts)) {
+            throw new BotError('Ошибка при вызове модуля SignArt');
+        }
         $fonts = $this->imgDir . $fonts;
         $this->getRandImg();
         $color = $this->colors($color[0], $color[1], $color[2]);

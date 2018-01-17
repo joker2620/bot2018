@@ -141,44 +141,29 @@ class HandlersEvent extends Modules
         if (!isset($this->data['object']['attachments'])
             and !isset($this->data['object']['copy_history'])
         ) {
-            $postx = [
-                'wall' . $this->data['object']['owner_id']
-                . '_' . $this->data['object']['id']
-            ];
-            VKAPI::getInstance()->messagesSend(
-                $this->data['object']['created_by'],
-                'Ты не прикрепил ни одного вложения к посту! Исправь этот недочет!',
-                $postx
-            );
+            $mesage = 'Ты не прикрепил ни одного вложения к посту! Исправь этот недочет!';
         } elseif ($this->data['object']['text'] == '') {
-            $postx = [
-                'wall' . $this->data['object']['owner_id'] . '_' .
-                $this->data['object']['id']
-            ];
-            VKAPI::getInstance()->messagesSend(
-                $this->data['object']['created_by'],
-                'Ты не написал ни слова... разве тебе нечего сказать?!
-                 - Не думаю, напиши хотя-бы пару слов к посту!',
-                $postx
-            );
+            $mesage
+                = 'Ты не написал ни слова...
+             разве тебе нечего сказать?! - Не думаю, напиши хотя-бы пару слов к посту!';
         } elseif (!empty($this->data['object']['text'])) {
-            $array = [
+            $array  = [
                 'Воу воу, это шедевр!',
                 'Умничка, у тебя получился хороший пост!',
                 'Отлично, все получилось!'
             ];
-            $postx = [
-                'wall' . $this->data['object']['owner_id'] .
-                '_' . $this->data['object']['id']
-            ];
-            VKAPI::getInstance()->messagesSend(
-                $this->data['object']['created_by'],
-                $array[rand(0, count($array) - 1)],
-                $postx
-            );
+            $mesage = $array[rand(0, count($array) - 1)];
         } else {
             Loger::getInstance()->logger($this->data);
             throw new BotError('the secret key does not match or is missing');
+        }
+        if ($mesage) {
+            VKAPI::getInstance()->messagesSend(
+                $this->data['object']['created_by'],
+                $mesage,
+                ['wall' . $this->data['object']['owner_id'] . '_' .
+                $this->data['object']['id']]
+            );
         }
         DataOperations::putData();
     }
