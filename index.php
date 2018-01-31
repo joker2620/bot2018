@@ -27,5 +27,5 @@ try {
     (new joker2620\Source\Engine\Core())->scan();
 } catch (BotError $exception) {
     Loger::getInstance()->logger($exception);
-    DataOperations::__PutData();
+    DataOperations::putData();
 }
