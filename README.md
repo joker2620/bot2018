@@ -5,7 +5,7 @@
 [![VERSION](https://img.shields.io/badge/LAST%20VERSION-0.2.0-blue.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 [![BUID](https://img.shields.io/badge/LAST%20BUILD-17.01.18-lightgrey.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 [![PSR](https://img.shields.io/badge/PSR-0--4-orange.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
-[![PSR](https://img.shields.io/badge/Code%20quality-very%20bad-orange.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
+[![PSR](https://img.shields.io/badge/Code%20quality-maybe%20bad-orange.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 
 [bot2018][1] - это **Чат-бот** для сообществ [ВК][2], созданный для развлечения посетителей группы.
 
