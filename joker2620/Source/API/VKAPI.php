@@ -1,11 +1,18 @@
 <?php
+namespace joker2620\Source\API;
+
+use joker2620\Source\BotFunction;
+use joker2620\Source\Exception\BotError;
+use joker2620\Source\Setting\SustemConfig;
+use joker2620\Source\Setting\UserConfig;
+use VK\Client\VKApiClient;
 
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
  * Date: 12.01.2018;
  * Time: 7:55;
- * PHP version 5.6;
+ * PHP version 7.1;
  *
  * @category API
  * @package  Joker2620\Source\API
@@ -13,38 +20,21 @@
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-namespace joker2620\Source\API;
-
-use joker2620\Source\Crutch\FileInMemory;
-use joker2620\Source\Crutch\ObjectFile;
-use joker2620\Source\Engine\BotFunction;
-use joker2620\Source\Engine\Setting\SustemConfig;
-use joker2620\Source\Engine\Setting\UserConfig;
-use joker2620\Source\Exception\BotError;
-
-/**
- * Class VKAPI
- *
- * Класс для работы с API VK.COM
- *
- * @category API
- * @package  Joker2620\Source\API
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
- */
-final class VKAPI extends Curl
+class VKAPI
 {
     /**
      * Копия класса
      */
-    private static $instance;
+    private $_accessToken, $vkapi;
+    private static         $instance;
 
     /**
      * VKAPI constructor.
      */
-    private function __construct()
+    public function __construct()
     {
+        $this->_accessToken = UserConfig::getConfig()['ACCESS_TOKEN'];
+        $this->vkapi        = new VKApiClient();
     }
 
     /**
@@ -57,7 +47,6 @@ final class VKAPI extends Curl
         if (self::$instance == null) {
             self::$instance = new VKAPI();
         }
-
         return self::$instance;
     }
 
@@ -76,7 +65,7 @@ final class VKAPI extends Curl
             throw new BotError('Error: call uploadVoice.');
         }
         $server_response = $this->docsGUServer($user_id, 'audio_message');
-        $upload_response = $this->upload($server_response['upload_url'], $file_name);
+        $upload_response = $this->upload($server_response['upload_url'], $file_name, 'file');
         $files           = $upload_response['file'];
         $save_response   = $this->docsSave($files, 'Voice message');
         $doccx           = max($save_response);
@@ -97,8 +86,8 @@ final class VKAPI extends Curl
         if (!is_int($peer_id) || !is_string($type)) {
             throw new BotError('Error: call docs_GetUploadServer.');
         }
-        return $this->methodAPI(
-            'docs.getMessagesUploadServer',
+        return $this->vkapi->docs()->getMessagesUploadServer(
+            $this->_accessToken,
             [
                 'peer_id' => $peer_id,
                 'type' => $type,
@@ -116,34 +105,14 @@ final class VKAPI extends Curl
      *
      * @return mixed
      * @throws BotError
-     * @see    \ConfigVKAPI::ENDPOINT Адрес API
-     * @see    \ConfigVKAPI::VERSION версия API
-     * @see    \ConfigVKAPI::ACCESS_TOKEN Токен сообщества
      */
     public function methodAPI($method, $params = [])
     {
         if (!is_string($method) || !is_array($params)) {
             throw new BotError('Error: call api.');
         }
-        if (!isset($params['access_token'])) {
-            $params['access_token'] = UserConfig::getConfig()['ACCESS_TOKEN'];
-        }
-        $params['lang'] = 'ru';
-        $params['v']    = SustemConfig::getConfig()['VK_VERSION'];
-
-        $query   = http_build_query($params);
-        $curlurl = SustemConfig::getConfig()['VK_ENDPOINT'] .
-            $method . '?' . $query;
-
-        $responsejson = $this->curl($curlurl);
-        $response     = json_decode($responsejson, true);
-        if (!isset($response['response'])
-            || empty($response['response'])
-            || isset($response['error'])
-        ) {
-            (new ErrorScaner)->read($response, $method, $params);
-        }
-        return $response['response'];
+        $access_token = $this->getToken($params);
+        return $this->vkapi->request()->request($method, $access_token, $params);
     }
 
 
@@ -153,30 +122,17 @@ final class VKAPI extends Curl
      * @param string $url       Адрес сервера
      * @param string $file_name Имя файла
      *
+     * @param string $type
+     *
      * @return mixed
      * @throws BotError
      */
-    public function upload($url, $file_name = '')
+    public function upload($url, $file_name = '', $type = 'photo')
     {
         if (!is_string($url) || !is_string($file_name) && !is_object($file_name)) {
             throw new BotError('Error: call api.');
         }
-        if ($file_name instanceof ObjectFile) {
-            $fileobject   = FileInMemory::getInstance()->getFilePost(
-                ['file1' => $file_name]
-            );
-            $responsejson = $this->curl($url, 1, $fileobject);
-        } elseif (is_file($file_name) && file_exists($file_name)) {
-            $responsejson = $this->curl($url, 2, $file_name);
-        } else {
-            throw new BotError('Error in: VKAPI::upload()');
-        }
-        $response = json_decode($responsejson, true);
-        if (!$response || isset($response['error'])) {
-            (new ErrorScaner)->read($response, 'upload()');
-        }
-
-        return $response;
+        return $this->vkapi->request()->upload($url, $type, $file_name);
     }
 
     /**
@@ -193,8 +149,8 @@ final class VKAPI extends Curl
         if (!is_string($file) || !is_string($title)) {
             throw new BotError('Error: call docs_Save.');
         }
-        return $this->methodAPI(
-            'docs.save',
+        return $this->vkapi->docs()->save(
+            $this->_accessToken,
             [
                 'file' => $file,
                 'title' => $title,
@@ -239,8 +195,8 @@ final class VKAPI extends Curl
         if (!is_int($peer_id)) {
             throw new BotError('Error: call photos_GetUploadServer.');
         }
-        return $this->methodAPI(
-            'photos.getMessagesUploadServer',
+        return $this->vkapi->photos()->getMessagesUploadServer(
+            $this->_accessToken,
             [
                 'peer_id' => $peer_id,
             ]
@@ -262,8 +218,8 @@ final class VKAPI extends Curl
         if (!is_string($photo) || !is_int($server) || !is_string($hash)) {
             throw new BotError('Error: call photo_Save.');
         }
-        return $this->methodAPI(
-            'photos.saveMessagesPhoto',
+        return $this->vkapi->photos()->saveMessagesPhoto(
+            $this->_accessToken,
             [
                 'photo' => $photo,
                 'server' => $server,
@@ -287,14 +243,14 @@ final class VKAPI extends Curl
         if (!is_int($peer_id) || !is_string($message) || !is_array($attachment) && !is_bool($attachment)) {
             throw new BotError('Error: call messagesSend.');
         }
-        return $this->methodAPI(
-            'messages.send',
+        return $this->vkapi->messages()->send(
+            $this->_accessToken,
             [
                 'peer_id' => $peer_id,
-                'message' => !empty($message) ?
+                'message' => $message ?
                     BotFunction::getInstance()->ucFirst($message) :
                     SustemConfig::getConfig()['Main'][1],
-                'attachment' => !empty($attachment) ?
+                'attachment' => $attachment ?
                     implode(',', $attachment) : false,
             ]
         );
@@ -303,37 +259,53 @@ final class VKAPI extends Curl
     /**
      * Функция получения основных данных о пользователе
      *
-     * @param int    $peer_id   Айди
-     * @param string $name_case Склонение имени и фамилии
+     * @param int         $peer_id Айди
+     * @param bool|string $name_sk Все варианты склонения имени и фамилии
      *
      * @return mixed
      * @throws BotError
      */
-    public function usersGet($peer_id, $name_case = 'nom')
+    public function usersGet($peer_id, $name_sk = true)
     {
-        if (!is_int($peer_id) || !is_string($name_case)) {
+        if (!is_int($peer_id) && !is_bool($name_sk)) {
             throw new BotError('Error: call usersGet.');
         }
-        $param = 'timezone,' .
-            'sex,' .
-            'first_name_abl,' .
-            'first_name_ins,' .
-            'first_name_acc,' .
-            'first_name_dat,' .
-            'first_name_gen,' .
-            'last_name_abl,' .
-            'last_name_ins,' .
-            'last_name_acc,' .
-            'last_name_dat,' .
-            'last_name_gen,' .
-            'photo_50,' .
-            'city';
-        return $this->methodAPI(
-            'users.get',
-            [
-                'user_id' => $peer_id,
-                'fields' => $param
+        $param = ['timezone', 'sex', 'photo_50', 'city'];
+        if (true == $name_sk) {
+            $param = array_merge(
+                $param, [
+                'first_name_abl', 'first_name_ins', 'first_name_acc',
+                'first_name_dat', 'first_name_gen', 'last_name_abl',
+                'last_name_ins', 'last_name_acc', 'last_name_dat', 'last_name_gen'
+            ]
+            );
+        }
+        return $this->vkapi->users()->get(
+            $this->_accessToken, [
+                'user_ids' => $peer_id,
+                'fields' => $param,
             ]
         );
+    }
+
+    /**
+     * searchToken()
+     *
+     * @param string $parameters
+     *
+     * @return mixed
+     *
+     */
+    private function getToken($parameters = '')
+    {
+        $token = $this->_accessToken;
+        if (is_array($parameters)) {
+            if (isset($parameters['access_token'])
+                && is_string($parameters['access_token']) && '' != $parameters['access_token']
+            ) {
+                $token = $parameters['access_token'];
+            }
+        }
+        return $token;
     }
 }

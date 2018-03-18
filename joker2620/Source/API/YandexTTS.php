@@ -5,7 +5,7 @@
  * Author: Joker2620;
  * Date: 12.01.2018;
  * Time: 7:55;
- * PHP version 5.6;
+ * PHP version 7.1;
  *
  * @category API
  * @package  Joker2620\Source\API
@@ -16,8 +16,8 @@
 
 namespace joker2620\Source\API;
 
-use joker2620\Source\Engine\Setting\SustemConfig;
-use joker2620\Source\Engine\Setting\UserConfig;
+use joker2620\Source\Setting\SustemConfig;
+use joker2620\Source\Setting\UserConfig;
 use joker2620\Source\Exception\BotError;
 
 /**

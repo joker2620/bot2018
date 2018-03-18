@@ -5,7 +5,7 @@
  * Author: Joker2620;
  * Date: 12.01.2018;
  * Time: 7:55;
- * PHP version 5.6;
+ * PHP version 7.1;
  *
  * @category API
  * @package  Joker2620\Source\API
@@ -15,7 +15,7 @@
  */
 namespace joker2620\Source\API;
 
-use joker2620\Source\Engine\Loger;
+use joker2620\Source\Loger;
 use joker2620\Source\Exception\BotError;
 
 /**
@@ -47,37 +47,36 @@ class Curl
         if (!function_exists('curl_init')) {
             throw new BotError('cURL Не работает');
         }
+        $curl_setopt = $this->_curlMode($url, $curlmode, $file_name);
+        $curlh       = curl_init($url);
+        curl_setopt_array($curlh, $curl_setopt);
+        $result = curl_exec($curlh);
+        $error  = curl_error($curlh);
+        if ($error) {
+            Loger::getInstance()->logger($error);
+            Loger::getInstance()->logger($result);
+            throw new BotError('[ERROR]: ' . $error . ' ' . $url);
+        }
+        curl_close($curlh);
+        return $result;
+    }
+
+    /**
+     * _curlMode()
+     *
+     * @param string $url       Ссылка
+     * @param int    $curlmode  Режим
+     * @param mixed  $file_name Доп. Данные
+     *
+     * @return array
+     */
+    private function _curlMode($url, $curlmode = 0, $file_name = null)
+    {
         $curl_setopt = [
             CURLOPT_SSL_VERIFYPEER => false,
             CURLOPT_RETURNTRANSFER => true
         ];
         switch ($curlmode) {
-            case 0:
-                $curl_setopt += [
-                    CURLOPT_HEADER => false,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_URL => $url,
-                    CURLOPT_REFERER => $url
-                ];
-                break;
-            case 1:
-                $curl_setopt += [
-                    CURLOPT_URL => $url,
-                    CURLOPT_POST => true,
-                    CURLOPT_HTTPHEADER => [
-                        'Content-Type: multipart/form-data; boundary=' .
-                        $file_name[1],
-                        'Content-Length: ' . strlen($file_name[0])
-                    ],
-                    CURLOPT_POSTFIELDS => $file_name[0]
-                ];
-                break;
-            case 2:
-                $curl_setopt += [
-                    CURLOPT_POST => true,
-                    CURLOPT_POSTFIELDS => ['file' => new \CURLFile($file_name)]
-                ];
-                break;
             case 3:
                 $curl_setopt += [
                     CURLOPT_POST => true,
@@ -89,16 +88,6 @@ class Curl
                 $curl_setopt += [CURLOPT_FILE => $file_name];
                 break;
         }
-        $curlh = curl_init($url);
-        curl_setopt_array($curlh, $curl_setopt);
-        $result = curl_exec($curlh);
-        $error  = curl_error($curlh);
-        if ($error) {
-            Loger::getInstance()->logger($error);
-            Loger::getInstance()->logger($result);
-            throw new BotError('[ERROR]: ' . $error . ' ' . $url);
-        }
-        curl_close($curlh);
-        return $result;
+        return $curl_setopt;
     }
 }

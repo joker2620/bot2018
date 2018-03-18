@@ -5,26 +5,25 @@
  * Author: Joker2620;
  * Date: 12.01.2018;
  * Time: 7:55;
- * PHP version 5.6;
+ * PHP version 7.1;
  *
  * @category AutoSing
- * @package  Joker2620\Source\plugins\AutoSing
+ * @package  Joker2620\Source\Plugins\AutoSing
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
 
-namespace joker2620\Source\plugins\AutoSing;
+namespace joker2620\Source\Plugins\AutoSing;
 
-use joker2620\Source\Crutch\ObjectFile;
-use joker2620\Source\Engine\Setting\SustemConfig;
 use joker2620\Source\Exception\BotError;
+use joker2620\Source\Setting\SustemConfig;
 
 /**
  * Class signart
  *
  * @category AutoSing
- * @package  Joker2620\Source\plugins\AutoSing
+ * @package  Joker2620\Source\Plugins\AutoSing
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
@@ -81,15 +80,24 @@ final class SignArt
             [$this->data[3], $this->data[4]],
             [$this->data[1], $this->data[2]]
         );
-        ob_start();
-        imagepng($this->image, null, 6);
-        $result = ob_get_clean();
-        $result = new ObjectFile(
-            'image' . rand(0, 1000) . '.png',
-            'image/png',
-            $result
-        );
-        return $result;
+        $fileimage = SustemConfig::getConfig()['DIR_IMAGES'] . '/image' . date('his') . '.png';
+        imagepng($this->image, $fileimage);
+        imagedestroy($this->image);
+        return $fileimage;
+    }
+
+    /**
+     * Функция получения случайного изображения
+     *
+     * @param $fileimage
+     *
+     * @return void
+     */
+    public function imageDestroy($file_image)
+    {
+      if (file_exists($file_image)) {
+            unlink($file_image);
+        }
     }
 
     /**
@@ -100,7 +108,7 @@ final class SignArt
     public function getRandImg()
     {
         $base_art    = include 'Config.php';
-        $datas       = $base_art[rand(0, count($base_art) - 1)];
+        $datas       = $base_art[array_rand($base_art)];
         $files       = $this->imgDir . $datas[0];
         $this->image = imagecreatefrompng($files);
         $this->data  = $datas;

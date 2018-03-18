@@ -7,26 +7,31 @@
  * Time: 7:55;
  * PHP version 7.1;
  *
- * @category Exception
- * @package  Joker2620\Source\Exception
+ * @category ModuleCommand
+ * @package  Joker2620\Source\ModuleCommand
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-namespace joker2620\Source\Exception;
+namespace joker2620\Source\ModuleCommand;
 
 /**
- * Класс обработки искючений
- * Class BotError
+ * Class CommandsTemplate
  *
- * @category Exception
- * @package  Joker2620\Source\Exception
+ * @category ModuleCommand
+ * @package  Joker2620\Source\ModuleCommand
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-
-class BotError extends \Exception
+abstract class CommandsTemplate
 {
-
+    /**
+     * Функция для запуска выполнения комманды
+     *
+     * @param array $item Данные пользователя.
+     *
+     * @return mixed
+     */
+    abstract public function runCom($item);
 }
