@@ -77,7 +77,7 @@ class ConfigValidation
             ->noSettings('user', 'MIN_PERCENT', 'int')
             //Check Sustem configuration.
             ->noSettings('sustem', 'VERSION', '0.2.0')
-            ->noSettings('sustem', 'BUILD', '17.01.18');
+            ->noSettings('sustem', 'BUILD', '18.03.18');
     }
 
     /**

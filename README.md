@@ -1,9 +1,9 @@
 # bot2018 - Чат-бот для сообществ.
 
-[![PHP](https://img.shields.io/badge/PHP-5.6%5E-brightgreen.svg?style=for-the-badge)](https://php.net/)
+[![PHP](https://img.shields.io/badge/PHP-7.1%5E-brightgreen.svg?style=for-the-badge)](https://php.net/)
 [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/blob/master/LICENSE/)
 [![VERSION](https://img.shields.io/badge/LAST%20VERSION-0.2.0-blue.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
-[![BUID](https://img.shields.io/badge/LAST%20BUILD-17.01.18-lightgrey.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
+[![BUID](https://img.shields.io/badge/LAST%20BUILD-18.03.18-lightgrey.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 [![PSR](https://img.shields.io/badge/PSR-0--4-orange.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 [![PSR](https://img.shields.io/badge/Code%20quality-maybe%20bad-orange.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 
@@ -12,7 +12,7 @@
 Установка
 ------------
 
-1. Бот запускается на веб-севере, с минимальной версией **PHP 5.6.**.
+1. Бот запускается на веб-севере, с минимальной версией **PHP 7.1.**.
 1. Для корректной работы бота необходимо установить [Composer][3].
 1. Выполните команду ``` Composer install ``` находясь в папке с ботом. 
 1. Для корректной работы бота требуются следующие PHP расширения:
@@ -20,7 +20,6 @@
    * `php_curl.dll`;
    * `php_mbstring.dll`.
 1. Убедитесь что, все расширения включены.
-1. Переименуйте файл `Configuration/CommandsConfig.php_default` в `Configuration/CommandsConfig.php`
 1. Переименуйте файл `Configuration/UserConfig.php_default` в `Configuration/UserConfig.php`
 1. Следующие файлы, необходимы для работы бота на сайте: 
    * Папка `vendor` (данная папка создается автоматически, после установки `Composer`);
@@ -44,16 +43,15 @@
 Особенности некоторых команд
 ---------
 * Для выключения требований, заполнения некоторых из полей конфигураций (При запуске бота вам будет выдана ошибка), воспользуйтесь настройками файла `joker2620/Configuration/ConfgFeatures.php`.
-Такие команды бота как `!вголос`,`!смс`, работают с помощью API сторонних сервисов.
+Такие команды бота как `!вголос` работают с помощью API сторонних сервисов.
 * Для команды `!вголос`, необходимо получить Yandex API Key, через [кабинет разработчика][4], и вставить в поле `SPEECH_KEY`, файла `joker2620/Configuration/UserConfig.php`.
-* Для команды `!смс`, нужно зарегистрироваться на сайте [СМС-рассылок][5], и получить `секретный ключ`, и вставить в поле `SMSRU_API`, файла `joker2620/Configuration/CommandsConfig.php`. В этом-же файле вы можете настроить номера телефонов на которые будут отправляться ваши смс.
 
 Редактирование команд 
 --------- 
 
 1. Команды встроенные в бота, вы можете посмотреть после установки, написав ему сообщение с текстом `команды`.
-1. Все команды расположены в папке `joker2620/Source/engine/Commands`.
-1. Список команд и их вывод (отображение пользователю), можно изменить в файле `joker2620/Source/engine/ModuleCommand/Config.php` 
+1. Все команды расположены в папке `joker2620/Source/Commands`.
+1. Список команд и информацию о командах, можно изменить в файле `joker2620/Source/ModuleCommand/Config.php` 
 
 База ответов
 --------- 
@@ -61,7 +59,6 @@
 1. База данных расположена по адресу `joker2620/data/base/base.bin`. 
 1. База имеет формат `Вопрос\ответ\0`, `0` - никак не обрабатывается. 
 1. Если у вас уже есть база данных [VK IHA bot][6], вы можете переименовать ее в `base.bin`. А затем, замените ключевые слова [VK IHA bot][6], на слова из списка ниже.
-1. Также, вы можете почистить базу, от повторов, и рассортировать ее по алфавиту, запустив скрипт `tools/DeleteRepeats.php`. В ходе работы скрипта, могу возникнуть ошибки которые, возможно, приведут к уничтожению базы (такие случаи не наблюдались).
 1. Вы можете использовать ключевые слова в базе данных:
     * `#uid#` - айди пользователя; 
     * `#first_name#` - имя пользователя; 
@@ -72,7 +69,7 @@
     * `#what_time#` - время;
     * `#version#` - версия бота; 
     * `#build#` - номер сборки бота. 
-1. Можно использовать падеж для склонения имени и фамилии пользователя. Используется как приставка в теге, пример: `#first_name_gen#`.
+1. Можно использовать падеж для склонения имени и фамилии пользователя. Используется как приставка в теге: `#first_name_gen#`.
  Возможные значения:
     * `по умолчанию` - именительный;
     * `"gen"` - родительный;
@@ -85,7 +82,6 @@
 [2]: https://vk.com/
 [3]: https://getcomposer.org/doc/00-intro.md
 [4]: https://tech.yandex.ru/speechkit/cloud/
-[5]: https://sms.ru/
 [6]: https://vk.com/ihabotclub
 [7]: https://joker2620.github.io/bot2018/
 
