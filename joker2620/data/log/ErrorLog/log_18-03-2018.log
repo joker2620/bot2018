@@ -1,7 +1,0 @@
-[18-03-2018 23:29:31]: joker2620\Source\Exception\BotError: Параметр "BUILD" не отвечает требованиям: соответствие значению "17.01.18" in C:\Bot2018\BOT\bot2018\joker2620\Source\Setting\ConfigValidation.php:139
-Stack trace:
-#0 C:\Bot2018\BOT\bot2018\joker2620\Source\Setting\ConfigValidation.php(80): joker2620\Source\Setting\ConfigValidation->noSettings('sustem', 'BUILD', '17.01.18')
-#1 C:\Bot2018\BOT\bot2018\joker2620\Source\Setting\ConfigValidation.php(42): joker2620\Source\Setting\ConfigValidation->checkUserConfig(Array)
-#2 C:\Bot2018\BOT\bot2018\joker2620\Source\Core.php(45): joker2620\Source\Setting\ConfigValidation->validationConfig()
-#3 C:\Bot2018\BOT\bot2018\index.php(28): joker2620\Source\Core->__construct()
-#4 {main}
