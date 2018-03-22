@@ -34,7 +34,7 @@ class CSmiler extends CommandsTemplate
     /**
      * Отображение команды в списке
      */
-    protected $display = ' - "!см (текст)" или "смайл (текст)" - заменит смайлы на текcт.';
+    protected $display = ' - "см (текст)" или "смайл (текст)" - заменит смайлы на текcт.';
     /**
      * Права доступа
      */
@@ -1052,6 +1052,6 @@ class CSmiler extends CommandsTemplate
             '✍' => '*Пишущая рука*',
             '✏' => '*Карандаш*'
         ];
-        return strtr($matches[1][0], $smile);
+        return strtr($matches[2][0], $smile);
     }
 }
