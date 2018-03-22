@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category Engine
@@ -27,7 +25,7 @@ use joker2620\Source\Setting\UserConfig;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-final class BotFunction
+class BotFunction
 {
     /**
      * Копия класса
@@ -80,17 +78,18 @@ final class BotFunction
      * творительный – "_ins",
      * предложный – "_abl".
      *
-     * @param string $message   Строка сообщения
-     * @param int    $user_data Данные пользователя
-     *
-     * @see \ConfigCore::BOT_NAME Имя бота
-     * @see \ConfigCore::VERSION Версия бота
-     * @see \ConfigCore::BUILD Сборка бота
+     * @param string $message Строка сообщения
      *
      * @return string
+     *
+     * @see      \ConfigCore::BOT_NAME Имя бота
+     * @see      \ConfigCore::VERSION Версия бота
+     * @see      \ConfigCore::BUILD Сборка бота
+     *
      */
-    public function replace($message, $user_data)
+    public function replace($message)
     {
+        $user_data = User::getInfo();
         switch ($user_data['sex']) {
             case '1':
                 $sex_description = 'девушка';
@@ -103,9 +102,9 @@ final class BotFunction
                 break;
         }
         $trans = [
-            '#uid#' => $user_data['user_id'],
-            '#first_name#' => $user_data['first_name'],
-            '#last_name#' => $user_data['last_name'],
+            '#uid#' => User::getId(),
+            '#first_name#' => User::getFirstName(),
+            '#last_name#' => User::getLastName(),
             //Склонение имени
             '#first_name_abl#' => $user_data['first_name_abl'],
             '#first_name_ins#' => $user_data['first_name_ins'],

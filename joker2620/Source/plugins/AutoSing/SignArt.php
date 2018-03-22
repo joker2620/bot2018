@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category AutoSing
@@ -28,7 +26,7 @@ use joker2620\Source\Setting\SustemConfig;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-final class SignArt
+class SignArt
 {
     /**
      * Папка с картинками
@@ -89,20 +87,6 @@ final class SignArt
     /**
      * Функция получения случайного изображения
      *
-     * @param $fileimage
-     *
-     * @return void
-     */
-    public function imageDestroy($file_image)
-    {
-      if (file_exists($file_image)) {
-            unlink($file_image);
-        }
-    }
-
-    /**
-     * Функция получения случайного изображения
-     *
      * @return void
      */
     public function getRandImg()
@@ -151,5 +135,20 @@ final class SignArt
             $text[1],
             $text[0]
         );
+    }
+
+    /**
+     * Функция получения случайного изображения
+     *
+     * @param $file_image
+     *
+     * @return void
+     *
+     */
+    public function imageDestroy($file_image)
+    {
+        if (file_exists($file_image)) {
+            unlink($file_image);
+        }
     }
 }

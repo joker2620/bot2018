@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category ModuleCommand
@@ -18,6 +16,7 @@ namespace joker2620\Source\ModuleCommand;
 use joker2620\Source\BotFunction;
 use joker2620\Source\Interfaces\ModuleInterface;
 use joker2620\Source\Setting\SustemConfig;
+use joker2620\Source\User;
 
 /**
  * Class HTCommands
@@ -28,7 +27,7 @@ use joker2620\Source\Setting\SustemConfig;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-final class HTCommands extends CommandList implements ModuleInterface
+class HTCommands extends CommandList implements ModuleInterface
 {
     /**
      * Функция поиска команды
@@ -36,36 +35,36 @@ final class HTCommands extends CommandList implements ModuleInterface
      * В случай если сообщение попадет под регулярное выражение,
      * будет активирована соответствующая команда.
      *
-     * @param array $item Данные пользователя.
-     *
      * @return array|bool
+     *
      */
-    public function getAnwser($item)
+    public function getAnwser()
     {
         $ansver = false;
         $this->loadCommand();
         $commands = $this->getCommand();
         if (is_array($commands)) {
             foreach ($commands as $value) {
+                $command = new $value;
                 if (preg_match(
-                    '/^' . $value[0] . '$/iu',
-                    $item['body'],
+                    '/^' . $command->getRegexp() . '$/iu',
+                    User::getMessageData()['body'],
                     $matches,
                     PREG_OFFSET_CAPTURE,
                     0
                 )
                 ) {
-                    if (!BotFunction::getInstance()->scanAdm($item['user_id'])
-                        && $value[2] == 1
+                    if (!BotFunction::getInstance()->scanAdm(User::getId())
+                        && $command->getPermission() == 1
                     ) {
                         return
                             SustemConfig::getConfig()['MESSAGE']['TextCommand'][1];
                     }
-                    $userdata = $item + ['matches' => $matches];
-                    $ansver   = $value[1]->runCom($userdata);
+                    $ansver = $command->runCommand($matches);
                 }
             }
         }
         return $ansver;
+
     }
 }

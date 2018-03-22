@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category Commands
@@ -26,25 +24,32 @@ use joker2620\Source\ModuleCommand\CommandsTemplate;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-final class CDecode extends CommandsTemplate
+class CDecode extends CommandsTemplate
 {
     /**
-     * CDecode constructor.
+     * Команда запуска
      */
-    public function __construct()
-    {
-    }
+    protected $regexp = 'раскодируй (.{1,3000})';
+    /**
+     * Отображение команды в списке
+     */
+    protected $display = ' - "раскодируй (до 3 тыс. символ)" - раскодирует сообщение.';
+    /**
+     * Права доступа
+     */
+    protected $permission = 0;
 
     /**
      * Функция для запуска выполнения комманды
      *
-     * @param array $item Данные пользователя.
+     * @param $matches
      *
      * @return mixed
+     *
      */
-    public function runCom($item)
+    public function runCommand(array $matches)
     {
-        $message = base64_decode($item['matches'][2][0]);
+        $message = base64_decode($matches[1][0]);
         return $message;
     }
 }

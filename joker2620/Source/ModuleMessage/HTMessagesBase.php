@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category ModuleMessage
@@ -17,6 +15,7 @@ namespace joker2620\Source\ModuleMessage;
 
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
+use joker2620\Source\User;
 
 /**
  * Class HTMessagesBase
@@ -36,19 +35,17 @@ class HTMessagesBase extends TrainingEdit
      *
      * Основной сканер поиска ответов в базе.
      *
-     * @param array $msgsx Данные пользователя
-     *
-     * @param bool  $file_base
+     * @param bool $file_base
      *
      * @return bool|string
-     * @see \similar_text() Функция для определения процента схожести текста,
      *
+     * @see      \similar_text() Функция для определения процента схожести текста,
      */
-    public function prehistoric(&$msgsx, $file_base = false)
+    public function prehistoric($file_base = false)
     {
         //$this->database = [];
-        $return         = false;
-        $height         = UserConfig::getConfig()['MIN_PERCENT'];
+        $return = false;
+        $height = UserConfig::getConfig()['MIN_PERCENT'];
         if ($file_base) {
             $fname     = SustemConfig::getConfig()['FILE_TRAINING'];
             $results   = fopen($fname, 'r+');
@@ -56,7 +53,7 @@ class HTMessagesBase extends TrainingEdit
             $base_data = json_decode($result, true);
             if ($result) {
                 foreach ($base_data as $lines) {
-                    $height = $this->scanBase($msgsx, $lines, $height);
+                    $height = $this->scanBase($lines, $height);
                 }
                 unset($result);
             }
@@ -70,7 +67,7 @@ class HTMessagesBase extends TrainingEdit
             if ($result) {
                 foreach ($result as $lines) {
                     $lines  = explode('\\', $lines);
-                    $height = $this->scanBase($msgsx, $lines, $height);
+                    $height = $this->scanBase($lines, $height);
                 }
                 unset($result);
             }
@@ -87,22 +84,23 @@ class HTMessagesBase extends TrainingEdit
     /**
      * _scanBase()
      *
-     * @param $msgsx
      * @param $lines
      *
      * @param $height
      *
      * @return mixed
+     * @internal param $msgsx
      */
-    private function scanBase($msgsx, $lines, $height)
+    private function scanBase($lines, $height)
     {
         $height = $this->getHeight($height);
-        if (similar_text($msgsx['body'], $lines[0], $percent)) {
+        if (similar_text(User::getMessageData()['body'], $lines[0], $percent)) {
             $percent = intval($percent);
             if ($percent >= $height) {
                 $this->setDatabase($percent, $lines[1]);
             }
         }
+
         return $height;
     }
 

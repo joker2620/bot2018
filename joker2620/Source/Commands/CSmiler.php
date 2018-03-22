@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category Commands
@@ -15,7 +13,7 @@
  */
 namespace joker2620\Source\Commands;
 
-use joker2620\Source\Interfaces\CommandIntefce;
+
 use joker2620\Source\ModuleCommand\CommandsTemplate;
 
 /**
@@ -27,23 +25,30 @@ use joker2620\Source\ModuleCommand\CommandsTemplate;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-final class CSmiler extends CommandsTemplate implements CommandIntefce
+class CSmiler extends CommandsTemplate
 {
     /**
-     * CSmiler constructor.
+     * Команда запуска
      */
-    public function __construct()
-    {
-    }
+    protected $regexp = '(см|смайл) (.{1,})';
+    /**
+     * Отображение команды в списке
+     */
+    protected $display = ' - "!см (текст)" или "смайл (текст)" - заменит смайлы на текcт.';
+    /**
+     * Права доступа
+     */
+    protected $permission = 0;
 
     /**
      * Функция для запуска выполнения комманды
      *
-     * @param array $item Данные пользователя.
+     * @param array $matches
      *
      * @return mixed
+     *
      */
-    public function runCom($item)
+    public function runCommand(array $matches)
     {
         $smile = [
             '✒' => '*Перо*',
@@ -1047,6 +1052,6 @@ final class CSmiler extends CommandsTemplate implements CommandIntefce
             '✍' => '*Пишущая рука*',
             '✏' => '*Карандаш*'
         ];
-        return strtr($item['matches'][2][0], $smile);
+        return strtr($matches[1][0], $smile);
     }
 }

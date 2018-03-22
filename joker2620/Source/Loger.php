@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category Engine
@@ -27,7 +25,7 @@ use joker2620\Source\Setting\UserConfig;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-final class Loger
+class Loger
 {
     /**
      * Копия класса
@@ -66,6 +64,7 @@ final class Loger
      */
     public function logger($message = false)
     {
+
         if ($message) {
             if (is_array($message)) {
                 $message = json_encode($message, JSON_UNESCAPED_UNICODE);
@@ -99,20 +98,20 @@ final class Loger
      * Функция создания логов текстовых сообщений,
      * и группировки их по пользователям.
      *
-     * @param int    $uid     Айди пользователя
      * @param string $message Сообщение
      * @param string $answer  Ответ
      *                        бота
      *
      * @return void
      */
-    public function message($uid, $message, $answer)
+    public function message($message, $answer)
     {
         if (UserConfig::getConfig()['SAVE_MESSAGE']) {
             $message       = BotFunction::getInstance()->filterString($message);
             $answer        = BotFunction::getInstance()->filterString($answer);
+            $userid        = User::getId();
             $log_file_chat = SustemConfig::getConfig()['DIR_LOG'] .
-                "/chats/chat_id{$uid}.chat";
+                "/chats/chat_id{$userid}.chat";
             self::writeLog($log_file_chat, "[{$message}]=>[{$answer}]" . "\n");
         }
     }

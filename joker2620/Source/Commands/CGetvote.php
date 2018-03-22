@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category Commands
@@ -15,8 +13,9 @@
  */
 namespace joker2620\Source\Commands;
 
-use joker2620\Source\Interfaces\CommandIntefce;
+
 use joker2620\Source\ModuleCommand\CommandsTemplate;
+use joker2620\Source\User;
 
 /**
  * Class CGetvote
@@ -27,23 +26,30 @@ use joker2620\Source\ModuleCommand\CommandsTemplate;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-final class CGetvote extends CommandsTemplate implements CommandIntefce
+class CGetvote extends CommandsTemplate
 {
     /**
-     * CGetvote constructor.
+     * Команда запуска
      */
-    public function __construct()
-    {
-    }
+    protected $regexp = 'Оцени';
+    /**
+     * Отображение команды в списке
+     */
+    protected $display = ' - "Оацени" - оценит приклепленное вложение.';
+    /**
+     * Права доступа
+     */
+    protected $permission = 0;
 
     /**
      * Функция для запуска выполнения комманды
      *
-     * @param array $item Данные пользователя.
+     * @param $matches
      *
      * @return mixed
+     *
      */
-    public function runCom($item)
+    public function runCommand(array $matches)
     {
         $array = [
             'шикардос', 'кулл',
@@ -52,7 +58,7 @@ final class CGetvote extends CommandsTemplate implements CommandIntefce
             'Хуже только фото где срут понни',
             'фу бл*ть, как это мерзко', 'дермище'
         ];
-        if (isset($item['attachments'])) {
+        if (isset(User::getMessageData()['attachments'])) {
             return $array[array_rand($array)];
         } else {
             return 'Ну "ЗеБеСт" у тебя логика: "оцени то чего нет"...';

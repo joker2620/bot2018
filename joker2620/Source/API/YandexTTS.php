@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category API
@@ -16,9 +14,9 @@
 
 namespace joker2620\Source\API;
 
+use joker2620\Source\Exception\BotError;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
-use joker2620\Source\Exception\BotError;
 
 /**
  * Class YandexTTS
@@ -31,7 +29,7 @@ use joker2620\Source\Exception\BotError;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-final class YandexTTS extends Curl
+class YandexTTS extends Curl
 {
     /**
      * Копия класса

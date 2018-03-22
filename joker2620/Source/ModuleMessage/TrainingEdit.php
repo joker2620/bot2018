@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category ModuleMessage
@@ -16,6 +14,7 @@
 namespace joker2620\Source\ModuleMessage;
 
 use joker2620\Source\Setting\SustemConfig;
+use joker2620\Source\User;
 
 /**
  * Class TrainingEdit
@@ -75,18 +74,17 @@ class TrainingEdit
     /**
      * Функция добавления ответа в пользовательскую базу.
      *
-     * @param array $msg Сообщение
-     * @param bool  $no  Режим
+     * @param bool $no Режим
      *
      * @return void
      */
-    protected function addAnswer($msg, $no = false)
+    protected function addAnswer($no = false)
     {
         foreach ($this->baseData as $key_base => $data_base) {
-            if ($data_base[2] == $msg['user_id'] && $data_base[1] == false) {
+            if ($data_base[2] == User::getId() && $data_base[1] == false) {
                 $this->baseData[$key_base] = [
                     $data_base[0],
-                    $no == false ? $msg['body'] : false,
+                    $no == false ? User::getMessageData()['body'] : false,
                     false,
                     isset($data_base[3]) ? $data_base[3] : false
                 ];
@@ -97,14 +95,13 @@ class TrainingEdit
     /**
      * Функция удаления сообщения из пользовательской базы
      *
-     * @param array $msg Сообщение
-     *
      * @return void
+     *
      */
-    protected function delAnswer($msg)
+    protected function delAnswer()
     {
         foreach ($this->baseData as $key_base => $data_base) {
-            if ($data_base[2] == $msg['user_id'] && $data_base[1] == false) {
+            if ($data_base[2] == User::getId() && $data_base[1] == false) {
                 unset($this->baseData[$key_base]);
             }
         }
@@ -113,20 +110,19 @@ class TrainingEdit
     /**
      * Функция включения режима "обучения", у определенного сообщения.
      *
-     * @param array $msg Сообщение
-     *
      * @return string
      */
-    protected function addTraining($msg)
+    protected function addTraining()
     {
         $message = SustemConfig::getConfig()['MESSAGE']['TextMessage'][8];
         foreach ($this->baseData as $key_base => $data_base) {
             if ($data_base[2] == 0 && $data_base[1] == false) {
                 $this->baseData[$key_base] = [
                     $data_base[0], $data_base[1],
-                    $msg['user_id'], $data_base[3]
+                    User::getId(), $data_base[3]
                 ];
-                $message                   = sprintf(
+
+                $message = sprintf(
                     SustemConfig::getConfig()['MESSAGE']['TextMessage'][7],
                     $data_base[0]
                 );
@@ -138,20 +134,19 @@ class TrainingEdit
     /**
      * Функция добавления вопроса в базу
      *
-     * @param array $msg Сообщение
-     * @param bool  $no  Режим
+     * @param bool $no Режим
      *
      * @return void
      */
-    protected function addQuestion($msg, $no = false)
+    protected function addQuestion($no = false)
     {
         $this->baseData   = $this->uniqueMultiArray($this->baseData, 0);
         $this->baseData   = $this->uniqueMultiArray($this->baseData, 2);
         $this->baseData[] = [
-            $msg['body'],
+            User::getMessageData()['body'],
             false,
-            $no == false ? $msg['user_id'] : false,
-            $msg['user_id']
+            $no == false ? User::getId() : false,
+            User::getId()
         ];
     }
 
@@ -185,15 +180,13 @@ class TrainingEdit
     /**
      * Функия сканирования сообщения.
      *
-     * @param array $msg Сообщение
-     *
      * @return bool
      */
-    protected function scanMsgUser($msg)
+    protected function scanMsgUser()
     {
         if ($this->baseData) {
             foreach ($this->baseData as $key_base => $data_base) {
-                if ($data_base[2] == $msg['user_id']) {
+                if ($data_base[2] == User::getId()) {
                     return true;
                 }
             }

@@ -2,8 +2,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category Joker2620
@@ -27,7 +25,7 @@ use joker2620\Source\Loger;
 try {
     $handler = new \joker2620\Source\Core();
     $handler->parse(DataOperations::getData(
-// This is test request:
+// //This is test request:
 //        [
 //        'type' => 'message_new',
 //        'object' =>
@@ -38,10 +36,10 @@ try {
 //                'user_id' => 211984675,
 //                'read_state' => 0,
 //                'title' => '',
-//                'body' => 'ТЕКСТ',
+//                'body' => 'время',
 //            ],
-//        'group_id' => '",
-//        'secret' => '',
+//        'group_id' => 324,
+//        'secret' => 432,
 //        ]
     ));
 } catch (BotError $exception) {

@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category Commands
@@ -59,15 +57,27 @@ class Cball extends CommandsTemplate
             'Перспективы не очень хорошие',
             'Весьма сомнительно'
         ];
+    /**
+     * Команда запуска
+     */
+    protected $regexp = 'шар (.{1,})';
+    /**
+     * Отображение команды в списке
+     */
+    protected $display = ' - "шар (вопрос)" - даст предсказание.';
+    /**
+     * Права доступа
+     */
+    protected $permission = 0;
 
     /**
      * Функция для запуска выполнения комманды
      *
-     * @param array $item Данные пользователя.
+     * @param $matches
      *
      * @return mixed
      */
-    public function runCom($item)
+    public function runCommand(array $matches)
     {
         return $this->ansver[array_rand($this->ansver)];
     }

@@ -10,8 +10,6 @@ use VK\Client\VKApiClient;
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category API
@@ -22,11 +20,11 @@ use VK\Client\VKApiClient;
  */
 class VKAPI
 {
+    private static         $instance;
     /**
      * Копия класса
      */
     private $_accessToken, $vkapi;
-    private static         $instance;
 
     /**
      * VKAPI constructor.
@@ -96,27 +94,6 @@ class VKAPI
     }
 
     /**
-     * Функция (Application Programming Interface)
-     *
-     *  Для отправки запросов к API VK.COM
-     *
-     * @param string $method метод VK API
-     * @param array  $params Массив параметров
-     *
-     * @return mixed
-     * @throws BotError
-     */
-    public function methodAPI($method, $params = [])
-    {
-        if (!is_string($method) || !is_array($params)) {
-            throw new BotError('Error: call api.');
-        }
-        $access_token = $this->getToken($params);
-        return $this->vkapi->request()->request($method, $access_token, $params);
-    }
-
-
-    /**
      * Функция загрузки файлов
      *
      * @param string $url       Адрес сервера
@@ -156,6 +133,47 @@ class VKAPI
                 'title' => $title,
             ]
         );
+    }
+
+    /**
+     * Функция (Application Programming Interface)
+     *
+     *  Для отправки запросов к API VK.COM
+     *
+     * @param string $method метод VK API
+     * @param array  $params Массив параметров
+     *
+     * @return mixed
+     * @throws BotError
+     */
+    public function methodAPI($method, $params = [])
+    {
+        if (!is_string($method) || !is_array($params)) {
+            throw new BotError('Error: call api.');
+        }
+        $access_token = $this->getToken($params);
+        return $this->vkapi->request()->request($method, $access_token, $params);
+    }
+
+    /**
+     * searchToken()
+     *
+     * @param string $parameters
+     *
+     * @return mixed
+     *
+     */
+    private function getToken($parameters = '')
+    {
+        $token = $this->_accessToken;
+        if (is_array($parameters)) {
+            if (isset($parameters['access_token'])
+                && is_string($parameters['access_token']) && '' != $parameters['access_token']
+            ) {
+                $token = $parameters['access_token'];
+            }
+        }
+        return $token;
     }
 
     /**
@@ -249,7 +267,7 @@ class VKAPI
                 'peer_id' => $peer_id,
                 'message' => $message ?
                     BotFunction::getInstance()->ucFirst($message) :
-                    SustemConfig::getConfig()['Main'][1],
+                    SustemConfig::getConfig()['MESSAGE']['Main'][1],
                 'attachment' => $attachment ?
                     implode(',', $attachment) : false,
             ]
@@ -274,10 +292,10 @@ class VKAPI
         if (true == $name_sk) {
             $param = array_merge(
                 $param, [
-                'first_name_abl', 'first_name_ins', 'first_name_acc',
-                'first_name_dat', 'first_name_gen', 'last_name_abl',
-                'last_name_ins', 'last_name_acc', 'last_name_dat', 'last_name_gen'
-            ]
+                    'first_name_abl', 'first_name_ins', 'first_name_acc',
+                    'first_name_dat', 'first_name_gen', 'last_name_abl',
+                    'last_name_ins', 'last_name_acc', 'last_name_dat', 'last_name_gen'
+                ]
             );
         }
         return $this->vkapi->users()->get(
@@ -286,26 +304,5 @@ class VKAPI
                 'fields' => $param,
             ]
         );
-    }
-
-    /**
-     * searchToken()
-     *
-     * @param string $parameters
-     *
-     * @return mixed
-     *
-     */
-    private function getToken($parameters = '')
-    {
-        $token = $this->_accessToken;
-        if (is_array($parameters)) {
-            if (isset($parameters['access_token'])
-                && is_string($parameters['access_token']) && '' != $parameters['access_token']
-            ) {
-                $token = $parameters['access_token'];
-            }
-        }
-        return $token;
     }
 }

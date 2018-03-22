@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category Setting
@@ -16,8 +14,8 @@
 
 namespace joker2620\Source\Setting;
 
-use joker2620\Source\Loger;
 use joker2620\Source\Exception\BotError;
+use joker2620\Source\Loger;
 
 /**
  * Class ConfigValidation
@@ -77,7 +75,7 @@ class ConfigValidation
             ->noSettings('user', 'MIN_PERCENT', 'int')
             //Check Sustem configuration.
             ->noSettings('sustem', 'VERSION', '0.2.0')
-            ->noSettings('sustem', 'BUILD', '18.03.18');
+            ->noSettings('sustem', 'BUILD', '22.03.18');
     }
 
     /**
@@ -158,16 +156,6 @@ class ConfigValidation
     private function userConfig()
     {
         return UserConfig::getConfig();
-    }
-
-    /**
-     * GetCommandConfig()
-     *
-     * @return ConfigCommands
-     */
-    private function commandConfig()
-    {
-        return ConfigCommands::getConfig();
     }
 
     /**

@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category ModuleMessage
@@ -18,6 +16,7 @@ namespace joker2620\Source\ModuleMessage;
 use joker2620\Source\Interfaces\ModuleInterface;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
+use joker2620\Source\User;
 
 /**
  * Class HTMessages
@@ -28,7 +27,7 @@ use joker2620\Source\Setting\UserConfig;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-final class HTMessages extends HTMessagesBase implements ModuleInterface
+class HTMessages extends HTMessagesBase implements ModuleInterface
 {
     /**
      * Деструктор
@@ -43,21 +42,20 @@ final class HTMessages extends HTMessagesBase implements ModuleInterface
     /**
      * Функция поиска текстового ответа на сообщение
      *
-     * @param array $item Данные пользователя.
-     *
      * @return bool|string
+     *
      */
-    public function getAnwser($item)
+    public function getAnwser()
     {
-        $return = $this->scanAnswer($item);
+        $return = $this->scanAnswer();
         if (!$return) {
-            $return = $this->prehistoric($item, true);
+            $return = $this->prehistoric(true);
         }
-        elseif (!$return) {
-            $return = $this->prehistoric($item);
+        if (!$return) {
+            $return = $this->prehistoric();
         }
-        elseif (!$return) {
-            $return = $this->noAnswer($return, $item);
+        if (!$return) {
+            $return = $this->noAnswer($return);
         }
         return [$return, false];
     }
@@ -66,26 +64,24 @@ final class HTMessages extends HTMessagesBase implements ModuleInterface
     /**
      * _noAnswer()
      *
-     * @param $item
-     *
      * @return string
      */
-    private function scanAnswer($item)
+    private function scanAnswer()
     {
         $return = false;
         if (UserConfig::getConfig()['USER_TRAINING']) {
-            if (preg_match('/^(\!наобучение)$/iu', $item['body'])) {
-                $return = $this->addTraining($item);
-            } elseif ($this->scanMsgUser($item)) {
-                if (preg_match('/^(нет)$/iu', $item['body'])) {
-                    $this->addAnswer($item, true);
+            if (preg_match('/^(\!наобучение)$/iu', User::getMessageData()['body'])) {
+                $return = $this->addTraining();
+            } elseif ($this->scanMsgUser()) {
+                if (preg_match('/^(нет)$/iu', User::getMessageData()['body'])) {
+                    $this->addAnswer(true);
                     $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][6];
-                } elseif (preg_match('/^(!мусор)$/iu', $item['body'])) {
-                    $this->delAnswer($item);
+                } elseif (preg_match('/^(!мусор)$/iu', User::getMessageData()['body'])) {
+                    $this->delAnswer();
                     $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][9];
                 } else {
-                    if (mb_strlen($item['body']) > 5) {
-                        $this->addAnswer($item);
+                    if (mb_strlen(User::getMessageData()['body']) > 5) {
+                        $this->addAnswer();
                         $return
                             = SustemConfig::getConfig()['MESSAGE']['TextMessage'][4];
                     } else {
@@ -102,23 +98,22 @@ final class HTMessages extends HTMessagesBase implements ModuleInterface
      * _noAnswer()
      *
      * @param $return
-     * @param $item
      *
      * @return string
      */
-    private function noAnswer($return, $item)
+    private function noAnswer($return)
     {
         if (UserConfig::getConfig()['USER_TRAINING']) {
-            $this->addQuestion($item);
+            $this->addQuestion();
             $return = sprintf(
                 SustemConfig::getConfig()['MESSAGE']['TextMessage'][1],
-                $item['body']
+                User::getMessageData()['body']
             );
         } elseif ($return && UserConfig::getConfig()['SAVE_TRAINING_FALSE']) {
-            $this->addQuestion($item, true);
+            $this->addQuestion(true);
             $return = sprintf(
                 SustemConfig::getConfig()['MESSAGE']['TextMessage'][3],
-                $item['body']
+                User::getMessageData()['body']
             );
         } elseif (!($return)) {
             $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][0];

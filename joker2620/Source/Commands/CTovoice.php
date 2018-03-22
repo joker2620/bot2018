@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category Commands
@@ -17,10 +15,10 @@ namespace joker2620\Source\Commands;
 
 use joker2620\Source\API\VKAPI;
 use joker2620\Source\API\YandexTTS;
-use joker2620\Source\Interfaces\CommandIntefce;
 use joker2620\Source\ModuleCommand\CommandsTemplate;
 use joker2620\Source\Setting\ConfgFeatures;
 use joker2620\Source\Setting\SustemConfig;
+use joker2620\Source\User;
 
 /**
  * Class CTovoice
@@ -31,35 +29,42 @@ use joker2620\Source\Setting\SustemConfig;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-final class CTovoice extends CommandsTemplate implements CommandIntefce
+class CTovoice extends CommandsTemplate
 {
     /**
-     * CTovoice constructor.
+     * Команда запуска
      */
-    public function __construct()
-    {
-    }
+    protected $regexp = 'молви (.{1,500})';
+    /**
+     * Отображение команды в списке
+     */
+    protected $display = ' - "молви (текст < 500 символ)" - произнесет сообщение.';
+    /**
+     * Права доступа
+     */
+    protected $permission = 0;
 
     /**
      * Функция для запуска выполнения комманды
      *
-     * @param array $item Данные пользователя.
+     * @param array $matches
      *
      * @return mixed
+     *
      */
-    public function runCom($item)
+    public function runCommand(array $matches)
     {
         if (ConfgFeatures::getConfig()['YANDEX_SPEECH']) {
             $messagefilename = YandexTTS::getInstance()->getVoice(
-                $item['matches'][2][0],
+                $matches[1][0],
                 'omazh'
             );
             $doccs           = VKAPI::getInstance()->uploadVoice(
-                $item['user_id'],
+                User::getId(),
                 $messagefilename
             );
             $return          = [
-                $item['matches'][2][0],
+                $matches[1][0],
                 ['doc' . $doccs['owner_id'] . '_' . $doccs['id']]
             ];
         } else {

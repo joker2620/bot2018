@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category API
@@ -15,8 +13,8 @@
  */
 namespace joker2620\Source\API;
 
-use joker2620\Source\Loger;
 use joker2620\Source\Exception\BotError;
+use joker2620\Source\Loger;
 
 /**
  * Class Curl
@@ -47,7 +45,7 @@ class Curl
         if (!function_exists('curl_init')) {
             throw new BotError('cURL Не работает');
         }
-        $curl_setopt = $this->_curlMode($url, $curlmode, $file_name);
+        $curl_setopt = $this->_curlMode($curlmode, $file_name);
         $curlh       = curl_init($url);
         curl_setopt_array($curlh, $curl_setopt);
         $result = curl_exec($curlh);
@@ -64,13 +62,13 @@ class Curl
     /**
      * _curlMode()
      *
-     * @param string $url       Ссылка
-     * @param int    $curlmode  Режим
-     * @param mixed  $file_name Доп. Данные
+     * @param int   $curlmode  Режим
+     * @param mixed $file_name Доп. Данные
      *
      * @return array
+     * @internal param string $url Ссылка
      */
-    private function _curlMode($url, $curlmode = 0, $file_name = null)
+    private function _curlMode($curlmode = 0, $file_name = null)
     {
         $curl_setopt = [
             CURLOPT_SSL_VERIFYPEER => false,

@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category Commands
@@ -16,7 +14,6 @@
 namespace joker2620\Source\Commands;
 
 use joker2620\Source\API\VKAPI;
-use joker2620\Source\Interfaces\CommandIntefce;
 use joker2620\Source\ModuleCommand\CommandsTemplate;
 
 /**
@@ -28,8 +25,21 @@ use joker2620\Source\ModuleCommand\CommandsTemplate;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-final class CSovet extends CommandsTemplate implements CommandIntefce
+class CSovet extends CommandsTemplate
 {
+    /**
+     * Команда запуска
+     */
+    protected $regexp = 'совет';
+    /**
+     * Отображение команды в списке
+     */
+    protected $display = ' - "совет" - дает совет.';
+    /**
+     * Права доступа
+     */
+    protected $permission = 0;
+
     /**
      * CSovet constructor.
      */
@@ -40,11 +50,12 @@ final class CSovet extends CommandsTemplate implements CommandIntefce
     /**
      * Функция для запуска выполнения комманды
      *
-     * @param array $item Данные пользователя.
+     * @param array $matches
      *
      * @return mixed
+     *
      */
-    public function runCom($item)
+    public function runCommand(array $matches)
     {
         $jsondata = json_decode(
             VKAPI::getInstance()

@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category Engine
@@ -23,7 +21,6 @@ use joker2620\Source\Setting\ConfgFeatures;
 use joker2620\Source\Setting\ConfigValidation;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
-use VK\Client\VKApiClient;
 
 /**
  * Class Core
@@ -34,9 +31,8 @@ use VK\Client\VKApiClient;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-final class Core extends Modules
+class Core extends Modules
 {
-
     /**
      * Core constructor.
      */
@@ -44,7 +40,6 @@ final class Core extends Modules
     {
         (new ConfigValidation)->validationConfig();
         $this->addModule(new HTCommands())->addModule(new HTMessages());
-        $this->vk = new VKApiClient();
     }
 
     /**
@@ -65,12 +60,14 @@ final class Core extends Modules
     public function messageNew(int $group_id, ?string $secret, array $object)
     {
         $users          = VKAPI::getInstance()->usersGet($object['user_id'], true);
-        $object         = array_merge($object, max($users));
+        $users          = max($users);
         $object['body'] = BotFunction::getInstance()->filterString($object['body']);
-        $ansver         = false;
+        new User($users, $object);
+        $ansver = false;
+
         foreach ($this->getModule() as $module) {
-            $handler = $module->getAnwser($object);
-            if (is_array($handler) | is_string($handler) | is_int($handler)) {
+            $handler = $module->getAnwser();
+            if (is_array($handler) | is_string($handler)) {
                 $ansver = $handler;
                 break;
             }
@@ -86,20 +83,9 @@ final class Core extends Modules
         } else {
             $message = SustemConfig::getConfig()['MESSAGE']['Main'][0];
         }
-        $message = BotFunction::getInstance()->replace(
-            $message,
-            $object
-        );
-        Loger::getInstance()->message(
-            $object['user_id'],
-            $object['body'],
-            $message
-        );
-        VKAPI::getInstance()->messagesSend(
-            $object['user_id'],
-            $message,
-            $attachments
-        );
+        $message = BotFunction::getInstance()->replace($message);
+        Loger::getInstance()->message(User::getMessageData()['body'], $message);
+        VKAPI::getInstance()->messagesSend(User::getId(), $message, $attachments);
         DataOperations::putData();
     }
 

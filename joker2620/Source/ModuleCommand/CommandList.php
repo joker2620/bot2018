@@ -3,8 +3,6 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
  * PHP version 7.1;
  *
  * @category ModuleCommand
@@ -16,8 +14,8 @@
 
 namespace joker2620\Source\ModuleCommand;
 
-use joker2620\Source\Loger;
 use joker2620\Source\Exception\BotError;
+use joker2620\Source\Loger;
 
 /**
  * Class CommandList
@@ -53,14 +51,8 @@ class CommandList
 
         $command = [];
         foreach (self::$commands as $commands) {
-            switch ($commands[2]) {
-                case 0:
-                    $command[0][] = $commands[3];
-                    break;
-                case 1:
-                    $command[1][] = $commands[3];
-                    break;
-            }
+            $commands                                   = new $commands;
+            $command[$commands->getPermission() ?: 0][] = $commands->getDisplay();
         }
         $ucomm = array_merge(["--- Команды бота ---\n"], $command[0]);
         $acomm = array_merge(
@@ -106,7 +98,16 @@ class CommandList
      */
     protected function commands()
     {
-        return include_once 'Config.php';
+        $iterator = new \FilesystemIterator("joker2620\\Source\\Commands");
+        $filter   = new \RegexIterator($iterator, '/.*\.php$/');
+        $classes  = [];
+        foreach ($filter as $entry) {
+            $patch = $entry->getPathName();
+            $class = strtr($patch, ['.php' => '']);
+            include_once $entry->getPathName();
+            $classes[] = new $class();
+        }
+        return $classes;// include_once 'Config.php';
     }
 
     /**
