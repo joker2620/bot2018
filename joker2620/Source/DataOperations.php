@@ -37,14 +37,12 @@ class DataOperations
     public static function getData($request = '')
     {
         if (!is_array($request) && !$request) {
-            $request = json_decode(file_get_contents('php://input'));
+            $request = json_decode(file_get_contents('php://input'),true);
             if (!$request) {
                 throw new BotError('Пришел пустой запрос');
             }
-        } else {
-            $request = (object)$request;
         }
-        return $request;
+        return (object)$request;
     }
 
     /**

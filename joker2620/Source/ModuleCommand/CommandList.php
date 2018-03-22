@@ -98,12 +98,13 @@ class CommandList
      */
     protected function commands()
     {
-        $iterator = new \FilesystemIterator("joker2620\\Source\\Commands");
+
+        $iterator = new \FilesystemIterator("joker2620/Source/Commands");
         $filter   = new \RegexIterator($iterator, '/.*\.php$/');
         $classes  = [];
         foreach ($filter as $entry) {
             $patch = $entry->getPathName();
-            $class = strtr($patch, ['.php' => '']);
+            $class = strtr($patch, ['.php' => '','/'=>'\\']);
             include_once $entry->getPathName();
             $classes[] = new $class();
         }
