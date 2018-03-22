@@ -2,9 +2,7 @@
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
- * PHP version 5.6;
+ * PHP version 7.1;
  *
  * @category Joker2620
  * @package  Joker2620
@@ -14,17 +12,36 @@
  */
 ini_set('date.timezone', 'Europe/Moscow');
 
-require_once 'vendor/autoload.php';
+if (!file_exists('vendor/autoload.php')) {
+    die('Composer not installed.');
+}
 
-use joker2620\Source\Engine\DataOperations;
-use joker2620\Source\Engine\Loger;
+require 'vendor/autoload.php';
+
+use joker2620\Source\DataOperations;
 use joker2620\Source\Exception\BotError;
+use joker2620\Source\Loger;
 
-/*
- * Папка бота
- */
 try {
-    (new joker2620\Source\Engine\Core())->scan();
+    $handler = new \joker2620\Source\Core();
+    $handler->parse(DataOperations::getData(
+// //This is test request:
+//        [
+//        'type' => 'message_new',
+//        'object' =>
+//            [
+//                'id' => 4520,
+//                'date' => 1521303747,
+//                'out' => 0,
+//                'user_id' => 211984675,
+//                'read_state' => 0,
+//                'title' => '',
+//                'body' => 'время',
+//            ],
+//        'group_id' => 324,
+//        'secret' => 432,
+//        ]
+    ));
 } catch (BotError $exception) {
     Loger::getInstance()->logger($exception);
     DataOperations::putData();

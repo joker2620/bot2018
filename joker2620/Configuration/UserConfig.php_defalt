@@ -84,5 +84,5 @@ return [
      * Сохранять полученные сообщения (вместе с ответом бота)
      * в папку joker2620/data/log/chats/
      */
-     'SAVE_MESSAGE' => true
+     'SAVE_MESSAGE' => false
 ]; //Выбирает сообщения строго выше

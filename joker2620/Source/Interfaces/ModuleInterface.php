@@ -5,26 +5,30 @@
  * Author: Joker2620;
  * PHP version 7.1;
  *
- * @category Exception
- * @package  Joker2620\Source\Exception
+ * @category Interfaces
+ * @package  Joker2620\Source\Interfaces
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-namespace joker2620\Source\Exception;
+namespace joker2620\Source\Interfaces;
 
 /**
- * Класс обработки искючений
- * Class BotError
+ * Interface ModuleInterface
  *
- * @category Exception
- * @package  Joker2620\Source\Exception
+ * @category Interfaces
+ * @package  Joker2620\Source\Interfaces
  * @author   Joker2620 <joker2000joker@list.ru>
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-
-class BotError extends \Exception
+interface ModuleInterface
 {
-
+    /**
+     * Получение ответа от модуля
+     *
+     * @return mixed
+     *
+     */
+    public function getAnwser();
 }
