@@ -119,8 +119,8 @@ class BotFunction
             '#last_name_gen#' => $user_data['last_name_gen'],
 
             '#sex_dis#' => $sex_description,
-            '#neme_bot#' => UserConfig::getConfig()['BOT_NAME'],
-            '#what_dey#' => date('d.m.Y'),
+            '#name_bot#' => UserConfig::getConfig()['BOT_NAME'],
+            '#what_day#' => date('d.m.Y'),
             '#what_time#' => date('H:i:s'),
             '#version#' => SustemConfig::getConfig()['VERSION'],
             '#build#' => SustemConfig::getConfig()['BUILD']
@@ -159,5 +159,17 @@ class BotFunction
     public function ucFirst($string)
     {
         return mb_strtoupper(mb_substr($string, 0, 1)) . mb_substr($string, 1);
+    }
+
+    /**
+     * buildPath()
+     *
+     * @param array ...$segments
+     *
+     * @return string
+     */
+    public function buildPath(...$segments)
+    {
+        return join(DIRECTORY_SEPARATOR, $segments);
     }
 }

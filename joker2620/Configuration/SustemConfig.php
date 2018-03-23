@@ -11,6 +11,7 @@
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
+use joker2620\Source\BotFunction;
 
 /**
  * Конфиурация
@@ -90,64 +91,20 @@ $config = [
     'BUILD' => '22.03.18'
 ];//Сборка бота
 /**
- * Корень
+ * Определение местонахождения файлов
  *
  *  Тут храняться файлы бота
  */
-$config['DIRECT'] = dirname(__DIR__);//Документы
-/**
- * Документы
- *
- * Тут храняться документы бота
- */
-$config['DIR_DATA'] = $config['DIRECT'] . '/data';//Корень
-/**
- * Файлы
- *
- * Тут храняться документы бота
- */
-$config['DIR_LOG'] = $config['DIR_DATA'] . '/log';//Файлы
-/**
- * Логи
- *
- *  Тут храняться логи бота
- */
-$config['DIR_IMAGES'] = $config['DIR_DATA'] . '/images';//Логи
-/**
- * Картинки
- *
- *  Тут храняться картинки бота
- */
-$config['DIR_AUDIO'] = $config['DIR_DATA'] . '/audio';//Картинки
-/**
- * Аудио
- *
- *  Тут храняться аудио бота
- */
-$config['DIR_DOC'] = $config['DIR_DATA'] . '/docs';//Аудио
-/**
- * Базы
- *
- *  Тут храняться базы бота
- */
-$config['DIR_BASE'] = $config['DIR_DATA'] . '/base';//базы
-/**
- * Пользовательские данные
- *
- *  В этой папке находяться данные веденные пользователями.
- */
-$config['DIR_USER'] = $config['DIR_DATA'] . '/user';//базы
-/**
- * Папка с основно базой
- *
- * Эти данные не стоит изменять
- */
-$config['FILE_BASE'] = $config['DIR_BASE'] . '/base.bin';//База слов
-/**
- * Папка с базой пользовательских сообщений
- *
- * Эти данные не стоит изменять
- */
-$config['FILE_TRAINING'] = $config['DIR_BASE'] . '/UserMessages.json';//База обучений
+$config['BOT']           = dirname(__DIR__);//Документы
+$function                = BotFunction::getInstance();
+$config['DIR_DATA']      = $function->buildPath($config['BOT'], 'data');//Корень
+$config['DIR_LOG']       = $function->buildPath($config['DIR_DATA'], 'log');//Файлы
+$config['DIR_IMAGES']    = $function->buildPath($config['DIR_DATA'], 'images');//Логи
+$config['DIR_AUDIO']     = $function->buildPath($config['DIR_DATA'], 'audio');//Картинки
+$config['DIR_DOC']       = $function->buildPath($config['DIR_DATA'], 'docs');//Аудио
+$config['DIR_BASE']      = $function->buildPath($config['DIR_DATA'], 'base');//базы
+$config['DIR_USER']      = $function->buildPath($config['DIR_DATA'], 'user');//базы
+$config['FILE_BASE']     = $function->buildPath($config['DIR_BASE'], 'base.bin');//База слов
+$config['FILE_TRAINING'] = $function->buildPath($config['DIR_BASE'], 'UserMessages.json');//База обучений
 
 return $config;
