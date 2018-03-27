@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -14,13 +14,19 @@
 namespace joker2620\Source;
 
 use joker2620\Source\API\VKAPI;
+use joker2620\Source\DataFlow\DataFlow;
 use joker2620\Source\Exception\BotError;
+use joker2620\Source\Functions\BotFunction;
+use joker2620\Source\Loger\Loger;
 use joker2620\Source\ModuleCommand\HTCommands;
 use joker2620\Source\ModuleMessage\HTMessages;
+use joker2620\Source\Modules\Modules;
 use joker2620\Source\Setting\ConfgFeatures;
 use joker2620\Source\Setting\ConfigValidation;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
+use joker2620\Source\User\User;
+use VK\CallbackApi\Server\VKCallbackApiServerHandler;
 
 /**
  * Class Core
@@ -31,15 +37,32 @@ use joker2620\Source\Setting\UserConfig;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-class Core extends Modules
+class Core extends VKCallbackApiServerHandler
 {
+    private $userData;
+    private $modules;
+    private $flow;
+    private $loger;
+    private $vkapi;
+    private $botFunctions;
+
     /**
      * Core constructor.
      */
     public function __construct()
     {
-        (new ConfigValidation)->validationConfig();
-        $this->addModule(new HTCommands())->addModule(new HTMessages());
+        $this->botFunctions = new BotFunction();
+        $this->flow         = new DataFlow();
+        $this->vkapi        = new VKAPI();
+        $this->modules      = new Modules();
+        $this->userData     = new User();
+        $this->loger        = new Loger();
+        $config_valid       = new ConfigValidation();
+        $module_commands    = new HTCommands();
+        $module_messages    = new HTMessages();
+
+        $config_valid->validationConfig();
+        $this->modules->addModule($module_commands)->addModule($module_messages);
     }
 
     /**
@@ -48,8 +71,8 @@ class Core extends Modules
      */
     public function confirmation(int $group_id, ?string $secret)
     {
-        DataOperations::putData(UserConfig::getConfig()['CONFIRMATION_TOKEN']);
-        Loger::getInstance()->logger('confirmation send');
+        $this->flow->putData(UserConfig::getConfig()['CONFIRMATION_TOKEN']);
+        $this->loger->logger('confirmation send');
     }
 
     /**
@@ -59,13 +82,14 @@ class Core extends Modules
      */
     public function messageNew(int $group_id, ?string $secret, array $object)
     {
-        $users          = VKAPI::getInstance()->usersGet($object['user_id'], true);
+
+        $users          = $this->vkapi->usersGet($object['user_id'], true);
         $users          = max($users);
-        $object['body'] = BotFunction::getInstance()->filterString($object['body']);
-        new User($users, $object);
+        $object['body'] = $this->botFunctions->filterString($object['body']);
+        $this->userData->setUserData($users, $object);
         $ansver = false;
 
-        foreach ($this->getModule() as $module) {
+        foreach ($this->modules->getModule() as $module) {
             $handler = $module->getAnwser();
             if (is_array($handler) | is_string($handler)) {
                 $ansver = $handler;
@@ -83,10 +107,10 @@ class Core extends Modules
         } else {
             $message = SustemConfig::getConfig()['MESSAGE']['Main'][0];
         }
-        $message = BotFunction::getInstance()->replace($message);
-        Loger::getInstance()->message(User::getMessageData()['body'], $message);
-        VKAPI::getInstance()->messagesSend(User::getId(), $message, $attachments);
-        DataOperations::putData();
+        $message = $this->botFunctions->replace($message);
+        $this->loger->message($this->userData->getMessageData()['body'], $message);
+        $this->vkapi->messagesSend($this->userData->getId(), $message, $attachments);
+        $this->flow->putData();
     }
 
     /**
@@ -118,11 +142,11 @@ class Core extends Modules
             ];
             $mesage = $array[array_rand($array)];
         } else {
-            Loger::getInstance()->logger($object);
+            $this->loger->logger($object);
             throw new BotError('the secret key does not match or is missing');
         }
         if ($mesage) {
-            VKAPI::getInstance()->messagesSend(
+            $this->vkapi->messagesSend(
                 $object['created_by'],
                 $mesage,
                 [
@@ -131,7 +155,7 @@ class Core extends Modules
                 ]
             );
         }
-        DataOperations::putData();
+        $this->flow->putData();
     }
 
     /**
@@ -146,7 +170,7 @@ class Core extends Modules
     public function pollVoteNew(int $group_id, ?string $secret, array $object)
     {
         if (ConfgFeatures::getConfig()['ENABLE_ADMIN_TOKEN']) {
-            $data_poll = VKAPI::getInstance()->methodAPI(
+            $data_poll = $this->vkapi->methodAPI(
                 'polls.getById',
                 [
                     'access_token' => UserConfig::getConfig()['ADMIN_TOKEN'],
@@ -154,7 +178,7 @@ class Core extends Modules
                     'poll_id' => $object['poll_id']
                 ]
             );
-            $userdata  = VKAPI::getInstance()->usersGet(
+            $userdata  = $this->vkapi->usersGet(
                 $object['user_id']
             );
             $userdata  = max($userdata);
@@ -167,7 +191,7 @@ class Core extends Modules
             }
             $message
                 = "В опросе: '{$data_poll['question']}', пользователь @id{$object['user_id']} ({$userdata['first_name']} {$userdata['last_name']}), проголосовал за '{$votes}'. Всего голосов в опросе: {$data_poll['votes']}'.";//Опрос
-            VKAPI::getInstance()->methodAPI(
+            $this->vkapi->methodAPI(
                 'messages.send',
                 [
                     'user_ids' => implode(
@@ -177,7 +201,7 @@ class Core extends Modules
                     'message' => $message
                 ]
             );
-            DataOperations::putData();
+            $this->flow->putData();
         }
     }
 

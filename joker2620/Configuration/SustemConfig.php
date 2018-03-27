@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -11,12 +11,11 @@
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-use joker2620\Source\BotFunction;
 
 /**
  * Конфиурация
  */
-$config = [
+return [
     /**
      * Адрес генератора голосовых сообщений
      *
@@ -89,22 +88,4 @@ $config = [
      * Сборка бота, указываеться вручную разработчиком бота
      */
     'BUILD' => '22.03.18'
-];//Сборка бота
-/**
- * Определение местонахождения файлов
- *
- *  Тут храняться файлы бота
- */
-$config['BOT']           = dirname(__DIR__);//Документы
-$function                = BotFunction::getInstance();
-$config['DIR_DATA']      = $function->buildPath($config['BOT'], 'data');//Корень
-$config['DIR_LOG']       = $function->buildPath($config['DIR_DATA'], 'log');//Файлы
-$config['DIR_IMAGES']    = $function->buildPath($config['DIR_DATA'], 'images');//Логи
-$config['DIR_AUDIO']     = $function->buildPath($config['DIR_DATA'], 'audio');//Картинки
-$config['DIR_DOC']       = $function->buildPath($config['DIR_DATA'], 'docs');//Аудио
-$config['DIR_BASE']      = $function->buildPath($config['DIR_DATA'], 'base');//базы
-$config['DIR_USER']      = $function->buildPath($config['DIR_DATA'], 'user');//базы
-$config['FILE_BASE']     = $function->buildPath($config['DIR_BASE'], 'base.bin');//База слов
-$config['FILE_TRAINING'] = $function->buildPath($config['DIR_BASE'], 'UserMessages.json');//База обучений
-
-return $config;
+];

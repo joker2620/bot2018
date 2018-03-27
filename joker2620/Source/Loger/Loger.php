@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -11,10 +11,12 @@
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-namespace joker2620\Source;
+namespace joker2620\Source\Loger;
 
+use joker2620\Source\Functions\BotFunction;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
+use joker2620\Source\User\User;
 
 /**
  * Class Loger
@@ -27,30 +29,16 @@ use joker2620\Source\Setting\UserConfig;
  */
 class Loger
 {
-    /**
-     * Копия класса
-     */
-    private static $instance;
+    private $botFunction;
+    private $userData;
 
     /**
      * Loger constructor.
      */
-    private function __construct()
+    public function __construct()
     {
-    }
-
-    /**
-     * GetInstance()
-     *
-     * @return Loger
-     */
-    public static function getInstance()
-    {
-        if (self::$instance == null) {
-            self::$instance = new Loger();
-        }
-
-        return self::$instance;
+        $this->botFunction = new BotFunction();
+        $this->userData    = new User();
     }
 
     /**
@@ -107,9 +95,9 @@ class Loger
     public function message($message, $answer)
     {
         if (UserConfig::getConfig()['SAVE_MESSAGE']) {
-            $message       = BotFunction::getInstance()->filterString($message);
-            $answer        = BotFunction::getInstance()->filterString($answer);
-            $userid        = User::getId();
+            $message       = $this->botFunction->filterString($message);
+            $answer        = $this->botFunction->filterString($answer);
+            $userid        = $this->userData->getId();
             $log_file_chat = SustemConfig::getConfig()['DIR_LOG'] .
                 "/chats/chat_id{$userid}.chat";
             self::writeLog($log_file_chat, "[{$message}]=>[{$answer}]" . "\n");

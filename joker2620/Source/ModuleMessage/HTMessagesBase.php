@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -15,7 +15,6 @@ namespace joker2620\Source\ModuleMessage;
 
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
-use joker2620\Source\User;
 
 /**
  * Class HTMessagesBase
@@ -94,7 +93,7 @@ class HTMessagesBase extends TrainingEdit
     private function scanBase($lines, $height)
     {
         $height = $this->getHeight($height);
-        if (similar_text(User::getMessageData()['body'], $lines[0], $percent)) {
+        if (similar_text($this->user->getMessageData()['body'], $lines[0], $percent)) {
             $percent = intval($percent);
             if ($percent >= $height) {
                 $this->setDatabase($percent, $lines[1]);

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -14,7 +14,7 @@
 namespace joker2620\Source\API;
 
 use joker2620\Source\Exception\BotError;
-use joker2620\Source\Loger;
+use joker2620\Source\Loger\Loger;
 
 /**
  * Class Curl
@@ -27,6 +27,16 @@ use joker2620\Source\Loger;
  */
 class Curl
 {
+    private $loger;
+
+    /**
+     * Curl constructor.
+     */
+    public function __construct()
+    {
+        $this->loger = new Loger();
+    }
+
     /**
      * Функция библиотеки CURL
      *
@@ -45,14 +55,14 @@ class Curl
         if (!function_exists('curl_init')) {
             throw new BotError('cURL Не работает');
         }
-        $curl_setopt = $this->_curlMode($curlmode, $file_name);
+        $curl_setopt = $this->curlMode($curlmode, $file_name);
         $curlh       = curl_init($url);
         curl_setopt_array($curlh, $curl_setopt);
         $result = curl_exec($curlh);
         $error  = curl_error($curlh);
         if ($error) {
-            Loger::getInstance()->logger($error);
-            Loger::getInstance()->logger($result);
+            $this->loger->logger($error);
+            $this->loger->logger($result);
             throw new BotError('[ERROR]: ' . $error . ' ' . $url);
         }
         curl_close($curlh);
@@ -68,7 +78,7 @@ class Curl
      * @return array
      * @internal param string $url Ссылка
      */
-    private function _curlMode($curlmode = 0, $file_name = null)
+    private function curlMode($curlmode = 0, $file_name = null)
     {
         $curl_setopt = [
             CURLOPT_SSL_VERIFYPEER => false,

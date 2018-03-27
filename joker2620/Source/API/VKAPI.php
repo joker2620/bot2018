@@ -1,8 +1,10 @@
 <?php
+declare(strict_types = 1);
+
 namespace joker2620\Source\API;
 
-use joker2620\Source\BotFunction;
 use joker2620\Source\Exception\BotError;
+use joker2620\Source\Functions\BotFunction;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
 use VK\Client\VKApiClient;
@@ -20,32 +22,16 @@ use VK\Client\VKApiClient;
  */
 class VKAPI
 {
-    private static         $instance;
-    /**
-     * Копия класса
-     */
-    private $_accessToken, $vkapi;
+    private $accessToken, $vkapi, $botFucntion;
 
     /**
      * VKAPI constructor.
      */
     public function __construct()
     {
-        $this->_accessToken = UserConfig::getConfig()['ACCESS_TOKEN'];
-        $this->vkapi        = new VKApiClient();
-    }
-
-    /**
-     * GetInstance()
-     *
-     * @return VKAPI
-     */
-    public static function getInstance()
-    {
-        if (self::$instance == null) {
-            self::$instance = new VKAPI();
-        }
-        return self::$instance;
+        $this->accessToken = UserConfig::getConfig()['ACCESS_TOKEN'];
+        $this->botFucntion = new BotFunction();
+        $this->vkapi       = new VKApiClient();
     }
 
     /**
@@ -85,7 +71,7 @@ class VKAPI
             throw new BotError('Error: call docs_GetUploadServer.');
         }
         return $this->vkapi->docs()->getMessagesUploadServer(
-            $this->_accessToken,
+            $this->accessToken,
             [
                 'peer_id' => $peer_id,
                 'type' => $type,
@@ -127,7 +113,7 @@ class VKAPI
             throw new BotError('Error: call docs_Save.');
         }
         return $this->vkapi->docs()->save(
-            $this->_accessToken,
+            $this->accessToken,
             [
                 'file' => $file,
                 'title' => $title,
@@ -165,7 +151,7 @@ class VKAPI
      */
     private function getToken($parameters = '')
     {
-        $token = $this->_accessToken;
+        $token = $this->accessToken;
         if (is_array($parameters)) {
             if (isset($parameters['access_token'])
                 && is_string($parameters['access_token']) && '' != $parameters['access_token']
@@ -214,7 +200,7 @@ class VKAPI
             throw new BotError('Error: call photos_GetUploadServer.');
         }
         return $this->vkapi->photos()->getMessagesUploadServer(
-            $this->_accessToken,
+            $this->accessToken,
             [
                 'peer_id' => $peer_id,
             ]
@@ -237,7 +223,7 @@ class VKAPI
             throw new BotError('Error: call photo_Save.');
         }
         return $this->vkapi->photos()->saveMessagesPhoto(
-            $this->_accessToken,
+            $this->accessToken,
             [
                 'photo' => $photo,
                 'server' => $server,
@@ -262,11 +248,11 @@ class VKAPI
             throw new BotError('Error: call messagesSend.');
         }
         return $this->vkapi->messages()->send(
-            $this->_accessToken,
+            $this->accessToken,
             [
                 'peer_id' => $peer_id,
                 'message' => $message ?
-                    BotFunction::getInstance()->ucFirst($message) :
+                    $this->botFucntion->ucFirst($message) :
                     SustemConfig::getConfig()['MESSAGE']['Main'][1],
                 'attachment' => $attachment ?
                     implode(',', $attachment) : false,
@@ -299,7 +285,7 @@ class VKAPI
             );
         }
         return $this->vkapi->users()->get(
-            $this->_accessToken, [
+            $this->accessToken, [
                 'user_ids' => $peer_id,
                 'fields' => $param,
             ]

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -14,7 +14,7 @@
 namespace joker2620\Source\ModuleMessage;
 
 use joker2620\Source\Setting\SustemConfig;
-use joker2620\Source\User;
+use joker2620\Source\User\User;
 
 /**
  * Class TrainingEdit
@@ -27,6 +27,7 @@ use joker2620\Source\User;
  */
 class TrainingEdit
 {
+    public $user;
     /**
      * Файл базы пользовательских сообщений
      */
@@ -41,6 +42,7 @@ class TrainingEdit
      */
     public function __construct()
     {
+        $this->user     = new User();
         $this->baseName = SustemConfig::getConfig()['FILE_TRAINING'];
         if (file_exists($this->baseName)) {
             $file_name     = $this->baseName;
@@ -81,10 +83,10 @@ class TrainingEdit
     protected function addAnswer($no = false)
     {
         foreach ($this->baseData as $key_base => $data_base) {
-            if ($data_base[2] == User::getId() && $data_base[1] == false) {
+            if ($data_base[2] == $this->user->getId() && $data_base[1] == false) {
                 $this->baseData[$key_base] = [
                     $data_base[0],
-                    $no == false ? User::getMessageData()['body'] : false,
+                    $no == false ? $this->user->getMessageData()['body'] : false,
                     false,
                     isset($data_base[3]) ? $data_base[3] : false
                 ];
@@ -101,7 +103,7 @@ class TrainingEdit
     protected function delAnswer()
     {
         foreach ($this->baseData as $key_base => $data_base) {
-            if ($data_base[2] == User::getId() && $data_base[1] == false) {
+            if ($data_base[2] == $this->user->getId() && $data_base[1] == false) {
                 unset($this->baseData[$key_base]);
             }
         }
@@ -119,7 +121,7 @@ class TrainingEdit
             if ($data_base[2] == 0 && $data_base[1] == false) {
                 $this->baseData[$key_base] = [
                     $data_base[0], $data_base[1],
-                    User::getId(), $data_base[3]
+                    $this->user->getId(), $data_base[3]
                 ];
 
                 $message = sprintf(
@@ -143,10 +145,10 @@ class TrainingEdit
         $this->baseData   = $this->uniqueMultiArray($this->baseData, 0);
         $this->baseData   = $this->uniqueMultiArray($this->baseData, 2);
         $this->baseData[] = [
-            User::getMessageData()['body'],
+            $this->user->getMessageData()['body'],
             false,
-            $no == false ? User::getId() : false,
-            User::getId()
+            $no == false ? $this->user->getId() : false,
+            $this->user->getId()
         ];
     }
 
@@ -186,7 +188,7 @@ class TrainingEdit
     {
         if ($this->baseData) {
             foreach ($this->baseData as $key_base => $data_base) {
-                if ($data_base[2] == User::getId()) {
+                if ($data_base[2] == $this->user->getId()) {
                     return true;
                 }
             }

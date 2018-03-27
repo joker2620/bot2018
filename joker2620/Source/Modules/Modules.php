@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -12,10 +12,9 @@
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
 
-namespace joker2620\Source;
+namespace joker2620\Source\Modules;
 
 use joker2620\Source\Exception\BotError;
-use VK\CallbackApi\Server\VKCallbackApiServerHandler;
 
 /**
  * Class Modules
@@ -26,7 +25,7 @@ use VK\CallbackApi\Server\VKCallbackApiServerHandler;
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-abstract class Modules extends VKCallbackApiServerHandler
+class Modules
 {
     /**
      * Модули
@@ -38,7 +37,7 @@ abstract class Modules extends VKCallbackApiServerHandler
      *
      * @return object
      */
-    protected function getModule()
+    public function getModule()
     {
         return self::$modules;
     }
@@ -51,7 +50,7 @@ abstract class Modules extends VKCallbackApiServerHandler
      * @return $this
      * @throws BotError
      */
-    protected function addModule($class)
+    public function addModule($class)
     {
         $no_register = false;
         if (count(self::$modules) > 1) {

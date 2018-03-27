@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -15,7 +15,6 @@ namespace joker2620\Source\Commands;
 
 
 use joker2620\Source\ModuleCommand\CommandsTemplate;
-use joker2620\Source\User;
 
 /**
  * Class CGetvote
@@ -58,7 +57,7 @@ class CGetvote extends CommandsTemplate
             'Хуже только фото где срут понни',
             'фу бл*ть, как это мерзко', 'дермище'
         ];
-        if (isset(User::getMessageData()['attachments'])) {
+        if (isset($this->user->getMessageData()['attachments'])) {
             return $array[array_rand($array)];
         } else {
             return 'Ну "ЗеБеСт" у тебя логика: "оцени то чего нет"...';

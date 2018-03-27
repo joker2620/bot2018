@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -13,7 +13,6 @@
  */
 namespace joker2620\Source\Commands;
 
-use joker2620\Source\API\VKAPI;
 use joker2620\Source\ModuleCommand\CommandsTemplate;
 
 /**
@@ -50,7 +49,7 @@ class CKurs extends CommandsTemplate
      */
     public function runCommand(array $matches)
     {
-        $filekurs = VKAPI::getInstance()
+        $filekurs = $this->vkapi
             ->curl('http://www.cbr.ru/scripts/XML_daily.asp');
         preg_match(
             '/\<Valute ID=\"R01235\".*?\>(.*?)\<\/Valute\>/is',

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -16,7 +16,6 @@ namespace joker2620\Source\ModuleMessage;
 use joker2620\Source\Interfaces\ModuleInterface;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
-use joker2620\Source\User;
 
 /**
  * Class HTMessages
@@ -70,17 +69,17 @@ class HTMessages extends HTMessagesBase implements ModuleInterface
     {
         $return = false;
         if (UserConfig::getConfig()['USER_TRAINING']) {
-            if (preg_match('/^(\!наобучение)$/iu', User::getMessageData()['body'])) {
+            if (preg_match('/^(\!наобучение)$/iu', $this->user->getMessageData()['body'])) {
                 $return = $this->addTraining();
             } elseif ($this->scanMsgUser()) {
-                if (preg_match('/^(нет)$/iu', User::getMessageData()['body'])) {
+                if (preg_match('/^(нет)$/iu', $this->user->getMessageData()['body'])) {
                     $this->addAnswer(true);
                     $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][6];
-                } elseif (preg_match('/^(!мусор)$/iu', User::getMessageData()['body'])) {
+                } elseif (preg_match('/^(!мусор)$/iu', $this->user->getMessageData()['body'])) {
                     $this->delAnswer();
                     $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][9];
                 } else {
-                    if (mb_strlen(User::getMessageData()['body']) > 5) {
+                    if (mb_strlen($this->user->getMessageData()['body']) > 5) {
                         $this->addAnswer();
                         $return
                             = SustemConfig::getConfig()['MESSAGE']['TextMessage'][4];
@@ -107,13 +106,13 @@ class HTMessages extends HTMessagesBase implements ModuleInterface
             $this->addQuestion();
             $return = sprintf(
                 SustemConfig::getConfig()['MESSAGE']['TextMessage'][1],
-                User::getMessageData()['body']
+                $this->user->getMessageData()['body']
             );
         } elseif ($return && UserConfig::getConfig()['SAVE_TRAINING_FALSE']) {
             $this->addQuestion(true);
             $return = sprintf(
                 SustemConfig::getConfig()['MESSAGE']['TextMessage'][3],
-                User::getMessageData()['body']
+                $this->user->getMessageData()['body']
             );
         } elseif (!($return)) {
             $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][0];

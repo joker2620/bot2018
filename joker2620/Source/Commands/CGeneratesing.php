@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -13,10 +13,8 @@
  */
 namespace joker2620\Source\Commands;
 
-use joker2620\Source\API\VKAPI;
 use joker2620\Source\ModuleCommand\CommandsTemplate;
 use joker2620\Source\Plugins\AutoSing\SignArt;
-use joker2620\Source\User;
 
 /**
  * Class CGeneratesing
@@ -54,7 +52,7 @@ class CGeneratesing extends CommandsTemplate
     {
         $content  = new SignArt();
         $autosign = $content->generate($matches[1][0], [0, 34, 56]);
-        $photo    = VKAPI::getInstance()->uploadPhoto(User::getId(), $autosign);
+        $photo    = $this->vkapi->uploadPhoto($this->user->getId(), $autosign);
         $content->imageDestroy($autosign);
         return [
             $matches[1][0], [

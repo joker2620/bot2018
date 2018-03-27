@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -11,10 +11,11 @@
  * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
-namespace joker2620\Source;
+namespace joker2620\Source\Functions;
 
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
+use joker2620\Source\User\User;
 
 /**
  * Class BotFunction
@@ -27,30 +28,14 @@ use joker2620\Source\Setting\UserConfig;
  */
 class BotFunction
 {
-    /**
-     * Копия класса
-     */
-    private static $instance;
+    private $user;
 
     /**
      * BotFunction constructor.
      */
-    private function __construct()
+    public function __construct()
     {
-    }
-
-    /**
-     * GetInstance()
-     *
-     * @return BotFunction
-     */
-    public static function getInstance()
-    {
-        if (self::$instance == null) {
-            self::$instance = new BotFunction();
-        }
-
-        return self::$instance;
+        $this->user = new User();
     }
 
     /**
@@ -89,7 +74,7 @@ class BotFunction
      */
     public function replace($message)
     {
-        $user_data = User::getInfo();
+        $user_data = $this->user->getInfo();
         switch ($user_data['sex']) {
             case '1':
                 $sex_description = 'девушка';
@@ -102,9 +87,9 @@ class BotFunction
                 break;
         }
         $trans = [
-            '#uid#' => User::getId(),
-            '#first_name#' => User::getFirstName(),
-            '#last_name#' => User::getLastName(),
+            '#uid#' => $this->user->getId(),
+            '#first_name#' => $this->user->getFirstName(),
+            '#last_name#' => $this->user->getLastName(),
             //Склонение имени
             '#first_name_abl#' => $user_data['first_name_abl'],
             '#first_name_ins#' => $user_data['first_name_ins'],
