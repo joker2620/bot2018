@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -71,7 +71,7 @@ class SignArt
         }
         $fonts = $this->imgDir . $fonts;
         $this->getRandImg();
-        $color = $this->colors($color[0], $color[1], $color[2]);
+        $color = imagecolorallocate($this->image, $color[0], $color[1], $color[2]);
         $this->setText(
             [$text, $fonts, $color],
             $this->data[5],
@@ -96,20 +96,6 @@ class SignArt
         $files       = $this->imgDir . $datas[0];
         $this->image = imagecreatefrompng($files);
         $this->data  = $datas;
-    }
-
-    /**
-     * Функция установки цвета текста изображения
-     *
-     * @param int $r Крассный
-     * @param int $g Зеленый
-     * @param int $b Синий
-     *
-     * @return int
-     */
-    public function colors($r, $g, $b)
-    {
-        return imagecolorallocate($this->image, $r, $g, $b);
     }
 
     /**

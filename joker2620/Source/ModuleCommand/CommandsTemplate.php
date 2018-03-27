@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -12,6 +12,10 @@
  * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
 namespace joker2620\Source\ModuleCommand;
+
+use joker2620\Source\API\VKAPI;
+use joker2620\Source\Loger\Loger;
+use joker2620\Source\User\User;
 
 /**
  * Class CommandsTemplate
@@ -36,6 +40,28 @@ abstract class CommandsTemplate
      * Права доступа
      */
     protected $permission = 0;
+
+    /**
+     * VKAPI
+     */
+    protected $vkapi;
+
+    /**
+     * VKAPI
+     */
+    protected $user;
+
+    protected $loger;
+
+    /**
+     * CommandsTemplate constructor.
+     */
+    public function __construct()
+    {
+        $this->loger = new Loger();
+        $this->vkapi = new VKAPI();
+        $this->user  = new User();
+    }
 
     /**
      * Функция для запуска выполнения комманды

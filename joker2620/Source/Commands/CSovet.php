@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -13,7 +13,6 @@
  */
 namespace joker2620\Source\Commands;
 
-use joker2620\Source\API\VKAPI;
 use joker2620\Source\ModuleCommand\CommandsTemplate;
 
 /**
@@ -41,13 +40,6 @@ class CSovet extends CommandsTemplate
     protected $permission = 0;
 
     /**
-     * CSovet constructor.
-     */
-    public function __construct()
-    {
-    }
-
-    /**
      * Функция для запуска выполнения комманды
      *
      * @param array $matches
@@ -58,7 +50,7 @@ class CSovet extends CommandsTemplate
     public function runCommand(array $matches)
     {
         $jsondata = json_decode(
-            VKAPI::getInstance()
+            $this->vkapi
                 ->curl('http://fucking-great-advice.ru/api/random'),
             true
         );

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -54,14 +54,14 @@ class CTimed extends CommandsTemplate
             'Для #first_name_acc# ничего не жалко!',
             'Держи что просил:',
             '---------------',
-            'Время: #what_dey# #what_time#',
+            'Время: #what_day# #what_time#',
             '---------------',
             'Вы: #first_name# #last_name#',
             'Ваш пол: #sex_dis#',
             'Ваш айди: @id#uid#',
             '---------------',
-            "Имя бота: #neme_bot#",
-            'Автор бота @joker2620 (Назым Бавбеков)',
+            "Имя бота: #name_bot#",
+            'Автор бота: @joker2620 (Назым Бавбеков)',
             'Версия бота: #version# (сборка #build#)',
         ];
         return implode("\n", $return);

@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -15,7 +15,7 @@
 namespace joker2620\Source\Setting;
 
 use joker2620\Source\Exception\BotError;
-use joker2620\Source\Loger;
+use joker2620\Source\Loger\Loger;
 
 /**
  * Class ConfigValidation
@@ -28,6 +28,14 @@ use joker2620\Source\Loger;
  */
 class ConfigValidation
 {
+    /**
+     * ConfigValidation constructor.
+     */
+    public function __construct()
+    {
+        $this->loger = new Loger();
+    }
+
     /**
      * ValidationConfig()
      *
@@ -139,7 +147,7 @@ class ConfigValidation
                     '" не отвечает требованиям: ' . $requirements
                 );
             } else {
-                Loger::getInstance()->logger(
+                $this->loger->logger(
                     'Параметр "' . $param_name .
                     '" не отвечает требованиям: ' . $requirements
                 );

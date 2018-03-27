@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -15,7 +15,9 @@
 namespace joker2620\Source\ModuleCommand;
 
 use joker2620\Source\Exception\BotError;
-use joker2620\Source\Loger;
+use joker2620\Source\Functions\BotFunction;
+use joker2620\Source\Loger\Loger;
+use joker2620\Source\User\User;
 
 /**
  * Class CommandList
@@ -28,13 +30,23 @@ use joker2620\Source\Loger;
  */
 class CommandList
 {
-
     /**
      * Команды
      *
      * @var array Массив
      */
     private static $commands;
+    public $user;
+    public $botFunction;
+
+    /**
+     * CommandList constructor.
+     */
+    public function __construct()
+    {
+        $this->user        = new User();
+        $this->botFunction = new BotFunction();
+    }
 
     /**
      * Список комманд
@@ -104,7 +116,7 @@ class CommandList
         $classes  = [];
         foreach ($filter as $entry) {
             $patch = $entry->getPathName();
-            $class = strtr($patch, ['.php' => '','/'=>'\\']);
+            $class = strtr($patch, ['.php' => '', '/' => '\\']);
             include_once $entry->getPathName();
             $classes[] = new $class();
         }
@@ -137,7 +149,8 @@ class CommandList
         if (count(self::$commands) > 1) {
             foreach (self::$commands as $command) {
                 if ($command[1] instanceof $class) {
-                    Loger::getInstance()->logger(
+                    $loger = new Loger();
+                    $loger->logger(
                         'Попытка добавить существующую команду "' .
                         get_class($class)
                     );

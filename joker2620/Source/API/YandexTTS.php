@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -31,32 +31,6 @@ use joker2620\Source\Setting\UserConfig;
  */
 class YandexTTS extends Curl
 {
-    /**
-     * Копия класса
-     */
-    private static $instance;
-
-    /**
-     * YandexTTS constructor.
-     */
-    private function __construct()
-    {
-    }
-
-    /**
-     * GetInstance()
-     *
-     * @return YandexTTS
-     */
-    public static function getInstance()
-    {
-        if (self::$instance == null) {
-            self::$instance = new YandexTTS();
-        }
-
-        return self::$instance;
-    }
-
     /**
      * Функция генерации голоса из текста
      *

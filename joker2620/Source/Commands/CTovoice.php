@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -13,12 +13,10 @@
  */
 namespace joker2620\Source\Commands;
 
-use joker2620\Source\API\VKAPI;
 use joker2620\Source\API\YandexTTS;
 use joker2620\Source\ModuleCommand\CommandsTemplate;
 use joker2620\Source\Setting\ConfgFeatures;
 use joker2620\Source\Setting\SustemConfig;
-use joker2620\Source\User;
 
 /**
  * Class CTovoice
@@ -55,12 +53,13 @@ class CTovoice extends CommandsTemplate
     public function runCommand(array $matches)
     {
         if (ConfgFeatures::getConfig()['YANDEX_SPEECH']) {
-            $messagefilename = YandexTTS::getInstance()->getVoice(
+            $yandex_tts      = new YandexTTS();
+            $messagefilename = $yandex_tts->getVoice(
                 $matches[1][0],
                 'omazh'
             );
-            $doccs           = VKAPI::getInstance()->uploadVoice(
-                User::getId(),
+            $doccs           = $this->vkapi->uploadVoice(
+                $this->user->getId(),
                 $messagefilename
             );
             $return          = [

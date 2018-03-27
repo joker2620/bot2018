@@ -1,5 +1,5 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
@@ -13,10 +13,9 @@
  */
 namespace joker2620\Source\Commands;
 
-use joker2620\Source\BotFunction;
+use joker2620\Source\Functions\BotFunction;
 use joker2620\Source\ModuleCommand\CommandList;
 use joker2620\Source\ModuleCommand\CommandsTemplate;
-use joker2620\Source\User;
 
 /**
  * Class CCommands
@@ -52,8 +51,11 @@ class CCommands extends CommandsTemplate
      */
     public function runCommand(array $matches)
     {
-        $admin        = BotFunction::getInstance()->scanAdm(User::getId());
+
         $command_list = new CommandList();
+        $admin        = new BotFunction();
+
+        $admin = $admin->scanAdm($this->user->getId());
         if ($admin == true) {
             $items = $command_list->getCommandList(2);
         } else {

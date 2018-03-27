@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 /**
  * File: UserInterface.php;
  * Author: Joker2620;
@@ -17,31 +18,41 @@ namespace joker2620\Source\Interfaces;
 interface UserInterface
 {
     /**
-     * @return string
+     * setUserData()
+     *
+     * @param array $user_info
+     * @param array $messageData
+     *
+     * @return
      */
-    static function getId();
+    public function setUserData(array $user_info, array $messageData);
 
     /**
      * @return string
      */
-    static function getFirstName();
+    public function getId();
 
     /**
      * @return string
      */
-    static function getLastName();
+    public function getFirstName();
+
+    /**
+     * @return string
+     */
+    public function getLastName();
 
     /**
      * Get raw driver's user info.
      *
      * @return array
      */
-    static function getInfo();
+    public function getInfo();
 
     /**
      * Get message data
      *
      * @return array
      */
-    static function getMessageData();
+    public function getMessageData();
 }
