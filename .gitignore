@@ -5,4 +5,4 @@
 # IntelliJ project files
 .idea
 /joker2620/Configuration/UserConfig.php
-/vendor/
+composer.lock
