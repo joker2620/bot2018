@@ -4,12 +4,6 @@ declare(strict_types = 1);
  * Проект: joker2620/bot2018
  * Author: Joker2620;
  * PHP version 7.1;
- *
- * @category Config
- * @package  Configuration
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
  */
 
 /**
@@ -87,5 +81,5 @@ return [
      *
      * Сборка бота, указываеться вручную разработчиком бота
      */
-    'BUILD' => '28.03.18'
+    'BUILD' => '11.04.18'
 ];

@@ -1,33 +1,22 @@
 <?php
 declare(strict_types = 1);
-/**
- * Проект: joker2620/bot2018
- * Author: Joker2620;
- * PHP version 7.1;
- *
- * @category Setting
- * @package  Joker2620\Source\Setting
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
- */
+
 
 namespace joker2620\Source\Setting;
 
 use joker2620\Source\Exception\BotError;
 use joker2620\Source\Loger\Loger;
 
+
 /**
  * Class ConfigValidation
  *
- * @category Setting
- * @package  Joker2620\Source\Setting
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ * @package joker2620\Source\Setting
  */
 class ConfigValidation
 {
+
+
     /**
      * ConfigValidation constructor.
      */
@@ -36,11 +25,7 @@ class ConfigValidation
         $this->loger = new Loger();
     }
 
-    /**
-     * ValidationConfig()
-     *
-     * @return void
-     */
+
     public function validationConfig()
     {
         $config_feat = ConfgFeatures::getConfig();
@@ -49,14 +34,13 @@ class ConfigValidation
         }
     }
 
+
     /**
-     * CheckUserConfig()
+     * checkUserConfig()
      *
-     * @param array|ConfgFeatures $config_feat Конфигурация
-     *
-     * @return void
+     * @param array $config_feat
      */
-    private function checkUserConfig($config_feat)
+    private function checkUserConfig(array $config_feat)
     {
         foreach ($config_feat as $feats_name => $feats) {
             if ($feats === true) {
@@ -73,7 +57,7 @@ class ConfigValidation
                 }
             }
         }
-        //Check User configuration.
+
         $this->noSettings('user', 'BOT_NAME', 'string')
             ->noSettings('user', 'ADMINISTRATORS', 'array')
             ->noSettings('user', 'CONFIRMATION_TOKEN', 'string')
@@ -81,28 +65,23 @@ class ConfigValidation
             ->noSettings('user', 'USER_TRAINING', 'bool')
             ->noSettings('user', 'SAVE_TRAINING_FALSE', 'bool')
             ->noSettings('user', 'MIN_PERCENT', 'int')
-            //Check Sustem configuration.
             ->noSettings('sustem', 'VERSION', '0.2.0')
-            ->noSettings('sustem', 'BUILD', '28.03.18');
+            ->noSettings('sustem', 'BUILD', '11.04.18');
     }
 
+
     /**
-     * NoSettings()
+     * noSettings()
      *
-     * @param string $config     Конфигурация
-     * @param string $param_name Имя параметра
-     * @param string $type       Тип параметра (bool,
-     *                           string, int, array, "любой текст" -
-     *                           проверит соответствие значению)
-     * @param bool   $level      Уравень
-     *                           ошибки (false -
-     *                           жесткий, true -
-     *                           мягкий)
+     * @param string $config
+     * @param string $param_name
+     * @param string $type
+     * @param bool   $level
      *
      * @return $this
      * @throws BotError
      */
-    private function noSettings($config, $param_name, $type, $level = false)
+    private function noSettings(string $config, string $param_name, string $type, bool $level = false)
     {
         $user_config = [];
         switch ($config) {
@@ -156,20 +135,22 @@ class ConfigValidation
         return $this;
     }
 
+
     /**
-     * GetUserConfig()
+     * userConfig()
      *
-     * @return UserConfig
+     * @return mixed
      */
     private function userConfig()
     {
         return UserConfig::getConfig();
     }
 
+
     /**
-     * GetCommandConfig()
+     * sustemConfig()
      *
-     * @return SustemConfig
+     * @return mixed
      */
     private function sustemConfig()
     {

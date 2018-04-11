@@ -1,50 +1,33 @@
 <?php
 declare(strict_types = 1);
-/**
- * Проект: joker2620/bot2018
- * Author: Joker2620;
- * PHP version 7.1;
- *
- * @category ModuleMessage
- * @package  Joker2620\Source\ModuleMessage
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
- */
+
 namespace joker2620\Source\ModuleMessage;
 
 use joker2620\Source\Interfaces\ModuleInterface;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
 
+
 /**
  * Class HTMessages
  *
- * @category ModuleMessage
- * @package  Joker2620\Source\ModuleMessage
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ * @package joker2620\Source\ModuleMessage
  */
 class HTMessages extends HTMessagesBase implements ModuleInterface
 {
-    /**
-     * Деструктор
-     *
-     * @ingore
-     */
+
     public function __destruct()
     {
         parent::__destruct();
     }
 
+
     /**
-     * Функция поиска текстового ответа на сообщение
+     * getAnwser()
      *
-     * @return bool|string
-     *
+     * @return array
      */
-    public function getAnwser()
+    public function getAnwser(): array
     {
         $return = $this->scanAnswer();
         if (!$return) {
@@ -54,16 +37,16 @@ class HTMessages extends HTMessagesBase implements ModuleInterface
             $return = $this->prehistoric();
         }
         if (!$return) {
-            $return = $this->noAnswer($return);
+            $return = $this->noAnswer();
         }
         return [$return, false];
     }
 
 
     /**
-     * _noAnswer()
+     * scanAnswer()
      *
-     * @return string
+     * @return bool|string
      */
     private function scanAnswer()
     {
@@ -93,15 +76,15 @@ class HTMessages extends HTMessagesBase implements ModuleInterface
         return $return;
     }
 
+
     /**
-     * _noAnswer()
+     * noAnswer()
      *
-     * @param $return
-     *
-     * @return string
+     * @return bool|string
      */
-    private function noAnswer($return)
+    private function noAnswer()
     {
+        $return = false;
         if (UserConfig::getConfig()['USER_TRAINING']) {
             $this->addQuestion();
             $return = sprintf(

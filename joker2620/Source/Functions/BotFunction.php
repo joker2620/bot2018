@@ -1,34 +1,22 @@
 <?php
 declare(strict_types = 1);
-/**
- * Проект: joker2620/bot2018
- * Author: Joker2620;
- * PHP version 7.1;
- *
- * @category Engine
- * @package  Joker2620\Source
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
- */
+
 namespace joker2620\Source\Functions;
 
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
 use joker2620\Source\User\User;
 
+
 /**
  * Class BotFunction
  *
- * @category Engine
- * @package  Joker2620\Source
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ * @package joker2620\Source\Functions
  */
 class BotFunction
 {
     private $user;
+
 
     /**
      * BotFunction constructor.
@@ -38,41 +26,28 @@ class BotFunction
         $this->user = new User();
     }
 
+
     /**
-     * Слияние строк
+     * filterString()
      *
-     * @param string $string Строка для очитски от переносов
+     * @param string $string
      *
      * @return string
      */
-    public function filterString($string)
+    public function filterString(string $string)
     {
         return strtr($string, ["\n" => '']);
     }
 
+
     /**
-     * Функция замены специальных тегов на соответствующую информацию
+     * replace()
      *
-     * Можно использовать падеж для склонения имени и фамилии пользователя.
-     * Используется как приставка в теге, пример: #first_name_gen#
-     * Возможные значения:
-     * именительный – по умолчанию,
-     * родительный – "_gen",
-     * дательный – "_dat",
-     * винительный – "_acc",
-     * творительный – "_ins",
-     * предложный – "_abl".
-     *
-     * @param string $message Строка сообщения
+     * @param string $message
      *
      * @return string
-     *
-     * @see      \ConfigCore::BOT_NAME Имя бота
-     * @see      \ConfigCore::VERSION Версия бота
-     * @see      \ConfigCore::BUILD Сборка бота
-     *
      */
-    public function replace($message)
+    public function replace(string $message)
     {
         $user_data = $this->user->getInfo();
         switch ($user_data['sex']) {
@@ -90,13 +65,13 @@ class BotFunction
             '#uid#' => $this->user->getId(),
             '#first_name#' => $this->user->getFirstName(),
             '#last_name#' => $this->user->getLastName(),
-            //Склонение имени
+
             '#first_name_abl#' => $user_data['first_name_abl'],
             '#first_name_ins#' => $user_data['first_name_ins'],
             '#first_name_acc#' => $user_data['first_name_acc'],
             '#first_name_dat#' => $user_data['first_name_dat'],
             '#first_name_gen#' => $user_data['first_name_gen'],
-            //Склонение фамилии
+
             '#last_name_abl#' => $user_data['last_name_abl'],
             '#last_name_ins#' => $user_data['last_name_ins'],
             '#last_name_acc#' => $user_data['last_name_acc'],
@@ -113,18 +88,15 @@ class BotFunction
         return strtr($message, $trans);
     }
 
+
     /**
-     * Функция проверки прав
+     * scanAdm()
      *
-     * Проверяет являеться ли пользователь администратором бота.
-     *
-     * @param int $uid Айди пользователя
-     *
-     * @see ConfigCore::ADMINISTRATORS Список администраторов бота
+     * @param int $uid
      *
      * @return bool
      */
-    public function scanAdm($uid)
+    public function scanAdm(int $uid)
     {
         return array_search(
             $uid,
@@ -132,19 +104,19 @@ class BotFunction
         ) !== false ? true : false;
     }
 
+
     /**
-     * UcFirst()
+     * ucFirst()
      *
-     * Делает первую букву заглавной.
-     *
-     * @param string $string Строка
+     * @param string $string
      *
      * @return string
      */
-    public function ucFirst($string)
+    public function ucFirst(string $string)
     {
         return mb_strtoupper(mb_substr($string, 0, 1)) . mb_substr($string, 1);
     }
+
 
     /**
      * buildPath()

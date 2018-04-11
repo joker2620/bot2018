@@ -1,11 +1,6 @@
 <?php
 declare(strict_types = 1);
-/**
- * File: PutDataFlow.php;
- * Author: Joker2620;
- * Date: 24.03.2018;
- * Time: 13:22;
- */
+
 
 namespace joker2620\Source\DataFlow;
 
@@ -13,23 +8,25 @@ use joker2620\Source\Exception\BotError;
 
 
 /**
- * Class PutDataFlow
+ * Class DataFlow
  *
  * @package joker2620\Source\DataFlow
  */
 class DataFlow
 {
+
+
     /**
-     * Функция получения данных
+     * readData()
      *
-     * @param int|string $request
+     * @param array $request
      *
-     * @return bool|mixed
+     * @return object
      * @throws BotError
      */
-    public function readData($request = 0)
+    public function readData(array $request = [])
     {
-        if (!is_array($request) && !$request) {
+        if (empty($request)) {
             $request = json_decode(file_get_contents('php://input'), true);
             if (!$request) {
                 throw new BotError('Пришел пустой запрос');
@@ -38,13 +35,13 @@ class DataFlow
         return (object)$request;
     }
 
+
     /**
-     * Функция отправки данных
+     * putData()
      *
-     * @param string $responce
-     *
+     * @param null|string $responce
      */
-    public function putData(?string $responce = 'ok')
+    public function putData(?string $responce = 'ok'): void
     {
         file_put_contents('php://output', $responce);
     }
