@@ -1,11 +1,6 @@
 <?php
 declare(strict_types = 1);
-/**
- * File: User.php;
- * Author: Joker2620;
- * Date: 22.03.2018;
- * Time: 0:29;
- */
+
 
 namespace joker2620\Source\User;
 
@@ -15,63 +10,81 @@ use joker2620\Source\Interfaces\UserInterface;
 /**
  * Class User
  *
- * @package joker2620\Source\Action
+ * @package joker2620\Source\User
  */
 class User implements UserInterface
 {
-    /** @var array */
+
     static protected $userInfo;
-    /** @var array */
+
     static protected $messageData;
+
 
     /**
      * setUserData()
      *
      * @param array $user_info
      * @param array $messageData
+     *
+     * @return mixed|void
      */
-    public function setUserData(array $user_info, array $messageData)
+    public function setUserData(array $user_info, array $messageData): void
     {
         self::$messageData = $messageData;
         self::$userInfo    = $user_info;
     }
 
+
     /**
-     * @return string
+     * getId()
+     *
+     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return self::$userInfo['id'];
     }
 
+
     /**
+     * getFirstName()
+     *
      * @return string
      */
-    public function getFirstName()
+    public function getFirstName(): string
     {
         return self::$userInfo['first_name'];
     }
 
+
     /**
+     * getLastName()
+     *
      * @return string
      */
-    public function getLastName()
+    public function getLastName(): string
     {
         return self::$userInfo['last_name'];
     }
 
+
     /**
-     * {@inheritdoc}
+     * getInfo()
+     *
+     * @return array
      */
-    public function getInfo()
+    public function getInfo(): array
     {
         return self::$userInfo;
     }
 
+
     /**
-     * {@inheritdoc}
+     * getMessageData()
+     *
+     * @return array
      */
-    public function getMessageData()
+    public function getMessageData(): array
     {
         return self::$messageData;
     }

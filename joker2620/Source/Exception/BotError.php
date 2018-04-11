@@ -1,29 +1,14 @@
 <?php
 declare(strict_types = 1);
-/**
- * Проект: joker2620/bot2018
- * Author: Joker2620;
- * PHP version 7.1;
- *
- * @category Exception
- * @package  Joker2620\Source\Exception
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
- */
+
 namespace joker2620\Source\Exception;
 
+
 /**
- * Класс обработки искючений
  * Class BotError
  *
- * @category Exception
- * @package  Joker2620\Source\Exception
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ * @package joker2620\Source\Exception
  */
-
 class BotError extends \Exception
 {
 

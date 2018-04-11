@@ -1,48 +1,32 @@
 <?php
 declare(strict_types = 1);
-/**
- * Проект: joker2620/bot2018
- * Author: Joker2620;
- * PHP version 7.1;
- *
- * @category ModuleMessage
- * @package  Joker2620\Source\ModuleMessage
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
- */
+
 namespace joker2620\Source\ModuleMessage;
 
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
 
+
 /**
  * Class HTMessagesBase
  *
- * @category ModuleMessage
- * @package  Joker2620\Source\ModuleMessage
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ * @package joker2620\Source\ModuleMessage
  */
 class HTMessagesBase extends TrainingEdit
 {
     private $database = [];
 
+
     /**
-     * Сканер Prehistoric
-     *
-     * Основной сканер поиска ответов в базе.
+     * prehistoric()
      *
      * @param bool $file_base
      *
-     * @return bool|string
-     *
-     * @see      \similar_text() Функция для определения процента схожести текста,
+     * @return bool
      */
-    public function prehistoric($file_base = false)
+    public function prehistoric(bool $file_base = false)
     {
-        //$this->database = [];
+
         $return = false;
         $height = UserConfig::getConfig()['MIN_PERCENT'];
         if ($file_base) {
@@ -80,17 +64,16 @@ class HTMessagesBase extends TrainingEdit
         return $return;
     }
 
+
     /**
-     * _scanBase()
+     * scanBase()
      *
-     * @param $lines
+     * @param array $lines
+     * @param int   $height
      *
-     * @param $height
-     *
-     * @return mixed
-     * @internal param $msgsx
+     * @return int|mixed
      */
-    private function scanBase($lines, $height)
+    private function scanBase(array $lines, int $height)
     {
         $height = $this->getHeight($height);
         if (similar_text($this->user->getMessageData()['body'], $lines[0], $percent)) {
@@ -103,14 +86,15 @@ class HTMessagesBase extends TrainingEdit
         return $height;
     }
 
+
     /**
-     * _getHeight()
+     * getHeight()
      *
-     * @param $height
+     * @param int $height
      *
-     * @return mixed
+     * @return int|mixed
      */
-    private function getHeight(&$height)
+    private function getHeight(int &$height)
     {
         $arraykey = array_keys($this->database);
         sort($arraykey);
@@ -118,13 +102,14 @@ class HTMessagesBase extends TrainingEdit
         return $height < $maxkey ? $maxkey : $height;
     }
 
+
     /**
      * setDatabase()
      *
-     * @param $per
-     * @param $value
+     * @param int    $per
+     * @param string $value
      */
-    private function setDatabase($per, $value)
+    private function setDatabase(int $per, string $value)
     {
         $this->database[$per][] = $value;
     }

@@ -1,54 +1,33 @@
 <?php
 declare(strict_types = 1);
-/**
- * Проект: joker2620/bot2018
- * Author: Joker2620;
- * PHP version 7.1;
- *
- * @category Engine
- * @package  Joker2620\Source
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
- */
+
 
 namespace joker2620\Source\Modules;
 
-use joker2620\Source\Exception\BotError;
 
 /**
  * Class Modules
  *
- * @category Engine
- * @package  Joker2620\Source
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ * @package joker2620\Source\Modules
  */
 class Modules
 {
-    /**
-     * Модули
-     */
+
     private static $modules;
 
-    /**
-     * Получение модуля
-     *
-     * @return object
-     */
+
     public function getModule()
     {
         return self::$modules;
     }
 
+
     /**
-     * Функция добавления модуля
+     * addModule()
      *
-     * @param object $class Объект класса
+     * @param $class
      *
      * @return $this
-     * @throws BotError
      */
     public function addModule($class)
     {

@@ -3,7 +3,7 @@
 [![PHP](https://img.shields.io/badge/PHP-7.1%5E-brightgreen.svg?style=for-the-badge)](https://php.net/)
 [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/blob/master/LICENSE/)
 [![VERSION](https://img.shields.io/badge/LAST%20VERSION-0.2.0-blue.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
-[![BUID](https://img.shields.io/badge/LAST%20BUILD-22.03.18-lightgrey.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
+[![BUID](https://img.shields.io/badge/LAST%20BUILD-11.04.18-lightgrey.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 [![PSR](https://img.shields.io/badge/PSR-0--4-orange.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 [![PSR](https://img.shields.io/badge/Code%20quality-maybe%20bad-orange.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 

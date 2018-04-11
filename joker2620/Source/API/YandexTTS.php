@@ -1,16 +1,6 @@
 <?php
 declare(strict_types = 1);
-/**
- * Проект: joker2620/bot2018
- * Author: Joker2620;
- * PHP version 7.1;
- *
- * @category API
- * @package  Joker2620\Source\API
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
- */
+
 
 namespace joker2620\Source\API;
 
@@ -18,45 +8,32 @@ use joker2620\Source\Exception\BotError;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
 
+
 /**
  * Class YandexTTS
  *
- * Класс для работы с API YANDEX.RU
- *
- * @category API
- * @package  Joker2620\Source\API
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ * @package joker2620\Source\API
  */
 class YandexTTS extends Curl
 {
+
+
     /**
-     * Функция генерации голоса из текста
+     * getVoice()
      *
-     * @param string $text     Текст
-     * @param string $speaker  Имя спикера
-     * @param string $emoticon Эмоциональный окрас
-     * @param string $lang     Язык
-     *
-     * @see \ConfigCore::DIR_AUDIO Папка с аудио
-     * @see \ConfigYandex::SPEECH_KEY Ключ API
-     * @see \ConfigYandex::ENDPOINT Адрес API
+     * @param string $text
+     * @param string $speaker
+     * @param string $emoticon
+     * @param string $lang
      *
      * @return string
-     * @throws BotError
      */
     public function getVoice(
-        $text,
-        $speaker = 'jane',
-        $emoticon = 'good',
-        $lang = 'ru-RU'
+        string $text,
+        string $speaker = 'jane',
+        string $emoticon = 'good',
+        string $lang = 'ru-RU'
     ) {
-        if (!is_string($text) || !is_string($speaker) ||
-            !is_string($emoticon) || !is_string($lang)
-        ) {
-            throw new BotError('Error: call getVoice().');
-        };
         $file_name = SustemConfig::getConfig()['DIR_AUDIO'] .
             '/aud_' . md5($text) . '.ogg';
         if (file_exists($file_name)) {
@@ -82,17 +59,15 @@ class YandexTTS extends Curl
         return $file_name;
     }
 
+
     /**
-     * ValidFile()
+     * validFile()
      *
-     * Проверка файла на ошибки
-     *
-     * @param string $file_name Файл
+     * @param string $file_name
      *
      * @throws BotError
-     * @return void
      */
-    private function validFile($file_name)
+    private function validFile(string $file_name)
     {
         $read_file = fopen($file_name, 'r');
         $get_data  = fread($read_file, filesize($file_name));

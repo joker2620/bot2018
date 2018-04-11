@@ -1,17 +1,9 @@
 <?php
-
+declare(strict_types = 1);
 /**
  * Проект: joker2620/bot2018
  * Author: Joker2620;
- * Date: 12.01.2018;
- * Time: 7:55;
- * PHP version 5.6;
- *
- * @category Config
- * @package  Configuration
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ * PHP version 7.1;
  */
 
 /**
@@ -84,5 +76,5 @@ return [
      * Сохранять полученные сообщения (вместе с ответом бота)
      * в папку joker2620/data/log/chats/
      */
-     'SAVE_MESSAGE' => false
+    'SAVE_MESSAGE' => false
 ]; //Выбирает сообщения строго выше

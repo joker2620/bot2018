@@ -1,43 +1,26 @@
 <?php
 declare(strict_types = 1);
-/**
- * Проект: joker2620/bot2018
- * Author: Joker2620;
- * PHP version 7.1;
- *
- * @category ModuleCommand
- * @package  Joker2620\Source\ModuleCommand
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
- */
+
 
 namespace joker2620\Source\ModuleCommand;
 
-use joker2620\Source\Exception\BotError;
 use joker2620\Source\Functions\BotFunction;
 use joker2620\Source\Loger\Loger;
 use joker2620\Source\User\User;
 
+
 /**
  * Class CommandList
  *
- * @category ModuleCommand
- * @package  Joker2620\Source\ModuleCommand
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ * @package joker2620\Source\ModuleCommand
  */
 class CommandList
 {
-    /**
-     * Команды
-     *
-     * @var array Массив
-     */
+
     private static $commands;
-    public $user;
-    public $botFunction;
+    public         $user;
+    public         $botFunction;
+
 
     /**
      * CommandList constructor.
@@ -48,17 +31,15 @@ class CommandList
         $this->botFunction = new BotFunction();
     }
 
+
     /**
-     * Список комманд
-     * mode 0 - только пользовательские,
-     * mode 1 - только админитраторские,
-     * mode 2 - все.
+     * getCommandList()
      *
-     * @param int $mode Режим
+     * @param int $mode
      *
      * @return array
      */
-    public function getCommandList($mode)
+    public function getCommandList(int $mode): array
     {
 
         $command = [];
@@ -85,30 +66,21 @@ class CommandList
         return $command;
     }
 
-    /**
-     * Список команд комманд (загрузчик)
-     *
-     * В данном списке можно увидеть список комманд бота в формате:
-     * 0 => регулярное выражение
-     * 1 => название класса комманды (из директории joker2620\Source/Engine/Commands)
-     * 2 => права доступа к команде, 0 - всем, 1 - только администрации
-     * 3 => то как будет отображаться коммада в списке комманд
-     *
-     * @return void
-     */
-    protected function loadCommand()
+
+    protected function loadCommand(): void
     {
         if (self::$commands == null) {
             self::$commands = $this->commands();
         }
     }
 
+
     /**
-     * Commands()
+     * commands()
      *
      * @return array
      */
-    protected function commands()
+    protected function commands(): array
     {
 
         $iterator = new \FilesystemIterator("joker2620/Source/Commands");
@@ -120,31 +92,27 @@ class CommandList
             include_once $entry->getPathName();
             $classes[] = new $class();
         }
-        return $classes;// include_once 'Config.php';
+        return $classes;
     }
 
-    /**
-     * GetCommand()
-     *
-     * @return mixed
-     */
+
     protected function getCommand()
     {
         return self::$commands;
     }
 
+
     /**
-     * AddCommand($regexp, $class, $rule, $print)
+     * addCommand()
      *
-     * @param string  $regexp Регулярное выражение
-     * @param object  $class  Объект класса
-     * @param boolean $rule   Привилегии
-     * @param string  $print  Отображение в списке команд
+     * @param string $regexp
+     * @param        $class
+     * @param bool   $rule
+     * @param string $print
      *
-     * @return object $this
-     * @throws BotError
+     * @return $this
      */
-    protected function addCommand($regexp, $class, $rule, $print)
+    protected function addCommand(string $regexp, $class, bool $rule, string $print)
     {
         if (count(self::$commands) > 1) {
             foreach (self::$commands as $command) {

@@ -3,51 +3,43 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\API;
 
-use joker2620\Source\Exception\BotError;
 use joker2620\Source\Functions\BotFunction;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
 use VK\Client\VKApiClient;
 
+
 /**
- * Проект: joker2620/bot2018
- * Author: Joker2620;
- * PHP version 7.1;
+ * Class VKAPI
  *
- * @category API
- * @package  Joker2620\Source\API
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ * @package joker2620\Source\API
  */
-class VKAPI
+class VKAPI extends VKApiClient
 {
-    private $accessToken, $vkapi, $botFucntion;
+    private $accessToken, $botFucntion;
+
 
     /**
      * VKAPI constructor.
      */
     public function __construct()
     {
+        parent::__construct();
         $this->accessToken = UserConfig::getConfig()['ACCESS_TOKEN'];
         $this->botFucntion = new BotFunction();
-        $this->vkapi       = new VKApiClient();
     }
 
+
     /**
-     * Функция загрузки голосовых сообщений в вк
+     * uploadVoice()
      *
-     * @param int    $user_id   Айди пользователя
-     * @param string $file_name Имя файла
+     * @param int    $user_id
+     * @param string $file_name
      *
      * @return mixed
-     * @throws BotError
      */
-    public function uploadVoice($user_id, $file_name)
+    public function uploadVoice(int $user_id, string $file_name)
     {
-        if (!is_int($user_id) || !is_string($file_name)) {
-            throw new BotError('Error: call uploadVoice.');
-        }
         $server_response = $this->docsGUServer($user_id, 'audio_message');
         $upload_response = $this->upload($server_response['upload_url'], $file_name, 'file');
         $files           = $upload_response['file'];
@@ -56,21 +48,18 @@ class VKAPI
         return $doccx;
     }
 
+
     /**
-     * Функция получения адреса для загрузки документов
+     * docsGUServer()
      *
-     * @param int    $peer_id Айди
-     * @param string $type    Тип документа
+     * @param int    $peer_id
+     * @param string $type
      *
      * @return mixed
-     * @throws BotError
      */
-    public function docsGUServer($peer_id, $type)
+    public function docsGUServer(int $peer_id, string $type)
     {
-        if (!is_int($peer_id) || !is_string($type)) {
-            throw new BotError('Error: call docs_GetUploadServer.');
-        }
-        return $this->vkapi->docs()->getMessagesUploadServer(
+        return $this->docs()->getMessagesUploadServer(
             $this->accessToken,
             [
                 'peer_id' => $peer_id,
@@ -79,77 +68,64 @@ class VKAPI
         );
     }
 
+
     /**
-     * Функция загрузки файлов
+     * upload()
      *
-     * @param string $url       Адрес сервера
-     * @param string $file_name Имя файла
-     *
+     * @param string $url
+     * @param        $file_name
      * @param string $type
      *
      * @return mixed
-     * @throws BotError
      */
-    public function upload($url, $file_name = '', $type = 'photo')
+    public function upload(string $url, $file_name, string $type = 'photo')
     {
-        if (!is_string($url) || !is_string($file_name) && !is_object($file_name)) {
-            throw new BotError('Error: call api.');
-        }
-        return $this->vkapi->request()->upload($url, $type, $file_name);
+        return $this->getRequest()->upload($url, $type, $file_name);
     }
 
+
     /**
-     * Функция сохранения документа
+     * docsSave()
      *
-     * @param string $file  Имя файла
-     * @param string $title Заголовок
+     * @param string $file
+     * @param string $title
      *
      * @return mixed
-     * @throws BotError
      */
-    public function docsSave($file, $title)
+    public function docsSave(string $file, string $title)
     {
-        if (!is_string($file) || !is_string($title)) {
-            throw new BotError('Error: call docs_Save.');
-        }
-        return $this->vkapi->docs()->save(
-            $this->accessToken,
-            [
+        return $this->docs()->save(
+            $this->accessToken, [
                 'file' => $file,
                 'title' => $title,
             ]
         );
     }
 
-    /**
-     * Функция (Application Programming Interface)
-     *
-     *  Для отправки запросов к API VK.COM
-     *
-     * @param string $method метод VK API
-     * @param array  $params Массив параметров
-     *
-     * @return mixed
-     * @throws BotError
-     */
-    public function methodAPI($method, $params = [])
-    {
-        if (!is_string($method) || !is_array($params)) {
-            throw new BotError('Error: call api.');
-        }
-        $access_token = $this->getToken($params);
-        return $this->vkapi->request()->request($method, $access_token, $params);
-    }
 
     /**
-     * searchToken()
+     * methodAPI()
      *
-     * @param string $parameters
+     * @param string $method
+     * @param array  $params
      *
      * @return mixed
-     *
      */
-    private function getToken($parameters = '')
+    public function methodAPI(string $method, array $params = [])
+    {
+        $access_token = $this->getToken($params);
+        return $this->getRequest()->request($method, $access_token, $params);
+    }
+
+
+    /**
+     * getToken()
+     *
+     * @param array $parameters
+     *
+     * @return mixed
+     */
+    private function getToken(array $parameters)
     {
         $token = $this->accessToken;
         if (is_array($parameters)) {
@@ -162,20 +138,17 @@ class VKAPI
         return $token;
     }
 
+
     /**
-     * Функция зарузки фотографий
+     * uploadPhoto()
      *
-     * @param int    $peer_id   Айди
-     * @param string $file_name Имя файла
+     * @param int $peer_id
+     * @param     $file_name
      *
      * @return mixed
-     * @throws BotError
      */
-    public function uploadPhoto($peer_id, $file_name)
+    public function uploadPhoto(int $peer_id, $file_name)
     {
-        if (!is_int($peer_id) || !is_string($file_name) && !is_object($file_name)) {
-            throw new BotError('Error: call uploadPhoto.');
-        }
         $server_response = $this->photosGUServer($peer_id);
         $upload_response = $this->upload($server_response['upload_url'], $file_name);
         $photo           = $upload_response['photo'];
@@ -186,20 +159,17 @@ class VKAPI
         return $photo;
     }
 
+
     /**
-     * Функция получения адреса для загрузки фотографи
+     * photosGUServer()
      *
-     * @param int $peer_id Айди
+     * @param int $peer_id
      *
      * @return mixed
-     * @throws BotError
      */
-    public function photosGUServer($peer_id)
+    public function photosGUServer(int $peer_id)
     {
-        if (!is_int($peer_id)) {
-            throw new BotError('Error: call photos_GetUploadServer.');
-        }
-        return $this->vkapi->photos()->getMessagesUploadServer(
+        return $this->photos()->getMessagesUploadServer(
             $this->accessToken,
             [
                 'peer_id' => $peer_id,
@@ -207,22 +177,19 @@ class VKAPI
         );
     }
 
+
     /**
-     * Функция сохранения фотографий
+     * photoSave()
      *
-     * @param string $photo  Фото
-     * @param int    $server Сервер
-     * @param string $hash   Хеш
+     * @param string $photo
+     * @param int    $server
+     * @param string $hash
      *
      * @return mixed
-     * @throws BotError
      */
-    public function photoSave($photo, $server, $hash)
+    public function photoSave(string $photo, int $server, string $hash)
     {
-        if (!is_string($photo) || !is_int($server) || !is_string($hash)) {
-            throw new BotError('Error: call photo_Save.');
-        }
-        return $this->vkapi->photos()->saveMessagesPhoto(
+        return $this->photos()->saveMessagesPhoto(
             $this->accessToken,
             [
                 'photo' => $photo,
@@ -232,22 +199,20 @@ class VKAPI
         );
     }
 
+
     /**
-     * Функция отправки сообщений
+     * messagesSend()
      *
-     * @param int    $peer_id    Айди
-     * @param string $message    Сообщение
-     * @param array  $attachment Вложения
+     * @param int    $peer_id
+     * @param string $message
+     * @param array  $attachment
      *
      * @return mixed
-     * @throws BotError
      */
-    public function messagesSend($peer_id, $message = '', $attachment = [])
-    {
-        if (!is_int($peer_id) || !is_string($message) || !is_array($attachment) && !is_bool($attachment)) {
-            throw new BotError('Error: call messagesSend.');
-        }
-        return $this->vkapi->messages()->send(
+    public function messagesSend(
+        int $peer_id, string $message = '', $attachment = []
+    ) {
+        return $this->messages()->send(
             $this->accessToken,
             [
                 'peer_id' => $peer_id,
@@ -260,31 +225,31 @@ class VKAPI
         );
     }
 
+
     /**
-     * Функция получения основных данных о пользователе
+     * usersGet()
      *
-     * @param int         $peer_id Айди
-     * @param bool|string $name_sk Все варианты склонения имени и фамилии
+     * @param int        $peer_id
+     * @param array|null $param
      *
      * @return mixed
-     * @throws BotError
      */
-    public function usersGet($peer_id, $name_sk = true)
-    {
-        if (!is_int($peer_id) && !is_bool($name_sk)) {
-            throw new BotError('Error: call usersGet.');
+    public function usersGet(
+        int $peer_id,
+        ?array $param
+        = [
+            'first_name_abl', 'first_name_ins', 'first_name_acc',
+            'first_name_dat', 'first_name_gen', 'last_name_abl',
+            'last_name_ins', 'last_name_acc', 'last_name_dat',
+            'last_name_gen'
+        ]
+    ) {
+        if (empty($param)) {
+            $param = ['timezone', 'sex', 'photo_50', 'city'];
+        } else {
+            $param = array_merge($param, ['timezone', 'sex', 'photo_50', 'city']);
         }
-        $param = ['timezone', 'sex', 'photo_50', 'city'];
-        if (true == $name_sk) {
-            $param = array_merge(
-                $param, [
-                    'first_name_abl', 'first_name_ins', 'first_name_acc',
-                    'first_name_dat', 'first_name_gen', 'last_name_abl',
-                    'last_name_ins', 'last_name_acc', 'last_name_dat', 'last_name_gen'
-                ]
-            );
-        }
-        return $this->vkapi->users()->get(
+        return $this->users()->get(
             $this->accessToken, [
                 'user_ids' => $peer_id,
                 'fields' => $param,

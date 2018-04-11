@@ -1,41 +1,25 @@
 <?php
 declare(strict_types = 1);
-/**
- * Проект: joker2620/bot2018
- * Author: Joker2620;
- * PHP version 7.1;
- *
- * @category ModuleMessage
- * @package  Joker2620\Source\ModuleMessage
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
- */
+
 namespace joker2620\Source\ModuleMessage;
 
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\User\User;
 
+
 /**
  * Class TrainingEdit
  *
- * @category ModuleMessage
- * @package  Joker2620\Source\ModuleMessage
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ * @package joker2620\Source\ModuleMessage
  */
 class TrainingEdit
 {
     public $user;
-    /**
-     * Файл базы пользовательских сообщений
-     */
+
     private $baseName;
-    /**
-     * Массив из базы пользовательских сообщений
-     */
+
     private $baseData;
+
 
     /**
      * TrainingEdit constructor.
@@ -62,9 +46,7 @@ class TrainingEdit
         }
     }
 
-    /**
-     * TrainingEdit destructor.
-     */
+
     public function __destruct()
     {
         $data_to_write = json_encode($this->baseData, JSON_UNESCAPED_UNICODE);
@@ -73,14 +55,13 @@ class TrainingEdit
         fclose($resource);
     }
 
+
     /**
-     * Функция добавления ответа в пользовательскую базу.
+     * addAnswer()
      *
-     * @param bool $no Режим
-     *
-     * @return void
+     * @param bool $no
      */
-    protected function addAnswer($no = false)
+    protected function addAnswer(bool $no = false)
     {
         foreach ($this->baseData as $key_base => $data_base) {
             if ($data_base[2] == $this->user->getId() && $data_base[1] == false) {
@@ -94,12 +75,7 @@ class TrainingEdit
         }
     }
 
-    /**
-     * Функция удаления сообщения из пользовательской базы
-     *
-     * @return void
-     *
-     */
+
     protected function delAnswer()
     {
         foreach ($this->baseData as $key_base => $data_base) {
@@ -109,8 +85,9 @@ class TrainingEdit
         }
     }
 
+
     /**
-     * Функция включения режима "обучения", у определенного сообщения.
+     * addTraining()
      *
      * @return string
      */
@@ -133,14 +110,13 @@ class TrainingEdit
         return $message;
     }
 
+
     /**
-     * Функция добавления вопроса в базу
+     * addQuestion()
      *
-     * @param bool $no Режим
-     *
-     * @return void
+     * @param bool $no
      */
-    protected function addQuestion($no = false)
+    protected function addQuestion(bool $no = false)
     {
         $this->baseData   = $this->uniqueMultiArray($this->baseData, 0);
         $this->baseData   = $this->uniqueMultiArray($this->baseData, 2);
@@ -152,16 +128,16 @@ class TrainingEdit
         ];
     }
 
+
     /**
-     * UniqueMultiArray()
+     * uniqueMultiArray()
      *
-     * @param array $array Массив
-     * @param mixed $key   Ключ
+     * @param array $array
+     * @param int   $key
      *
      * @return array
-     * @link   http://php.net/manual/ru/function.array-unique.php#116302
      */
-    protected function uniqueMultiArray($array, $key)
+    protected function uniqueMultiArray(array $array, int $key)
     {
         $temp_array = [];
         if (is_array($array)) {
@@ -179,8 +155,9 @@ class TrainingEdit
         return $temp_array;
     }
 
+
     /**
-     * Функия сканирования сообщения.
+     * scanMsgUser()
      *
      * @return bool
      */

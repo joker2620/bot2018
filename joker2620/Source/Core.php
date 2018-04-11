@@ -1,16 +1,6 @@
 <?php
 declare(strict_types = 1);
-/**
- * Проект: joker2620/bot2018
- * Author: Joker2620;
- * PHP version 7.1;
- *
- * @category Engine
- * @package  Joker2620\Source
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
- */
+
 namespace joker2620\Source;
 
 use joker2620\Source\API\VKAPI;
@@ -28,14 +18,11 @@ use joker2620\Source\Setting\UserConfig;
 use joker2620\Source\User\User;
 use VK\CallbackApi\Server\VKCallbackApiServerHandler;
 
+
 /**
  * Class Core
  *
- * @category Engine
- * @package  Joker2620\Source
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ * @package joker2620\Source
  */
 class Core extends VKCallbackApiServerHandler
 {
@@ -45,6 +32,7 @@ class Core extends VKCallbackApiServerHandler
     private $loger;
     private $vkapi;
     private $botFunctions;
+
 
     /**
      * Core constructor.
@@ -65,7 +53,10 @@ class Core extends VKCallbackApiServerHandler
         $this->modules->addModule($module_commands)->addModule($module_messages);
     }
 
+
     /**
+     * confirmation()
+     *
      * @param int         $group_id
      * @param null|string $secret
      */
@@ -75,7 +66,10 @@ class Core extends VKCallbackApiServerHandler
         $this->loger->logger('confirmation send');
     }
 
+
     /**
+     * messageNew()
+     *
      * @param int         $group_id
      * @param null|string $secret
      * @param array       $object
@@ -83,29 +77,26 @@ class Core extends VKCallbackApiServerHandler
     public function messageNew(int $group_id, ?string $secret, array $object)
     {
 
-        $users          = $this->vkapi->usersGet($object['user_id'], true);
+        $users          = $this->vkapi->usersGet($object['user_id']);
         $users          = max($users);
         $object['body'] = $this->botFunctions->filterString($object['body']);
         $this->userData->setUserData($users, $object);
-        $ansver = false;
-
+        $answer = false;
         foreach ($this->modules->getModule() as $module) {
             $handler = $module->getAnwser();
             if (is_array($handler) | is_string($handler)) {
-                $ansver = $handler;
+                $answer = $handler;
                 break;
             }
         }
         $attachments = false;
-        if ($ansver) {
-            if (is_array($ansver)) {
-                $attachments = $ansver[1];
-                $message     = $ansver[0];
-            } else {
-                $message = $ansver;
-            }
-        } else {
+        if (empty($answer)) {
             $message = SustemConfig::getConfig()['MESSAGE']['Main'][0];
+        } elseif (is_array($answer)) {
+            $attachments = $answer[1];
+            $message     = $answer[0];
+        } else {
+            $message = $answer;
         }
         $message = $this->botFunctions->replace($message);
         $this->loger->message($this->userData->getMessageData()['body'], $message);
@@ -113,17 +104,16 @@ class Core extends VKCallbackApiServerHandler
         $this->flow->putData();
     }
 
+
     /**
-     * Сканер постов
+     * wallPostNew()
      *
      * @param int         $group_id
      * @param null|string $secret
      * @param array       $object
      *
-     * @return void
      * @throws BotError
      */
-
     public function wallPostNew(int $group_id, ?string $secret, array $object)
     {
         if (!isset($object['attachments'])
@@ -158,14 +148,13 @@ class Core extends VKCallbackApiServerHandler
         $this->flow->putData();
     }
 
+
     /**
-     * Сканер опросов
+     * pollVoteNew()
      *
      * @param int         $group_id
      * @param null|string $secret
      * @param array       $object
-     *
-     * @return void
      */
     public function pollVoteNew(int $group_id, ?string $secret, array $object)
     {
@@ -179,7 +168,7 @@ class Core extends VKCallbackApiServerHandler
                 ]
             );
             $userdata  = $this->vkapi->usersGet(
-                $object['user_id']
+                $object['user_id'], []
             );
             $userdata  = max($userdata);
             $votes     = 'Не удалось определить';
@@ -190,7 +179,7 @@ class Core extends VKCallbackApiServerHandler
                 }
             }
             $message
-                = "В опросе: '{$data_poll['question']}', пользователь @id{$object['user_id']} ({$userdata['first_name']} {$userdata['last_name']}), проголосовал за '{$votes}'. Всего голосов в опросе: {$data_poll['votes']}'.";//Опрос
+                = "В опросе: '{$data_poll['question']}', пользователь @id{$object['user_id']} ({$userdata['first_name']} {$userdata['last_name']}), проголосовал за '{$votes}'. Всего голосов в опросе: {$data_poll['votes']}'.";
             $this->vkapi->methodAPI(
                 'messages.send',
                 [

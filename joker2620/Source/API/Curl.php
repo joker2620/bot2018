@@ -1,33 +1,21 @@
 <?php
 declare(strict_types = 1);
-/**
- * Проект: joker2620/bot2018
- * Author: Joker2620;
- * PHP version 7.1;
- *
- * @category API
- * @package  Joker2620\Source\API
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
- */
+
 namespace joker2620\Source\API;
 
 use joker2620\Source\Exception\BotError;
 use joker2620\Source\Loger\Loger;
 
+
 /**
  * Class Curl
  *
- * @category API
- * @package  Joker2620\Source\API
- * @author   Joker2620 <joker2000joker@list.ru>
- * @license  https://github.com/joker2620/bot2018/blob/master/LICENSE MIT
- * @link     https://github.com/joker2620/bot2018 #VKCHATBOT
+ * @package joker2620\Source\API
  */
 class Curl
 {
     private $loger;
+
 
     /**
      * Curl constructor.
@@ -37,17 +25,18 @@ class Curl
         $this->loger = new Loger();
     }
 
+
     /**
-     * Функция библиотеки CURL
+     * curl()
      *
-     * @param string $url       Ссылка
-     * @param int    $curlmode  Режим
-     * @param mixed  $file_name Доп. Данные
+     * @param string $url
+     * @param int    $curlmode
+     * @param null   $file_name
      *
      * @return mixed
      * @throws BotError
      */
-    public function curl($url, $curlmode = 0, $file_name = null)
+    public function curl(string $url, int $curlmode = 0, $file_name = null)
     {
         if (!is_string($url) || !is_int($curlmode)) {
             throw new BotError('cURL: ошибка, не верные данные');
@@ -69,16 +58,16 @@ class Curl
         return $result;
     }
 
+
     /**
-     * _curlMode()
+     * curlMode()
      *
-     * @param int   $curlmode  Режим
-     * @param mixed $file_name Доп. Данные
+     * @param int  $curlmode
+     * @param null $file_name
      *
      * @return array
-     * @internal param string $url Ссылка
      */
-    private function curlMode($curlmode = 0, $file_name = null)
+    private function curlMode(int $curlmode = 0, $file_name = null)
     {
         $curl_setopt = [
             CURLOPT_SSL_VERIFYPEER => false,
