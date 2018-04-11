@@ -14,7 +14,7 @@ class ComposerStaticInit80813fcb9b470701b6691b22e66b6539
         'V' => 
         array (
             'VK\\' => 3,
-        )
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -25,7 +25,7 @@ class ComposerStaticInit80813fcb9b470701b6691b22e66b6539
         'VK\\' => 
         array (
             0 => __DIR__ . '/..' . '/vkcom/vk-php-sdk/src/VK',
-        )
+        ),
     );
 
     public static function getInitializer(ClassLoader $loader)

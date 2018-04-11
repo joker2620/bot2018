@@ -95,7 +95,7 @@ class VKAPI
         if (!is_string($url) || !is_string($file_name) && !is_object($file_name)) {
             throw new BotError('Error: call api.');
         }
-        return $this->vkapi->request()->upload($url, $type, $file_name);
+        return $this->vkapi->getRequest()->upload($url, $type, $file_name);
     }
 
     /**
@@ -138,7 +138,7 @@ class VKAPI
             throw new BotError('Error: call api.');
         }
         $access_token = $this->getToken($params);
-        return $this->vkapi->request()->request($method, $access_token, $params);
+        return $this->vkapi->getRequest()->request($method, $access_token, $params);
     }
 
     /**

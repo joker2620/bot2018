@@ -7,5 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'joker2620\\' => array($baseDir . '/joker2620'),
-    'VK\\' => array($vendorDir . '/vkcom/vk-php-sdk/src/VK')
+    'VK\\' => array($vendorDir . '/vkcom/vk-php-sdk/src/VK'),
 );

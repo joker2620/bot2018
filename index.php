@@ -30,18 +30,18 @@ try {
     $handler->parse(
         $data_flow->readData(
 //       //This is test request:
-//            [
-//                'type' => 'message_new', 'object' =>
-//                [
-//                    'id' => 4520,
-//                    'date' => 1521303747,
-//                    'out' => 0,
-//                    'user_id' => 211984675,
-//                    'read_state' => 0,
-//                    'title' => '',
-//                    'body' => 'Кукаааар',
-//                ], 'group_id' => 324, 'secret' => 432
-//            ]
+            [
+            'type' => 'message_new', 'object' =>
+                [
+                    'id' => 4520,
+                    'date' => 1521303747,
+                    'out' => 0,
+                    'user_id' => 211984675,
+                    'read_state' => 0,
+                    'title' => '',
+                    'body' => 'время'
+                ], 'group_id' => 324, 'secret' => 432
+            ]
         )
     );
 } catch (BotError $exception) {

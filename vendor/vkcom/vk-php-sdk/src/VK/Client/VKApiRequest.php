@@ -10,8 +10,6 @@ use VK\TransportClient\TransportClientResponse;
 use VK\TransportClient\TransportRequestException;
 
 class VKApiRequest {
-    protected const VERSION = '5.69';
-
     private const PARAM_VERSION = 'v';
     private const PARAM_ACCESS_TOKEN = 'access_token';
     private const PARAM_LANG = 'lang';
@@ -127,11 +125,13 @@ class VKApiRequest {
 
         $body = $response->getBody();
         $decode_body = $this->decodeBody($body);
+
         if (isset($decode_body[static::KEY_ERROR])) {
             $error = $decode_body[static::KEY_ERROR];
             $api_error = new VKApiError($error);
             throw ExceptionMapper::parse($api_error);
         }
+
         if (isset($decode_body[static::KEY_RESPONSE])) {
             return $decode_body[static::KEY_RESPONSE];
         } else {
