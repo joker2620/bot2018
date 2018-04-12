@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace joker2620\Source\Commands;
 
 use joker2620\Source\API\YandexTTS;
-use joker2620\Source\ModuleCommand\CommandsTemplate;
+use joker2620\Source\ModulesClasses\CommandsTemplate;
 use joker2620\Source\Setting\ConfgFeatures;
 use joker2620\Source\Setting\SustemConfig;
 

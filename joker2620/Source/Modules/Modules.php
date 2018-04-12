@@ -21,27 +21,29 @@ class Modules
         return self::$modules;
     }
 
+    public function loadModules(): void
+    {
+        if (self::$modules == null) {
+            self::$modules = $this->modules();
+        }
+    }
+
 
     /**
-     * addModule()
+     * commands()
      *
-     * @param $class
-     *
-     * @return $this
+     * @return array
      */
-    public function addModule($class)
+    protected function modules(): array
     {
-        $no_register = false;
-        if (count(self::$modules) > 1) {
-            foreach (self::$modules as $module) {
-                if ($module instanceof $class) {
-                    $no_register = true;
-                }
-            }
+        $iterator = new \FilesystemIterator("joker2620/Source/Modules");
+        $filter   = new \RegexIterator($iterator, '/HModule.*\.php$/');
+        $classes  = [];
+        foreach ($filter as $entry) {
+            $patch     = $entry->getPathName();
+            $class     = strtr($patch, ['.php' => '', '/' => '\\']);
+            $classes[] = new $class();
         }
-        if (!$no_register) {
-            self::$modules [] = $class;
-        }
-        return $this;
+        return $classes;
     }
 }

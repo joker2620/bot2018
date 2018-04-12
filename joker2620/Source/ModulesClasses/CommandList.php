@@ -2,10 +2,9 @@
 declare(strict_types = 1);
 
 
-namespace joker2620\Source\ModuleCommand;
+namespace joker2620\Source\ModulesClasses;
 
 use joker2620\Source\Functions\BotFunction;
-use joker2620\Source\Loger\Loger;
 use joker2620\Source\User\User;
 
 
@@ -89,7 +88,6 @@ class CommandList
         foreach ($filter as $entry) {
             $patch = $entry->getPathName();
             $class = strtr($patch, ['.php' => '', '/' => '\\']);
-            include_once $entry->getPathName();
             $classes[] = new $class();
         }
         return $classes;
@@ -99,34 +97,5 @@ class CommandList
     protected function getCommand()
     {
         return self::$commands;
-    }
-
-
-    /**
-     * addCommand()
-     *
-     * @param string $regexp
-     * @param        $class
-     * @param bool   $rule
-     * @param string $print
-     *
-     * @return $this
-     */
-    protected function addCommand(string $regexp, $class, bool $rule, string $print)
-    {
-        if (count(self::$commands) > 1) {
-            foreach (self::$commands as $command) {
-                if ($command[1] instanceof $class) {
-                    $loger = new Loger();
-                    $loger->logger(
-                        'Попытка добавить существующую команду "' .
-                        get_class($class)
-                    );
-                    continue;
-                }
-            }
-        }
-        self::$commands [] = [$regexp, $class, $rule, $print];
-        return $this;
     }
 }

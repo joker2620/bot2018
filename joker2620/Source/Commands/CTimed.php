@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace joker2620\Source\Commands;
 
 
-use joker2620\Source\ModuleCommand\CommandsTemplate;
+use joker2620\Source\ModulesClasses\CommandsTemplate;
 
 
 /**

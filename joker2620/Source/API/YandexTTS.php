@@ -7,6 +7,7 @@ namespace joker2620\Source\API;
 use joker2620\Source\Exception\BotError;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
+use VK\TransportClient\Curl\CurlHttpClient;
 
 
 /**
@@ -14,7 +15,7 @@ use joker2620\Source\Setting\UserConfig;
  *
  * @package joker2620\Source\API
  */
-class YandexTTS extends Curl
+class YandexTTS
 {
 
 
@@ -41,8 +42,8 @@ class YandexTTS extends Curl
             return $file_name;
         }
 
-        $filevoice = fopen($file_name, 'w+');
-        $query     = http_build_query(
+        $filevoice    = fopen($file_name, 'w+');
+        $query        = http_build_query(
             [
                 'format' => 'opus',
                 'lang' => $lang,
@@ -52,11 +53,15 @@ class YandexTTS extends Curl
                 'text' => $text,
             ]
         );
-
-        $urladress = SustemConfig::getConfig()['YA_ENDPOINT'] . '?' . $query;
-        $this->curl($urladress, 4, $filevoice);
-        $this->validFile($file_name);
-        return $file_name;
+        $http_client  = new CurlHttpClient(10);
+        $urladress    = SustemConfig::getConfig()['YA_ENDPOINT'] . '?' . $query;
+        $http_data    = $http_client->post($urladress, ['file' => new \CURLFile($filevoice)]);
+        $decoded_body = json_decode($http_data->getBody(), true);
+        if ($decoded_body === null || !is_array($decoded_body)) {
+            $decoded_body = $http_data->getBody();
+        }
+        $this->validFile($decoded_body);
+        return $decoded_body;
     }
 
 

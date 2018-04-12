@@ -1,9 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace joker2620\Source\ModuleCommand;
+namespace joker2620\Source\Modules;
 
 use joker2620\Source\Interfaces\ModuleInterface;
+use joker2620\Source\ModulesClasses\CommandList;
 use joker2620\Source\Setting\SustemConfig;
 
 
@@ -12,7 +13,8 @@ use joker2620\Source\Setting\SustemConfig;
  *
  * @package joker2620\Source\ModuleCommand
  */
-class HTCommands extends CommandList implements ModuleInterface
+class HModuleCommands extends CommandList implements ModuleInterface
+
 {
 
 
@@ -21,7 +23,8 @@ class HTCommands extends CommandList implements ModuleInterface
      *
      * @return bool
      */
-    public function getAnwser()
+    public
+    function getAnwser()
     {
         $ansver = false;
         $this->loadCommand();

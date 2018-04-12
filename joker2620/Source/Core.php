@@ -8,8 +8,6 @@ use joker2620\Source\DataFlow\DataFlow;
 use joker2620\Source\Exception\BotError;
 use joker2620\Source\Functions\BotFunction;
 use joker2620\Source\Loger\Loger;
-use joker2620\Source\ModuleCommand\HTCommands;
-use joker2620\Source\ModuleMessage\HTMessages;
 use joker2620\Source\Modules\Modules;
 use joker2620\Source\Setting\ConfgFeatures;
 use joker2620\Source\Setting\ConfigValidation;
@@ -46,11 +44,8 @@ class Core extends VKCallbackApiServerHandler
         $this->userData     = new User();
         $this->loger        = new Loger();
         $config_valid       = new ConfigValidation();
-        $module_commands    = new HTCommands();
-        $module_messages    = new HTMessages();
-
         $config_valid->validationConfig();
-        $this->modules->addModule($module_commands)->addModule($module_messages);
+        $this->modules->loadModules();
     }
 
 

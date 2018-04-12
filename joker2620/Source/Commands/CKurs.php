@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\Commands;
 
-use joker2620\Source\ModuleCommand\CommandsTemplate;
+use joker2620\Source\ModulesClasses\CommandsTemplate;
 
 
 /**
@@ -30,8 +30,7 @@ class CKurs extends CommandsTemplate
      */
     public function runCommand(array $matches)
     {
-        $filekurs = $this->vkapi
-            ->curl('http://www.cbr.ru/scripts/XML_daily.asp');
+        $filekurs = $this->vkapi->curlGet('http://www.cbr.ru/scripts/XML_daily.asp');
         preg_match(
             '/\<Valute ID=\"R01235\".*?\>(.*?)\<\/Valute\>/is',
             $filekurs,

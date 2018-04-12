@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace joker2620\Source\ModuleMessage;
+namespace joker2620\Source\ModulesClasses;
 
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\User\User;

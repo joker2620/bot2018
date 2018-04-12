@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-namespace joker2620\Source\ModuleCommand;
+namespace joker2620\Source\ModulesClasses;
 
 use joker2620\Source\API\VKAPI;
 use joker2620\Source\Loger\Loger;

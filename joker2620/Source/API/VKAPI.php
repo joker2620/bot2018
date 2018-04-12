@@ -7,17 +7,18 @@ use joker2620\Source\Functions\BotFunction;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
 use VK\Client\VKApiClient;
+use VK\TransportClient\Curl\CurlHttpClient;
 
 
 /**
  * Class VKAPI
  *
+ * @property CurlHttpClient http_client
  * @package joker2620\Source\API
  */
 class VKAPI extends VKApiClient
 {
-    private $accessToken, $botFucntion;
-
+    private $accessToken, $botFucntion, $httpClient;
 
     /**
      * VKAPI constructor.
@@ -25,10 +26,27 @@ class VKAPI extends VKApiClient
     public function __construct()
     {
         parent::__construct();
+        $this->httpClient  = new CurlHttpClient(10);
         $this->accessToken = UserConfig::getConfig()['ACCESS_TOKEN'];
         $this->botFucntion = new BotFunction();
     }
 
+    /**
+     * curl()
+     *
+     * @param string $url
+     *
+     * @return CurlHttpClient
+     */
+    public function curlGet(string $url)
+    {
+        $http_data = $this->httpClient->get($url, []);
+        $decoded_body = json_decode($http_data->getBody(), true);
+        if ($decoded_body === null || !is_array($decoded_body)) {
+            $decoded_body = $http_data->getBody();
+        }
+        return $decoded_body;
+    }
 
     /**
      * uploadVoice()
@@ -114,7 +132,7 @@ class VKAPI extends VKApiClient
     public function methodAPI(string $method, array $params = [])
     {
         $access_token = $this->getToken($params);
-        return $this->getRequest()->request($method, $access_token, $params);
+        return $this->getRequest()->post($method, $access_token, $params);
     }
 
 

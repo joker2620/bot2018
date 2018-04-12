@@ -1,9 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace joker2620\Source\ModuleMessage;
+namespace joker2620\Source\Modules;
 
 use joker2620\Source\Interfaces\ModuleInterface;
+use joker2620\Source\ModulesClasses\HTMessagesBase;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
 
@@ -13,7 +14,7 @@ use joker2620\Source\Setting\UserConfig;
  *
  * @package joker2620\Source\ModuleMessage
  */
-class HTMessages extends HTMessagesBase implements ModuleInterface
+class HModuleMessages extends HTMessagesBase implements ModuleInterface
 {
 
     public function __destruct()

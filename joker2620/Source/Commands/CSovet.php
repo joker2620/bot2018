@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\Commands;
 
-use joker2620\Source\ModuleCommand\CommandsTemplate;
+use joker2620\Source\ModulesClasses\CommandsTemplate;
 
 
 /**
@@ -30,11 +30,8 @@ class CSovet extends CommandsTemplate
      */
     public function runCommand(array $matches)
     {
-        $jsondata = json_decode(
-            $this->vkapi
-                ->curl('http://fucking-great-advice.ru/api/random'),
-            true
-        );
+        $datas     = $this->vkapi->curlGet('http://fucking-great-advice.ru/api/random');
+        $jsondata = $datas;
         return strip_tags(strtr($jsondata['text'], ['&nbsp;' => ' ']));
     }
 }

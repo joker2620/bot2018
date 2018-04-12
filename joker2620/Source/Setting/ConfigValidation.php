@@ -66,7 +66,7 @@ class ConfigValidation
             ->noSettings('user', 'SAVE_TRAINING_FALSE', 'bool')
             ->noSettings('user', 'MIN_PERCENT', 'int')
             ->noSettings('sustem', 'VERSION', '0.2.0')
-            ->noSettings('sustem', 'BUILD', '11.04.18');
+            ->noSettings('sustem', 'BUILD', '12.04.18');
     }
 
 
@@ -88,8 +88,6 @@ class ConfigValidation
             case 'user':
                 $user_config = $this->userConfig();
                 break;
-            case 'command':
-                $user_config = $this->commandConfig();
                 break;
             case 'sustem':
                 $user_config = $this->sustemConfig();
