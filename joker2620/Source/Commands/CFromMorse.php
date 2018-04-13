@@ -15,8 +15,8 @@ use Morse\Text;
  */
 class CFromMorse extends CommandsTemplate
 {
-    protected $regexp     = 'ИМ(ЗА|З) (.{1,})';
-    protected $display    = ' - "ИМЗ(А) (текст)" - расшифрует сообщение. (А- Анг. Таблица)';
+    protected $regexp     = 'имз(1|) (.{1,})';
+    protected $display    = ' - "имз(1) (текст)" - расшифрует сообщение. (1- Анг. Таблица)';
     protected $permission = 0;
 
 
@@ -30,7 +30,7 @@ class CFromMorse extends CommandsTemplate
     public function runCommand(array $matches)
     {
         $russian = false;
-        if ($matches[1][0] != 'ЗА')
+        if ($matches[1][0] != '1')
             $russian = new TableRU();
         $morse = new Text($russian);
         return $morse->fromMorse($matches[2][0]);
