@@ -66,7 +66,7 @@ class ConfigValidation
             ->noSettings('user', 'SAVE_TRAINING_FALSE', 'bool')
             ->noSettings('user', 'MIN_PERCENT', 'int')
             ->noSettings('sustem', 'VERSION', '0.2.0')
-            ->noSettings('sustem', 'BUILD', '12.04.18');
+            ->noSettings('sustem', 'BUILD', '14.04.18');
     }
 
 

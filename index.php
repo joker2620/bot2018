@@ -1,7 +1,7 @@
 <?php
 declare(strict_types = 1);
 
-
+setlocale(LC_CTYPE, "ru_RU");
 ini_set('date.timezone', 'Europe/Moscow');
 
 if (!file_exists('vendor/autoload.php')) {
@@ -20,7 +20,7 @@ try {
     $handler->parse(
         $data_flow->readData(
 //            [
-//            'type' => 'message_new', 'object' =>
+//                'type' => 'message_new', 'object' =>
 //                [
 //                    'id' => 4520,
 //                    'date' => 1521303747,
@@ -28,7 +28,7 @@ try {
 //                    'user_id' => 211984675,
 //                    'read_state' => 0,
 //                    'title' => '',
-//                    'body' => 'времяя'
+//                    'body' => 'вч sqrt(10)'
 //                ], 'group_id' => 324, 'secret' => 432
 //            ]
         )

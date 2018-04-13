@@ -15,6 +15,14 @@ class ComposerStaticInit80813fcb9b470701b6691b22e66b6539
         array (
             'VK\\' => 3,
         ),
+        'M' => 
+        array (
+            'Morse\\' => 6,
+        ),
+        'F' => 
+        array (
+            'FormulaParser\\' => 14,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
@@ -25,6 +33,14 @@ class ComposerStaticInit80813fcb9b470701b6691b22e66b6539
         'VK\\' => 
         array (
             0 => __DIR__ . '/..' . '/vkcom/vk-php-sdk/src/VK',
+        ),
+        'Morse\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rexxars/morse/library',
+        ),
+        'FormulaParser\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/denissimon/formula-parser',
         ),
     );
 

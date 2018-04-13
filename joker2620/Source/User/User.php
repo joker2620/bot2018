@@ -26,7 +26,7 @@ class User implements UserInterface
      * @param array $user_info
      * @param array $messageData
      *
-     * @return mixed|void
+     * @return void
      */
     public function setUserData(array $user_info, array $messageData): void
     {
