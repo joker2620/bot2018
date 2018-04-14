@@ -40,7 +40,7 @@ class VKAPI extends VKApiClient
      */
     public function curlGet(string $url)
     {
-        $http_data = $this->httpClient->get($url, []);
+        $http_data    = $this->httpClient->get($url, []);
         $decoded_body = json_decode($http_data->getBody(), true);
         if ($decoded_body === null || !is_array($decoded_body)) {
             $decoded_body = $http_data->getBody();

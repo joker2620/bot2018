@@ -30,7 +30,7 @@ class CSovet extends CommandsTemplate
      */
     public function runCommand(array $matches)
     {
-        $datas     = $this->vkapi->curlGet('http://fucking-great-advice.ru/api/random');
+        $datas    = $this->vkapi->curlGet('http://fucking-great-advice.ru/api/random');
         $jsondata = $datas;
         return strip_tags(strtr($jsondata['text'], ['&nbsp;' => ' ']));
     }
