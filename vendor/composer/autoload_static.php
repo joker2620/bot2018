@@ -17,6 +17,7 @@ class ComposerStaticInit80813fcb9b470701b6691b22e66b6539
         ),
         'M' => 
         array (
+            'MrKody\\JsonDb\\' => 14,
             'Morse\\' => 6,
         ),
         'F' => 
@@ -33,6 +34,10 @@ class ComposerStaticInit80813fcb9b470701b6691b22e66b6539
         'VK\\' => 
         array (
             0 => __DIR__ . '/..' . '/vkcom/vk-php-sdk/src/VK',
+        ),
+        'MrKody\\JsonDb\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/mrkody/php-jsondb/src',
         ),
         'Morse\\' => 
         array (

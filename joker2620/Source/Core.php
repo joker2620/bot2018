@@ -14,6 +14,7 @@ use joker2620\Source\Setting\ConfigValidation;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
 use joker2620\Source\User\User;
+use joker2620\Source\User\UserData;
 use VK\CallbackApi\Server\VKCallbackApiServerHandler;
 
 
@@ -30,7 +31,7 @@ class Core extends VKCallbackApiServerHandler
     private $loger;
     private $vkapi;
     private $botFunctions;
-
+    private $userBase;
 
     /**
      * Core constructor.
@@ -44,6 +45,7 @@ class Core extends VKCallbackApiServerHandler
         $this->userData     = new User();
         $this->loger        = new Loger();
         $config_valid       = new ConfigValidation();
+        $this->userBase     = new UserData();
         $config_valid->validationConfig();
         $this->modules->loadModules();
     }
@@ -68,6 +70,7 @@ class Core extends VKCallbackApiServerHandler
      * @param int         $group_id
      * @param null|string $secret
      * @param array       $object
+     *
      */
     public function messageNew(int $group_id, ?string $secret, array $object)
     {
@@ -76,6 +79,7 @@ class Core extends VKCallbackApiServerHandler
         $users          = max($users);
         $object['body'] = $this->botFunctions->filterString($object['body']);
         $this->userData->setUserData($users, $object);
+        $this->userBase->user();
         $answer = false;
         foreach ($this->modules->getModule() as $module) {
             $handler = $module->getAnwser();
@@ -108,6 +112,9 @@ class Core extends VKCallbackApiServerHandler
      * @param array       $object
      *
      * @throws BotError
+     *      *
+     * @deprecated 0.2.0.140418
+     * @TODO       : will be removed in version 0.2.0
      */
     public function wallPostNew(int $group_id, ?string $secret, array $object)
     {
@@ -150,6 +157,9 @@ class Core extends VKCallbackApiServerHandler
      * @param int         $group_id
      * @param null|string $secret
      * @param array       $object
+     *
+     * @deprecated 0.2.0.140418
+     * @TODO       : will be removed in version 0.2.0
      */
     public function pollVoteNew(int $group_id, ?string $secret, array $object)
     {

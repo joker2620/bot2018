@@ -6,6 +6,7 @@ namespace joker2620\Source\ModulesClasses;
 use joker2620\Source\API\VKAPI;
 use joker2620\Source\Loger\Loger;
 use joker2620\Source\User\User;
+use joker2620\Source\User\UserData;
 
 
 /**
@@ -30,15 +31,17 @@ abstract class CommandsTemplate
 
     protected $loger;
 
+    protected $dataBase;
 
     /**
      * CommandsTemplate constructor.
      */
     public function __construct()
     {
-        $this->loger = new Loger();
-        $this->vkapi = new VKAPI();
-        $this->user  = new User();
+        $this->loger    = new Loger();
+        $this->vkapi    = new VKAPI();
+        $this->user     = new User();
+        $this->dataBase = new UserData();
     }
 
 

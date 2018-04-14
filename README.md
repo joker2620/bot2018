@@ -2,7 +2,7 @@
 
 [![PHP](https://img.shields.io/badge/PHP-7.1%5E-brightgreen.svg?style=for-the-badge)](https://php.net/)
 [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/blob/master/LICENSE/)
-[![VERSION](https://img.shields.io/badge/LAST%20VERSION-0.2.0-blue.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
+[![VERSION](https://img.shields.io/badge/LAST%20VERSION-0.2.1--aplha-blue.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 [![BUID](https://img.shields.io/badge/LAST%20BUILD-14.04.18-lightgrey.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 [![PSR](https://img.shields.io/badge/PSR-0--4-orange.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
 [![PSR](https://img.shields.io/badge/Code%20quality-maybe%20bad-orange.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
@@ -19,6 +19,7 @@
    * `php_gd2.dll`;
    * `php_curl.dll`;
    * `php_mbstring.dll`.
+   * `php_openssl.dll`
 1. Убедитесь что, все расширения включены.
 1. Переименуйте файл `Configuration/UserConfig.php_default` в `Configuration/UserConfig.php`
 1. Следующие файлы, необходимы для работы бота на сайте: 
@@ -26,8 +27,6 @@
    * Папка `joker2620`; 
    * Файл `index.php`.
 1. Настройте конфигурационные файлы, и загрузите вышеперечисленные файлы на сайт.
-1. Описание классов бота: [```Пока недоступно```][7].
-
 
 Настройка
 -------------
@@ -36,7 +35,6 @@
 1. Добавите сервер - перейдите в меню `Работа с API`, выберите `Callback API`, ведите адрес до файла `index.php`, который находиться в папки с ботом. Скопируйте строку которую должен вернуть сервер, и вставьте в поле `CONFIRMATION_TOKEN`, файла `joker2620/Configuration/UserConfig.php`. 
 1. В `Типах событий`, выберите:
     * Сообщения: `Входящие сообщения`;
-    * Записи на стене: `Добавление`;
     * Прочее: `Голос в публичном опросе` (Если не включать этот метод, то можно пропустить следующее действие).
 1. Получите свой токен - это требуется для работы некоторых функций (в частности, для функции pollVoteNew() - оповещения о проголосовавших в опросах группы), и вставьте в поле `ADMIN_TOKEN`, файла `joker2620/Configuration/UserConfig.php`.  
 
@@ -45,13 +43,24 @@
 * Для выключения требований, заполнения некоторых из полей конфигураций (При запуске бота вам будет выдана ошибка), воспользуйтесь настройками файла `joker2620/Configuration/ConfgFeatures.php`.
 Такие команды бота как `!вголос` работают с помощью API сторонних сервисов.
 * Для команды `!вголос`, необходимо получить Yandex API Key, через [кабинет разработчика][4], и вставить в поле `SPEECH_KEY`, файла `joker2620/Configuration/UserConfig.php`.
+* Вы можете сохранять необходимую информацию в базу данных. Доступные ячейки для сохранения указаны в `Configuration\SustemConfig.php`.
+Использование внутри класса команды:
+```php
+    public function runCommand(array $matches)
+    {
+        $this->dataBase->addVar('var1', $matches[1][0]);//Записать
+        $user_name = $this->dataBase->getVar('var1');//Получить
+        ...
+    }
+```
 
 Редактирование команд 
 --------- 
 
 1. Команды встроенные в бота, вы можете посмотреть после установки, написав ему сообщение с текстом `команды`.
 1. Все команды расположены в папке `joker2620/Source/Commands`.
-1. Список команд и информацию о командах, можно изменить в файле `joker2620/Source/ModuleCommand/Config.php` 
+1. Список команд формируется автоматически на основании данных в классе команды.
+1. В командах вы можете использовать любые публичные функции бота и его библиотек
 
 База ответов
 --------- 
@@ -78,10 +87,13 @@
     * `"ins"` - творительный;
     * `"abl"` - предложный.
 
+Старт
+--------- 
+
+1. После запуска бота вы можете выполнить команду "команды", чтобы узнать список команд.
+
 [1]: https://github.com/joker2620/bot2018
 [2]: https://vk.com/
 [3]: https://getcomposer.org/doc/00-intro.md
 [4]: https://tech.yandex.ru/speechkit/cloud/
 [6]: https://vk.com/ihabotclub
-[7]: https://joker2620.github.io/bot2018/
-

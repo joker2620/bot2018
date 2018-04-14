@@ -16,13 +16,6 @@ use joker2620\Source\Setting\UserConfig;
  */
 class HModuleMessages extends HTMessagesBase implements ModuleInterface
 {
-
-    public function __destruct()
-    {
-        parent::__destruct();
-    }
-
-
     /**
      * getAnwser()
      *
@@ -53,13 +46,22 @@ class HModuleMessages extends HTMessagesBase implements ModuleInterface
     {
         $return = false;
         if (UserConfig::getConfig()['USER_TRAINING']) {
-            if (preg_match('/^(\!наобучение)$/iu', $this->user->getMessageData()['body'])) {
+            if (preg_match(
+                '/^(\!' . SustemConfig::getConfig()['MESSAGE']['TextMessage']['toLearn'] . ')$/iu',
+                $this->user->getMessageData()['body']
+            )) {
                 $return = $this->addTraining();
             } elseif ($this->scanMsgUser()) {
-                if (preg_match('/^(нет)$/iu', $this->user->getMessageData()['body'])) {
+                if (preg_match(
+                    '/^(' . SustemConfig::getConfig()['MESSAGE']['TextMessage']['not'] . ')$/ui',
+                    $this->user->getMessageData()['body']
+                )) {
                     $this->addAnswer(true);
                     $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][6];
-                } elseif (preg_match('/^(!мусор)$/iu', $this->user->getMessageData()['body'])) {
+                } elseif (preg_match(
+                    '/^(' . SustemConfig::getConfig()['MESSAGE']['TextMessage']['Clear'] . ')$/ui',
+                    $this->user->getMessageData()['body']
+                )) {
                     $this->delAnswer();
                     $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][9];
                 } else {

@@ -14,7 +14,7 @@ use joker2620\Source\ModulesClasses\CommandsTemplate;
  */
 class CMatch extends CommandsTemplate
 {
-    protected $regexp     = 'вч (.*)';
+    protected $regexp     = 'вч (.{1,})';
     protected $display    = ' - "вч (выражение)" - Вычислит выражение.';
     protected $permission = 0;
 

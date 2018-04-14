@@ -46,6 +46,56 @@
         ]
     },
     {
+        "name": "mrkody/php-jsondb",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/mrkody/php-jsondb.git",
+            "reference": "eba2ae4274a23ba8821b857f7edd5aa861170d2b"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/mrkody/php-jsondb/zipball/eba2ae4274a23ba8821b857f7edd5aa861170d2b",
+            "reference": "eba2ae4274a23ba8821b857f7edd5aa861170d2b",
+            "shasum": ""
+        },
+        "require": {
+            "ext-json": "*",
+            "php": ">=5.3.0"
+        },
+        "time": "2018-02-27T08:47:46+00:00",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-4": {
+                "MrKody\\JsonDb\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "mrkody",
+                "email": "kody1994@mail.ru"
+            },
+            {
+                "name": "donjajo",
+                "email": "me@donjajo.com"
+            }
+        ],
+        "description": "Simple JSON-file-database PHP library",
+        "homepage": "https://github.com/mrkody/php-jsondb",
+        "keywords": [
+            "json",
+            "jsondb",
+            "mrkody",
+            "php"
+        ]
+    },
+    {
         "name": "rexxars/morse",
         "version": "1.0.0",
         "version_normalized": "1.0.0.0",

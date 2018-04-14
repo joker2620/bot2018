@@ -8,6 +8,7 @@ $baseDir = dirname($vendorDir);
 return array(
     'joker2620\\' => array($baseDir . '/joker2620'),
     'VK\\' => array($vendorDir . '/vkcom/vk-php-sdk/src/VK'),
+    'MrKody\\JsonDb\\' => array($vendorDir . '/mrkody/php-jsondb/src'),
     'Morse\\' => array($vendorDir . '/rexxars/morse/library'),
     'FormulaParser\\' => array($vendorDir . '/denissimon/formula-parser'),
 );

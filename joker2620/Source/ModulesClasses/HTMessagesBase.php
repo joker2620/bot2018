@@ -5,6 +5,7 @@ namespace joker2620\Source\ModulesClasses;
 
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
+use MrKody\JsonDb\JsonDb;
 
 
 /**
@@ -30,30 +31,9 @@ class HTMessagesBase extends TrainingEdit
         $return = false;
         $height = UserConfig::getConfig()['MIN_PERCENT'];
         if ($file_base) {
-            $fname     = SustemConfig::getConfig()['FILE_TRAINING'];
-            $results   = fopen($fname, 'r+');
-            $result    = fread($results, filesize($fname));
-            $base_data = json_decode($result, true);
-            if ($result) {
-                foreach ($base_data as $lines) {
-                    $height = $this->scanBase($lines, $height);
-                }
-                unset($result);
-            }
-            fclose($results);
+            $this->scanTraining($height);
         } else {
-            $fname  = SustemConfig::getConfig()['FILE_BASE'];
-            $result = file(
-                $fname,
-                FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES
-            );
-            if ($result) {
-                foreach ($result as $lines) {
-                    $lines  = explode('\\', $lines);
-                    $height = $this->scanBase($lines, $height);
-                }
-                unset($result);
-            }
+            $this->scanMainBase($height);
         }
         if ($this->database != []) {
             ksort($this->database);
@@ -64,28 +44,29 @@ class HTMessagesBase extends TrainingEdit
         return $return;
     }
 
-
     /**
-     * scanBase()
+     * scanTraining()
      *
-     * @param array $lines
-     * @param int   $height
-     *
-     * @return int|mixed
+     * @param $height
      */
-    private function scanBase(array $lines, int $height)
+    public function scanTraining($height)
     {
-        $height = $this->getHeight($height);
-        if (similar_text($this->user->getMessageData()['body'], $lines[0], $percent)) {
-            $percent = intval($percent);
-            if ($percent >= $height) {
-                $this->setDatabase($percent, $lines[1]);
+        $json_db = new JsonDb();
+        $json_db->from(SustemConfig::getConfig()['FILE_TRAINING']);
+        $result = $json_db->select('*')->get();
+        if ($result) {
+            foreach ($result as $lines) {
+                $height = $this->getHeight($height);
+                if (similar_text($this->user->getMessageData()['body'], $lines->question, $percent)) {
+                    $percent = intval($percent);
+                    if ($percent >= $height) {
+                        $this->setDatabase($percent, $lines->answer);
+                    }
+                }
             }
+            unset($result);
         }
-
-        return $height;
     }
-
 
     /**
      * getHeight()
@@ -102,7 +83,6 @@ class HTMessagesBase extends TrainingEdit
         return $height < $maxkey ? $maxkey : $height;
     }
 
-
     /**
      * setDatabase()
      *
@@ -112,5 +92,32 @@ class HTMessagesBase extends TrainingEdit
     private function setDatabase(int $per, string $value)
     {
         $this->database[$per][] = $value;
+    }
+
+    /**
+     * scanMainBase()
+     *
+     * @param $height
+     */
+    public function scanMainBase($height)
+    {
+        $fname  = SustemConfig::getConfig()['FILE_BASE'];
+        $result = file(
+            $fname,
+            FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES
+        );
+        if ($result) {
+            foreach ($result as $lines) {
+                $lines  = explode('\\', $lines);
+                $height = $this->getHeight($height);
+                if (similar_text($this->user->getMessageData()['body'], $lines[0], $percent)) {
+                    $percent = intval($percent);
+                    if ($percent >= $height) {
+                        $this->setDatabase($percent, $lines[1]);
+                    }
+                }
+            }
+            unset($result);
+        }
     }
 }

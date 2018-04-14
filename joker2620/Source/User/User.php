@@ -34,7 +34,6 @@ class User implements UserInterface
         self::$userInfo    = $user_info;
     }
 
-
     /**
      * getId()
      *

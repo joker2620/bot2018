@@ -5,6 +5,7 @@ namespace joker2620\Source\ModulesClasses;
 
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\User\User;
+use MrKody\JsonDb\JsonDb;
 
 
 /**
@@ -14,47 +15,22 @@ use joker2620\Source\User\User;
  */
 class TrainingEdit
 {
-    public $user;
-
+    const FALSE = 'false';
+    public  $user;
     private $baseName;
-
-    private $baseData;
-
+    private $jsonBD;
 
     /**
      * TrainingEdit constructor.
      */
     public function __construct()
     {
-        $this->user     = new User();
         $this->baseName = SustemConfig::getConfig()['FILE_TRAINING'];
-        if (file_exists($this->baseName)) {
-            $file_name     = $this->baseName;
-            $file_resource = fopen($file_name, "r+");
-            $file_base     = fread($file_resource, filesize($file_name));
-            if ($file_base) {
-                $resource = json_decode($file_base, true);
-                if ($resource !== false) {
-                    $this->baseData = $resource;
-                } else {
-                    $this->baseData = [];
-                }
-            } else {
-                $this->baseData = [];
-            }
-            fclose($file_resource);
-        }
+        $this->jsonBD   = new JsonDb();
+        //question answer training author
+        $this->jsonBD->from($this->baseName);
+        $this->user = new User();
     }
-
-
-    public function __destruct()
-    {
-        $data_to_write = json_encode($this->baseData, JSON_UNESCAPED_UNICODE);
-        $resource      = fopen($this->baseName, 'w+');
-        fwrite($resource, $data_to_write);
-        fclose($resource);
-    }
-
 
     /**
      * addAnswer()
@@ -63,28 +39,64 @@ class TrainingEdit
      */
     protected function addAnswer(bool $no = false)
     {
-        foreach ($this->baseData as $key_base => $data_base) {
-            if ($data_base[2] == $this->user->getId() && $data_base[1] == false) {
-                $this->baseData[$key_base] = [
-                    $data_base[0],
-                    $no == false ? $this->user->getMessageData()['body'] : false,
-                    false,
-                    isset($data_base[3]) ? $data_base[3] : false
-                ];
-            }
+        $no = $this->replLogic($no);
+        //question answer training author
+        $select = $this->jsonBD->select('question, answer, training')->where(
+            [
+                'answer' => self::FALSE,
+                'training' => $this->user->getId()
+            ],
+            'AND'
+        )->get();
+        if (!empty($select) && $select[0]['answer'] == self::FALSE && $select[0]['training'] == $this->user->getId()) {
+            //question answer training author
+            $this->jsonBD->update(
+                [
+                    'training' => self::FALSE,
+                    'answer' => $no == self::FALSE ? $this->user->getMessageData()['body'] : self::FALSE,
+                ]
+            )
+                ->where(['answer' => self::FALSE, 'training' => $this->user->getId()], 'AND')
+                ->trigger();
         }
     }
 
+    /**
+     * replLogic()
+     *
+     * @param bool $bool
+     *
+     * @return string
+     */
+    function replLogic(bool $bool)
+    {
+        $return = self::FALSE;
+        switch ($bool) {
+            case true:
+                $return = 'true';
+                break;
+            case false:
+                $return = 'false';
+                break;
+        }
+        return $return;
+    }
 
+    /**
+     * delAnswer()
+     *
+     */
     protected function delAnswer()
     {
-        foreach ($this->baseData as $key_base => $data_base) {
-            if ($data_base[2] == $this->user->getId() && $data_base[1] == false) {
-                unset($this->baseData[$key_base]);
-            }
-        }
+        //question answer training author
+        $this->jsonBD->delete()->where(
+            [
+                'answer' => self::FALSE,
+                'training' => $this->user->getId()
+            ],
+            'AND'
+        )->trigger();
     }
-
 
     /**
      * addTraining()
@@ -94,40 +106,50 @@ class TrainingEdit
     protected function addTraining()
     {
         $message = SustemConfig::getConfig()['MESSAGE']['TextMessage'][8];
-        foreach ($this->baseData as $key_base => $data_base) {
-            if ($data_base[2] == 0 && $data_base[1] == false) {
-                $this->baseData[$key_base] = [
-                    $data_base[0], $data_base[1],
-                    $this->user->getId(), $data_base[3]
-                ];
-
-                $message = sprintf(
-                    SustemConfig::getConfig()['MESSAGE']['TextMessage'][7],
-                    $data_base[0]
-                );
-            }
+        $select  = $this->jsonBD->select('question, answer, training')->where(
+            [
+                'answer' => self::FALSE,
+                'training' => self::FALSE
+            ],
+            'AND'
+        )->get();
+        if (!empty($select[0]) && $select[0]['answer'] == self::FALSE && $select[0]['training'] == self::FALSE) {
+            //question answer training author
+            $this->jsonBD->update(['training' => $this->user->getId()])
+                ->where(['answer' => self::FALSE, 'training' => self::FALSE], 'AND')
+                ->trigger();
+            $message = sprintf(
+                SustemConfig::getConfig()['MESSAGE']['TextMessage'][7],
+                $select[0]['question']
+            );
         }
         return $message;
     }
-
 
     /**
      * addQuestion()
      *
      * @param bool $no
      */
-    protected function addQuestion(bool $no = false)
-    {
-        $this->baseData   = $this->uniqueMultiArray($this->baseData, 0);
-        $this->baseData   = $this->uniqueMultiArray($this->baseData, 2);
-        $this->baseData[] = [
-            $this->user->getMessageData()['body'],
-            false,
-            $no == false ? $this->user->getId() : false,
-            $this->user->getId()
-        ];
+    protected function addQuestion(
+        bool $no = false
+    ) {
+        $no      = $this->replLogic($no);
+        $replace = $this->jsonBD->select('question')
+            ->where(['question' => $this->user->getMessageData()['body']])
+            ->get();
+        if (!$replace) {
+            $this->jsonBD->insert(
+                $this->baseName,
+                [//question answer training author
+                    'question' => $this->user->getMessageData()['body'],
+                    'answer' => self::FALSE,
+                    'training' => $no == self::FALSE ? $this->user->getId() : self::FALSE,
+                    'author' => $this->user->getId()
+                ]
+            );
+        }
     }
-
 
     /**
      * uniqueMultiArray()
@@ -137,8 +159,9 @@ class TrainingEdit
      *
      * @return array
      */
-    protected function uniqueMultiArray(array $array, int $key)
-    {
+    protected function uniqueMultiArray(
+        array $array, int $key
+    ) {
         $temp_array = [];
         if (is_array($array)) {
             $inter     = 0;
@@ -163,13 +186,10 @@ class TrainingEdit
      */
     protected function scanMsgUser()
     {
-        if ($this->baseData) {
-            foreach ($this->baseData as $key_base => $data_base) {
-                if ($data_base[2] == $this->user->getId()) {
-                    return true;
-                }
-            }
-        }
-        return false;
+        return !empty(
+        $this->jsonBD->select('*')
+            ->where(['training' => $this->user->getId()])
+            ->get()
+        );
     }
 }

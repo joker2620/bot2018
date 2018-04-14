@@ -4,11 +4,10 @@ declare(strict_types = 1);
 setlocale(LC_CTYPE, "ru_RU");
 ini_set('date.timezone', 'Europe/Moscow');
 
-if (!file_exists('vendor/autoload.php')) {
+if (!file_exists('vendor/autoload.php'))
     die('Composer not installed.');
-}
-
-require 'vendor/autoload.php';
+else
+    require 'vendor/autoload.php';
 
 use joker2620\Source\DataFlow\DataFlow;
 use joker2620\Source\Exception\BotError;
@@ -28,7 +27,7 @@ try {
 //                    'user_id' => 211984675,
 //                    'read_state' => 0,
 //                    'title' => '',
-//                    'body' => 'вч sqrt(10)'
+//                    'body' => 'команды'
 //                ], 'group_id' => 324, 'secret' => 432
 //            ]
         )

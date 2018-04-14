@@ -24,7 +24,6 @@ class SustemConfig
     {
     }
 
-
     /**
      * getConfig()
      *

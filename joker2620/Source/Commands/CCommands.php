@@ -16,9 +16,9 @@ use joker2620\Source\ModulesClasses\CommandsTemplate;
 class CCommands extends CommandsTemplate
 {
 
-    protected $regexp = 'команды';
+    protected $regexp = 'команды(\s([1-9]||[0-9]{2,})|)';
 
-    protected $display = ' - "команды" - этот список.';
+    protected $display = ' - "команды (страница)" - этот список.';
 
     protected $permission = 0;
 
@@ -32,15 +32,14 @@ class CCommands extends CommandsTemplate
      */
     public function runCommand(array $matches)
     {
-
         $command_list = new CommandList();
         $admin        = new BotFunction();
-
-        $admin = $admin->scanAdm($this->user->getId());
+        $page_list    = empty($matches[1][0]) ? 1 : (int)$matches[2][0];
+        $admin        = $admin->scanAdm($this->user->getId());
         if ($admin == true) {
-            $items = $command_list->getCommandList(2);
+            $items = $command_list->getCommandList(3, $page_list);
         } else {
-            $items = $command_list->getCommandList(0);
+            $items = $command_list->getCommandList(1, $page_list);
         }
         return implode("\n", $items);
     }

@@ -1,8 +1,15 @@
 {
   "name": "joker2620/bot2018",
-  "description": "Chat-bot for VK.COM",
-  "minimum-stability": "stable",
+  "description": "Чат-бот для социальной сети VK.COM",
+  "minimum-stability": "alpha",
+  "version": "0.2.1-alpha",
+  "type": "project",
+  "homepage": "https://vk.com/vkbotproject",
+  "time": "2018-04-14",
   "license": "MIT",
+  "support": {
+    "source": "https://vk.com/vkbotproject"
+  },
   "authors": [
     {
       "name": "joker2620",
@@ -15,8 +22,10 @@
     }
   },
   "require": {
+    "php": ">=7.1",
     "vkcom/vk-php-sdk": "0.2.0",
     "rexxars/morse": "1.0.0",
-    "denissimon/formula-parser": "v2.5.0"
+    "denissimon/formula-parser": "v2.5.0",
+    "mrkody/php-jsondb": "dev-master"
   }
 }
