@@ -41,7 +41,7 @@
 1. Переименуйте файл пользовательских настроек `UserConfig.php_default` в `UserConfig.php`;
 1. Заполните необходимые поля, и следуйте [настройкам группы][2]
 
-
+[0]: index.md
 [1]: struct.md
 [2]: vkgroup.md
 [3]: https://getcomposer.org/doc/00-intro.md

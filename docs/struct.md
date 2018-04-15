@@ -1,5 +1,6 @@
 Информация
 ------------
+
 * Документ поддерживается в версиях(ии): 0.2.1-alpha2
 * [Главная страница][0]
 
@@ -37,3 +38,5 @@ joker2620/
 * `joker2620/Configuration/SustemConfig.php` - Настройки системы
 * `joker2620/Configuration/FeaturesConfig.php` - Настройки требований
 * `joker2620/Configuration/UserConfig.php` - Настройки бота
+
+[0]: index.md
