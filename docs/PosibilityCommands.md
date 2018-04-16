@@ -43,8 +43,7 @@ $this->vkapi
 Пример работы:
 
 ```php
-$this->vkapi->curlGet('https://….com/’);
-$this->vkapi->curlGet('https://….com/’);
+$this->vkapi->curlGet('https://example.com/');
 ```
 
 $this->dataBase
