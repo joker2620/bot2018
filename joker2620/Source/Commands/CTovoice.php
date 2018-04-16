@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace joker2620\Source\Commands;
 
 use joker2620\Source\API\YandexTTS;
-use joker2620\Source\ModulesClasses\CommandsTemplate;
+use joker2620\Source\Modules\CommandsTemplate;
 use joker2620\Source\Setting\ConfgFeatures;
 use joker2620\Source\Setting\SustemConfig;
 
@@ -48,7 +48,7 @@ class CTovoice extends CommandsTemplate
                 ['doc' . $doccs['owner_id'] . '_' . $doccs['id']]
             ];
         } else {
-            $return = SustemConfig::getConfig()['MESSAGE']['TextCommand'][2];
+            $return = SustemConfig::getConfig()['MESSAGE']['FunctionDisabled'];
         }
         return $return;
     }

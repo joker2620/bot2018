@@ -4,13 +4,15 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\Setting;
 
+use joker2620\Source\Interfaces\Setting\ConfigGetter;
+
 
 /**
  * Class ConfgFeatures
  *
  * @package joker2620\Source\Setting
  */
-class ConfgFeatures
+class ConfgFeatures extends ConfigGetter
 {
 
     private static $instance;

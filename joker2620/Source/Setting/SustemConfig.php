@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace joker2620\Source\Setting;
 
 use joker2620\Source\Functions\BotFunction;
+use joker2620\Source\Interfaces\Setting\ConfigGetter;
 
 
 /**
@@ -11,7 +12,7 @@ use joker2620\Source\Functions\BotFunction;
  *
  * @package joker2620\Source\Setting
  */
-class SustemConfig
+class SustemConfig extends ConfigGetter
 {
 
     private static $instance;

@@ -96,47 +96,6 @@
         ]
     },
     {
-        "name": "rexxars/morse",
-        "version": "1.0.0",
-        "version_normalized": "1.0.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/rexxars/morse-php.git",
-            "reference": "4f8b8fe15639ddd6f9f030c06e9ccce844142ac9"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/rexxars/morse-php/zipball/4f8b8fe15639ddd6f9f030c06e9ccce844142ac9",
-            "reference": "4f8b8fe15639ddd6f9f030c06e9ccce844142ac9",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.4.0"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "^4.8.11"
-        },
-        "time": "2015-11-04T22:20:15+00:00",
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "Morse\\": "library/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Espen Hovlandsdal",
-                "email": "espen@hovlandsdal.com"
-            }
-        ],
-        "description": "Generate morse code (text and/or wav-audio)"
-    },
-    {
         "name": "vkcom/vk-php-sdk",
         "version": "0.2.0",
         "version_normalized": "0.2.0.0",

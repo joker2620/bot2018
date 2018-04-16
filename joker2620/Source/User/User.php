@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\User;
 
-use joker2620\Source\Interfaces\UserInterface;
+use joker2620\Source\Interfaces\User\UserInterface;
 
 
 /**

@@ -236,7 +236,7 @@ class VKAPI extends VKApiClient
                 'peer_id' => $peer_id,
                 'message' => $message ?
                     $this->botFucntion->ucFirst($message) :
-                    SustemConfig::getConfig()['MESSAGE']['Main'][1],
+                    SustemConfig::getConfig()['MESSAGE']['noAnswer'],
                 'attachment' => $attachment ?
                     implode(',', $attachment) : false,
             ]

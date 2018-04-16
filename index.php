@@ -4,18 +4,19 @@ declare(strict_types = 1);
 setlocale(LC_CTYPE, "ru_RU");
 ini_set('date.timezone', 'Europe/Moscow');
 
+use joker2620\Source\DataFlow\DataFlow;
+use joker2620\Source\Exception\BotError;
+use joker2620\Source\Loger\Loger;
+
 if (!file_exists('vendor/autoload.php'))
     die('Composer not installed.');
 else
     require 'vendor/autoload.php';
 
-use joker2620\Source\DataFlow\DataFlow;
-use joker2620\Source\Exception\BotError;
-use joker2620\Source\Loger\Loger;
 
+$data_flow = new DataFlow();
 try {
     $handler   = new \joker2620\Source\Core();
-    $data_flow = new DataFlow();
     $handler->parse(
         $data_flow->readData(
 //            [

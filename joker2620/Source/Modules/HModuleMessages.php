@@ -3,8 +3,7 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\Modules;
 
-use joker2620\Source\Interfaces\ModuleInterface;
-use joker2620\Source\ModulesClasses\HTMessagesBase;
+use joker2620\Source\Interfaces\Modules\ModuleInterface;
 use joker2620\Source\Setting\SustemConfig;
 use joker2620\Source\Setting\UserConfig;
 
@@ -47,31 +46,31 @@ class HModuleMessages extends HTMessagesBase implements ModuleInterface
         $return = false;
         if (UserConfig::getConfig()['USER_TRAINING']) {
             if (preg_match(
-                '/^(\!' . SustemConfig::getConfig()['MESSAGE']['TextMessage']['toLearn'] . ')$/iu',
+                '/^(\!' . SustemConfig::getConfig()['MESSAGE']['toLearn'] . ')$/iu',
                 $this->user->getMessageData()['body']
             )) {
                 $return = $this->addTraining();
             } elseif ($this->scanMsgUser()) {
                 if (preg_match(
-                    '/^(' . SustemConfig::getConfig()['MESSAGE']['TextMessage']['not'] . ')$/ui',
+                    '/^(' . SustemConfig::getConfig()['MESSAGE']['not'] . ')$/ui',
                     $this->user->getMessageData()['body']
                 )) {
                     $this->addAnswer(true);
-                    $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][6];
+                    $return = SustemConfig::getConfig()['MESSAGE']['AnswerNotGiven'];
                 } elseif (preg_match(
-                    '/^(' . SustemConfig::getConfig()['MESSAGE']['TextMessage']['Clear'] . ')$/ui',
+                    '/^(' . SustemConfig::getConfig()['MESSAGE']['Clear'] . ')$/ui',
                     $this->user->getMessageData()['body']
                 )) {
                     $this->delAnswer();
-                    $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][9];
+                    $return = SustemConfig::getConfig()['MESSAGE']['MessageDeleted'];
                 } else {
                     if (mb_strlen($this->user->getMessageData()['body']) > 5) {
                         $this->addAnswer();
                         $return
-                            = SustemConfig::getConfig()['MESSAGE']['TextMessage'][4];
+                            = SustemConfig::getConfig()['MESSAGE']['ThanksForAnswer'];
                     } else {
                         $return
-                            = SustemConfig::getConfig()['MESSAGE']['TextMessage'][2];
+                            = SustemConfig::getConfig()['MESSAGE']['tooShotAnswer'];
                     }
                 }
             }
@@ -91,17 +90,11 @@ class HModuleMessages extends HTMessagesBase implements ModuleInterface
         if (UserConfig::getConfig()['USER_TRAINING']) {
             $this->addQuestion();
             $return = sprintf(
-                SustemConfig::getConfig()['MESSAGE']['TextMessage'][1],
-                $this->user->getMessageData()['body']
-            );
-        } elseif ($return && UserConfig::getConfig()['SAVE_TRAINING_FALSE']) {
-            $this->addQuestion(true);
-            $return = sprintf(
-                SustemConfig::getConfig()['MESSAGE']['TextMessage'][3],
+                SustemConfig::getConfig()['MESSAGE']['IDontKnowHelpMe'],
                 $this->user->getMessageData()['body']
             );
         } elseif (!($return)) {
-            $return = SustemConfig::getConfig()['MESSAGE']['TextMessage'][0];
+            $return = SustemConfig::getConfig()['MESSAGE']['IDontKnowWhatToAnswer'];
         }
         return $return;
     }

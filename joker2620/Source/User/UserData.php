@@ -10,6 +10,7 @@ declare(strict_types = 1);
 namespace joker2620\Source\User;
 
 use joker2620\Source\Functions\BotFunction;
+use joker2620\Source\Interfaces\User\UserDataInterface;
 use joker2620\Source\Setting\SustemConfig;
 use MrKody\JsonDb\JsonDb;
 
@@ -19,7 +20,7 @@ use MrKody\JsonDb\JsonDb;
  *
  * @package joker2620\Source\User
  */
-class UserData
+class UserData implements UserDataInterface
 {
     private $userFile;
     private $dataBase;
@@ -35,7 +36,7 @@ class UserData
         $this->botFunction = new BotFunction();
         $this->user        = new User();
         $this->userFile    = $this->botFunction->buildPath(
-            SustemConfig::getConfig()['DIR_USER'], 'Users.json'
+            SustemConfig::getConfig()['DIR_BASE'], 'Users.json'
         );
         $this->dataBase->from($this->userFile);
     }
@@ -47,7 +48,7 @@ class UserData
      *
      * @return array
      */
-    public function getVar($name)
+    public function read($name): array
     {
         $user_var = $this->dataBase
             ->select($name)
@@ -60,11 +61,11 @@ class UserData
     }
 
     /**
-     * newVar()
+     * user()
      *
      * @return array
      */
-    public function user()
+    public function user(): array
     {
         $users = $this->dataBase->select('uid')->where(['uid' => $this->user->getId()])->get();
         if (!isset($users[0])) {
@@ -78,14 +79,14 @@ class UserData
     }
 
     /**
-     * toVar()
+     * addVar()
      *
      * @param $name
      * @param $param
      *
      * @return JsonDb
      */
-    public function addVar($name, $param = '')
+    public function write($name, $param = '')
     {
         return $this->dataBase
             ->update([$name => $param])

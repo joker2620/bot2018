@@ -4,13 +4,15 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\Setting;
 
+use joker2620\Source\Interfaces\Setting\ConfigGetter;
+
 
 /**
  * Class UserConfig
  *
  * @package joker2620\Source\Setting
  */
-class UserConfig
+class UserConfig extends ConfigGetter
 {
 
 

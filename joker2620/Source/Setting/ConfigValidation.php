@@ -5,6 +5,7 @@ declare(strict_types = 1);
 namespace joker2620\Source\Setting;
 
 use joker2620\Source\Exception\BotError;
+use joker2620\Source\Interfaces\Setting\ConfigValid;
 use joker2620\Source\Loger\Loger;
 
 
@@ -13,9 +14,10 @@ use joker2620\Source\Loger\Loger;
  *
  * @package joker2620\Source\Setting
  */
-class ConfigValidation
+class ConfigValidation implements ConfigValid
 {
 
+    private $loger;
 
     /**
      * ConfigValidation constructor.
@@ -26,7 +28,10 @@ class ConfigValidation
     }
 
 
-    public function validationConfig()
+    /**
+     * validationConfig()
+     */
+    public function validationConfig(): void
     {
         $config_feat = ConfgFeatures::getConfig();
         if ($config_feat['CONFIG_CHECKER']) {
@@ -42,31 +47,16 @@ class ConfigValidation
      */
     private function checkUserConfig(array $config_feat)
     {
-        foreach ($config_feat as $feats_name => $feats) {
-            if ($feats === true) {
-                switch ($feats_name) {
-                    case 'ENABLE_ADMIN_TOKEN':
-                        $this->noSettings('user', 'SPEECH_KEY', 'string');
-                        break;
-                    case 'YANDEX_SPEECH':
-                        $this->noSettings('user', 'SPEECH_KEY', 'string');
-                        break;
-                    case 'AG_API_KEY':
-                        $this->noSettings('user', 'AG_API_KEY', 'string');
-                        break;
-                }
-            }
+        if (key_exists('YANDEX_SPEECH', $config_feat) && $config_feat['YANDEX_SPEECH'] == true) {
+            $this->noSettings('user', 'SPEECH_KEY', 'string');
         }
-
         $this->noSettings('user', 'BOT_NAME', 'string')
             ->noSettings('user', 'ADMINISTRATORS', 'array')
             ->noSettings('user', 'CONFIRMATION_TOKEN', 'string')
-            ->noSettings('user', 'ACCESS_TOKEN', 'string')
             ->noSettings('user', 'USER_TRAINING', 'bool')
-            ->noSettings('user', 'SAVE_TRAINING_FALSE', 'bool')
             ->noSettings('user', 'MIN_PERCENT', 'int')
-            ->noSettings('sustem', 'VERSION', '0.2.1-alpha')
-            ->noSettings('sustem', 'BUILD', '14.04.18');
+            ->noSettings('sustem', 'VERSION', '0.2.1-alpha2')
+            ->noSettings('sustem', 'BUILD', '17.04.18');
     }
 
 
@@ -76,21 +66,20 @@ class ConfigValidation
      * @param string $config
      * @param string $param_name
      * @param string $type
-     * @param bool   $level
      *
      * @return $this
      * @throws BotError
+     *
      */
-    private function noSettings(string $config, string $param_name, string $type, bool $level = false)
+    private function noSettings(string $config, string $param_name, string $type)
     {
         $user_config = [];
         switch ($config) {
             case 'user':
-                $user_config = $this->userConfig();
-                break;
+                $user_config = UserConfig::getConfig();
                 break;
             case 'sustem':
-                $user_config = $this->sustemConfig();
+                $user_config = SustemConfig::getConfig();
                 break;
         }
         switch ($type) {
@@ -113,45 +102,16 @@ class ConfigValidation
                 $requirements = 'не целочисленное';
                 break;
             default:
-                $result       = $user_config[$param_name] == $type ? true : false;
+                $result       = $user_config[$param_name] === $type ? true : false;
                 $requirements = 'соответствие значению "' . $type . '"';
                 break;
         }
         if (!$result) {
-            if ($level === false) {
-                throw new BotError(
-                    'Параметр "' . $param_name .
-                    '" не отвечает требованиям: ' . $requirements
-                );
-            } else {
-                $this->loger->logger(
-                    'Параметр "' . $param_name .
-                    '" не отвечает требованиям: ' . $requirements
-                );
-            }
+            throw new BotError(
+                'Параметр "' . $param_name .
+                '" не отвечает требованиям: ' . $requirements
+            );
         }
         return $this;
-    }
-
-
-    /**
-     * userConfig()
-     *
-     * @return mixed
-     */
-    private function userConfig()
-    {
-        return UserConfig::getConfig();
-    }
-
-
-    /**
-     * sustemConfig()
-     *
-     * @return mixed
-     */
-    private function sustemConfig()
-    {
-        return SustemConfig::getConfig();
     }
 }

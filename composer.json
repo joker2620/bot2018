@@ -24,7 +24,6 @@
   "require": {
     "php": ">=7.1",
     "vkcom/vk-php-sdk": "0.2.0",
-    "rexxars/morse": "1.0.0",
     "denissimon/formula-parser": "v2.5.0",
     "mrkody/php-jsondb": "dev-master"
   }

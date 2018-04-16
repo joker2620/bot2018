@@ -1,99 +1,45 @@
 # bot2018 - Чат-бот для сообществ.
 
-[![PHP](https://img.shields.io/badge/PHP-7.1%5E-brightgreen.svg?style=for-the-badge)](https://php.net/)
-[![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/blob/master/LICENSE/)
-[![VERSION](https://img.shields.io/badge/LAST%20VERSION-0.2.1--aplha-blue.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
-[![BUID](https://img.shields.io/badge/LAST%20BUILD-14.04.18-lightgrey.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
-[![PSR](https://img.shields.io/badge/PSR-0--4-orange.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
-[![PSR](https://img.shields.io/badge/Code%20quality-maybe%20bad-orange.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
+  [![VERSION][IMGVERSION]][11]
+  [![BUID][IMGBUID]][11]
+  [![PHP][IMGPHP]][14]
+  [![LICENSE][IMGLICENSE]][13]
+  
+[bot2018][11] - это **Чат-бот** для сообществ [ВК][12], созданный для развлечения посетителей группы.
 
-[bot2018][1] - это **Чат-бот** для сообществ [ВК][2], созданный для развлечения посетителей группы.
-
-Установка
+Документация
 ------------
 
-1. Бот запускается на веб-севере, с минимальной версией **PHP 7.1.**.
-1. Для корректной работы бота необходимо установить [Composer][3].
-1. Выполните команду ``` Composer install ``` находясь в папке с ботом. 
-1. Для корректной работы бота требуются следующие PHP расширения:
-   * `php_gd2.dll`;
-   * `php_curl.dll`;
-   * `php_mbstring.dll`.
-   * `php_openssl.dll`
-1. Убедитесь что, все расширения включены.
-1. Переименуйте файл `Configuration/UserConfig.php_default` в `Configuration/UserConfig.php`
-1. Следующие файлы, необходимы для работы бота на сайте: 
-   * Папка `vendor` (данная папка создается автоматически, после установки `Composer`);
-   * Папка `joker2620`; 
-   * Файл `index.php`.
-1. Настройте конфигурационные файлы, и загрузите вышеперечисленные файлы на сайт.
+* [Главная страница][0];
+* [Структура][1];
+* [Установка][2];
+* [Подключение группы][3];
+* [База ответов][4]:
+  * [Создание ответов][5];
+  * [Ключевые слова][6].
+* Команды бота:
+  * [Создание команд][7];
+  * [Возможности команд][8];
+  * [Пример класса команд][10].
+* Стандартные сообщения
+  * [Настройка стандартных сообщений][9].
 
-Настройка
--------------
-
-1. Получите токен сообщества - это можно сделать перейдя в настройки сообщества, и в меню выбрать `Работа с API`, далее создайте ключ, и вставьте его в поле `ACCESS_TOKEN`, файла `joker2620/Configuration/UserConfig.php`. 
-1. Добавите сервер - перейдите в меню `Работа с API`, выберите `Callback API`, ведите адрес до файла `index.php`, который находиться в папки с ботом. Скопируйте строку которую должен вернуть сервер, и вставьте в поле `CONFIRMATION_TOKEN`, файла `joker2620/Configuration/UserConfig.php`. 
-1. В `Типах событий`, выберите:
-    * Сообщения: `Входящие сообщения`;
-    * Прочее: `Голос в публичном опросе` (Если не включать этот метод, то можно пропустить следующее действие).
-1. Получите свой токен - это требуется для работы некоторых функций (в частности, для функции pollVoteNew() - оповещения о проголосовавших в опросах группы), и вставьте в поле `ADMIN_TOKEN`, файла `joker2620/Configuration/UserConfig.php`.  
-
-Особенности некоторых команд
----------
-* Для выключения требований, заполнения некоторых из полей конфигураций (При запуске бота вам будет выдана ошибка), воспользуйтесь настройками файла `joker2620/Configuration/ConfgFeatures.php`.
-Такие команды бота как `!вголос` работают с помощью API сторонних сервисов.
-* Для команды `!вголос`, необходимо получить Yandex API Key, через [кабинет разработчика][4], и вставить в поле `SPEECH_KEY`, файла `joker2620/Configuration/UserConfig.php`.
-* Вы можете сохранять необходимую информацию в базу данных. Доступные ячейки для сохранения указаны в `Configuration\SustemConfig.php`.
-Использование внутри класса команды:
-```php
-    public function runCommand(array $matches)
-    {
-        $this->dataBase->addVar('var1', $matches[1][0]);//Записать
-        $user_name = $this->dataBase->getVar('var1');//Получить
-        ...
-    }
-```
-
-Редактирование команд 
---------- 
-
-1. Команды встроенные в бота, вы можете посмотреть после установки, написав ему сообщение с текстом `команды`.
-1. Все команды расположены в папке `joker2620/Source/Commands`.
-1. Список команд формируется автоматически на основании данных в классе команды.
-1. В командах вы можете использовать любые публичные функции бота и его библиотек
-
-База ответов
---------- 
-
-1. База данных расположена по адресу `joker2620/data/base/base.bin`. 
-1. База имеет формат `Вопрос\ответ\0`, `0` - никак не обрабатывается. 
-1. Если у вас уже есть база данных [VK IHA bot][6], вы можете переименовать ее в `base.bin`. А затем, замените ключевые слова [VK IHA bot][6], на слова из списка ниже.
-1. Вы можете использовать ключевые слова в базе данных:
-    * `#uid#` - айди пользователя; 
-    * `#first_name#` - имя пользователя; 
-    * `#last_name#` - фамилия пользователя; 
-    * `#sex_dis#` - пол пользователя в виде `парень, девушка`; 
-    * `#name_bot#` - имя бота;
-    * `#what_day#` - дата;
-    * `#what_time#` - время;
-    * `#version#` - версия бота; 
-    * `#build#` - номер сборки бота. 
-1. Можно использовать падеж для склонения имени и фамилии пользователя. Используется как приставка в теге: `#first_name_gen#`.
- Возможные значения:
-    * `по умолчанию` - именительный;
-    * `"gen"` - родительный;
-    * `"dat"` - дательный;
-    * `"acc"` - винительный;
-    * `"ins"` - творительный;
-    * `"abl"` - предложный.
-
-Старт
---------- 
-
-1. После запуска бота вы можете выполнить команду "команды", чтобы узнать список команд.
-
-[1]: https://github.com/joker2620/bot2018
-[2]: https://vk.com/
-[3]: https://getcomposer.org/doc/00-intro.md
-[4]: https://tech.yandex.ru/speechkit/cloud/
-[6]: https://vk.com/ihabotclub
+[0]: docs/index.md
+[1]: docs/struct.md
+[2]: docs/install.md
+[3]: docs/vkgroup.md
+[4]: docs/AnswerBase.md
+[5]: docs/CreateNewAnswer.md
+[6]: docs/keyWord.md
+[7]: docs/CreateCommands.md
+[8]: docs/PosibilityCommands.md
+[9]: docs/StandartMessages.md
+[10]: docs/exampleCommand.md
+[11]: https://github.com/joker2620/bot2018
+[12]: https://vk.com/
+[13]: LICENSE/
+[14]: https://php.net/
+[IMGPHP]: https://img.shields.io/badge/PHP-7.1%5E-brightgreen.svg?style=for-the-badge
+[IMGLICENSE]: https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=for-the-badge
+[IMGVERSION]: https://img.shields.io/badge/LAST%20VERSION-0.2.1--aplha2-blue.svg?style=for-the-badge
+[IMGBUID]: https://img.shields.io/badge/LAST%20BUILD-16.04.18-red.svg?style=for-the-badge

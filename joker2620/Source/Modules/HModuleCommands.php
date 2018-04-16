@@ -3,8 +3,7 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\Modules;
 
-use joker2620\Source\Interfaces\ModuleInterface;
-use joker2620\Source\ModulesClasses\CommandList;
+use joker2620\Source\Interfaces\Modules\ModuleInterface;
 use joker2620\Source\Setting\SustemConfig;
 
 

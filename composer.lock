@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "5f610f198ba93371acf34d22bb8ea6a9",
+    "content-hash": "f0f0e0ab6d02e10e72b3f184cb1412ff",
     "packages": [
         {
             "name": "denissimon/formula-parser",
@@ -99,45 +99,6 @@
             "time": "2018-02-27T08:47:46+00:00"
         },
         {
-            "name": "rexxars/morse",
-            "version": "1.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/rexxars/morse-php.git",
-                "reference": "4f8b8fe15639ddd6f9f030c06e9ccce844142ac9"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/rexxars/morse-php/zipball/4f8b8fe15639ddd6f9f030c06e9ccce844142ac9",
-                "reference": "4f8b8fe15639ddd6f9f030c06e9ccce844142ac9",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.4.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^4.8.11"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Morse\\": "library/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Espen Hovlandsdal",
-                    "email": "espen@hovlandsdal.com"
-                }
-            ],
-            "description": "Generate morse code (text and/or wav-audio)",
-            "time": "2015-11-04T22:20:15+00:00"
-        },
-        {
             "name": "vkcom/vk-php-sdk",
             "version": "0.2.0",
             "source": {
@@ -179,7 +140,7 @@
     ],
     "packages-dev": [],
     "aliases": [],
-    "minimum-stability": "beta",
+    "minimum-stability": "alpha",
     "stability-flags": {
         "mrkody/php-jsondb": 20
     },

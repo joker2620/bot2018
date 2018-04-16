@@ -18,7 +18,6 @@ class ComposerStaticInit80813fcb9b470701b6691b22e66b6539
         'M' => 
         array (
             'MrKody\\JsonDb\\' => 14,
-            'Morse\\' => 6,
         ),
         'F' => 
         array (
@@ -38,10 +37,6 @@ class ComposerStaticInit80813fcb9b470701b6691b22e66b6539
         'MrKody\\JsonDb\\' => 
         array (
             0 => __DIR__ . '/..' . '/mrkody/php-jsondb/src',
-        ),
-        'Morse\\' => 
-        array (
-            0 => __DIR__ . '/..' . '/rexxars/morse/library',
         ),
         'FormulaParser\\' => 
         array (
