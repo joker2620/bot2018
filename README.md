@@ -42,4 +42,4 @@
 [IMGPHP]: https://img.shields.io/badge/PHP-7.1%5E-brightgreen.svg?style=for-the-badge
 [IMGLICENSE]: https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=for-the-badge
 [IMGVERSION]: https://img.shields.io/badge/LAST%20VERSION-0.2.1--aplha2-blue.svg?style=for-the-badge
-[IMGBUID]: https://img.shields.io/badge/LAST%20BUILD-16.04.18-red.svg?style=for-the-badge
+[IMGBUID]: https://img.shields.io/badge/LAST%20BUILD-17.04.18-red.svg?style=for-the-badge
