@@ -5,7 +5,8 @@ namespace joker2620\Source\Commands;
 
 
 use joker2620\Source\Modules\CommandsTemplate;
-use joker2620\Source\Setting\SustemConfig;
+use joker2620\Source\Setting\Config;
+
 
 /**
  * Class CPhprun
@@ -32,7 +33,7 @@ class CGetUpdate extends CommandsTemplate
     public function runCommand(array $matches)
     {
         $message = 'Обновлений нет';
-        $result  = $this->vkapi->curlGet('https://raw.githubusercontent.com/joker2620/bot2018/develop/update.json');
+        $result  = $this->vkapi->curlGet('https://raw.githubusercontent.com/joker2620/bot2018/master/update.json');
         if ($result['status'] == 'done'
             && isset($result)
             && isset($result["joker2620/bot2018"])
@@ -60,7 +61,7 @@ class CGetUpdate extends CommandsTemplate
      */
     public function scanVersion(string $version)
     {
-        return version_compare(SustemConfig::getConfig()['VERSION'], $version, '<');
+        return version_compare(Config::getConfig()['VERSION'], $version, '<');
     }
 
     /**
@@ -72,6 +73,6 @@ class CGetUpdate extends CommandsTemplate
      */
     public function scanBuild(string $build)
     {
-        return version_compare(SustemConfig::getConfig()['BUILD'], $build, '<');
+        return version_compare(Config::getConfig()['BUILD'], $build, '<');
     }
 }

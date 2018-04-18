@@ -4,9 +4,8 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\Modules;
 
-use joker2620\Source\Functions\BotFunction;
-use joker2620\Source\Setting\SustemConfig;
-use joker2620\Source\Setting\UserConfig;
+use joker2620\Source\Engine\BotFunction;
+use joker2620\Source\Setting\Config;
 use joker2620\Source\User\User;
 
 
@@ -21,7 +20,6 @@ class CommandList
     private static $commands;
     public         $user;
     public         $botFunction;
-
 
     /**
      * CommandList constructor.
@@ -44,18 +42,18 @@ class CommandList
      */
     public function getCommandList(int $mode, int $page_list = 1): array
     {
-        $commans_limit = UserConfig::getConfig()['COMMANDS_LIST_LIMIT'];
+        $commans_limit = Config::getConfig()['COMMANDS_LIST_LIMIT'];
         $max_page      = round(count(self::$commands) / $commans_limit);
         $command       = [];
-        for ($i = 0; $i <= count(self::$commands); $i++) {
-            if ($i >= $commans_limit) {
+        for ($inter = 0; $inter <= count(self::$commands); $inter++) {
+            if ($inter >= $commans_limit) {
                 continue;
-            } elseif ($page_list > 1 && $i + $commans_limit) {
-                $i += $commans_limit;
+            } elseif ($page_list > 1 && $inter + $commans_limit) {
+                $inter += $commans_limit;
             }
-            $commands         = new self::$commands[$i];
-            $item             = $commands->getPermission() ? 2 : 1;
-            $command[$item][] = $commands->getDisplay();
+            $commands          = new self::$commands[$inter];
+            $items             = $commands->getPermission() ? 2 : 1;
+            $command[$items][] = $commands->getDisplay();
         }
         $ucomm  = isset($command[1]) ? array_merge(["--- Команды бота ---\n"], $command[1]) : [];
         $acomm  = isset($command[2]) ? array_merge(
@@ -76,7 +74,7 @@ class CommandList
                     break;
             }
         } else {
-            $comman = [SustemConfig::getConfig()['MESSAGE']['PageNotFound']];
+            $comman = [Config::getConfig()['MESSAGE']['PageNotFound']];
         }
         return $comman;
     }

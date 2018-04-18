@@ -2,11 +2,11 @@
 declare(strict_types = 1);
 
 
-namespace joker2620\Source\DataFlow;
+namespace joker2620\Source\Engine;
 
 use joker2620\Source\Exception\BotError;
 use joker2620\Source\Interfaces\DataFlow\DataFlowInterface;
-use joker2620\Source\Setting\SustemConfig;
+use joker2620\Source\Setting\Config;
 
 
 /**
@@ -32,7 +32,7 @@ class DataFlow implements DataFlowInterface
             $request = json_decode(file_get_contents('php://input'), true);
         }
         if (empty($request)) {
-            throw new BotError(SustemConfig::getConfig()['MESSAGE']['cameEmptyRequest']);
+            throw new BotError(Config::getConfig()['MESSAGE']['cameEmptyRequest']);
         }
         return (object)$request;
     }

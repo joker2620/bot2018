@@ -9,11 +9,10 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\User;
 
-use joker2620\Source\Functions\BotFunction;
+use joker2620\JsonDb\JsonDb;
+use joker2620\Source\Engine\BotFunction;
 use joker2620\Source\Interfaces\User\UserDataInterface;
-use joker2620\Source\Setting\SustemConfig;
-use MrKody\JsonDb\JsonDb;
-
+use joker2620\Source\Setting\Config;
 
 /**
  * Class UserData
@@ -36,7 +35,7 @@ class UserData implements UserDataInterface
         $this->botFunction = new BotFunction();
         $this->user        = new User();
         $this->userFile    = $this->botFunction->buildPath(
-            SustemConfig::getConfig()['DIR_BASE'], 'Users.json'
+            Config::getConfig()['DIR_BASE'], 'Users.json'
         );
         $this->dataBase->from($this->userFile);
     }
@@ -46,18 +45,18 @@ class UserData implements UserDataInterface
      *
      * @param $name
      *
-     * @return array
+     * @return string
      */
-    public function read($name): array
+    public function read($name): string
     {
         $user_var = $this->dataBase
             ->select($name)
             ->where(['uid' => $this->user->getId()])
             ->get();
         if (isset($user_var[0])) {
-            return $user_var[0];
+            return $user_var[0][$name];
         }
-        return [];
+        return '';
     }
 
     /**
@@ -69,7 +68,7 @@ class UserData implements UserDataInterface
     {
         $users = $this->dataBase->select('uid')->where(['uid' => $this->user->getId()])->get();
         if (!isset($users[0])) {
-            $uvars        = SustemConfig::getConfig()['DEFAULT_USER_VARS'];
+            $uvars        = Config::getConfig()['DEFAULT_USER_VARS'];
             $uvars['uid'] = $this->user->getId();
             return $this->dataBase->insert(
                 $this->userFile, $uvars
@@ -79,17 +78,18 @@ class UserData implements UserDataInterface
     }
 
     /**
-     * addVar()
+     * write()
      *
      * @param $name
      * @param $param
      *
      * @return JsonDb
      */
-    public function write($name, $param = '')
+    public function write($name, $param)
     {
+        $data = [$name => $param];
         return $this->dataBase
-            ->update([$name => $param])
+            ->update($data)
             ->where(['uid' => $this->user->getId()])
             ->trigger();
     }

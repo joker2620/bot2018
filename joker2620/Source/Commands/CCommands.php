@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\Commands;
 
-use joker2620\Source\Functions\BotFunction;
+use joker2620\Source\Engine\BotFunction;
 use joker2620\Source\Modules\CommandList;
 use joker2620\Source\Modules\CommandsTemplate;
 

@@ -5,8 +5,7 @@ declare(strict_types = 1);
 namespace joker2620\Source\API;
 
 use joker2620\Source\Exception\BotError;
-use joker2620\Source\Setting\SustemConfig;
-use joker2620\Source\Setting\UserConfig;
+use joker2620\Source\Setting\Config;
 use VK\TransportClient\Curl\CurlHttpClient;
 
 
@@ -35,7 +34,7 @@ class YandexTTS
         string $emoticon = 'good',
         string $lang = 'ru-RU'
     ) {
-        $file_name = SustemConfig::getConfig()['DIR_AUDIO'] .
+        $file_name = Config::getConfig()['DIR_AUDIO'] .
             '/aud_' . md5($text) . '.ogg';
         if (file_exists($file_name)) {
             $this->validFile($file_name);
@@ -48,13 +47,13 @@ class YandexTTS
                 'format' => 'opus',
                 'lang' => $lang,
                 'speaker' => $speaker,
-                'key' => UserConfig::getConfig()['SPEECH_KEY'],
+                'key' => Config::getConfig()['SPEECH_KEY'],
                 'emotion' => $emoticon,
                 'text' => $text,
             ]
         );
         $http_client  = new CurlHttpClient(10);
-        $urladress    = SustemConfig::getConfig()['YA_ENDPOINT'] . '?' . $query;
+        $urladress    = Config::getConfig()['YA_ENDPOINT'] . '?' . $query;
         $http_data    = $http_client->post($urladress, ['file' => new \CURLFile($filevoice)]);
         $decoded_body = json_decode($http_data->getBody(), true);
         if ($decoded_body === null || !is_array($decoded_body)) {

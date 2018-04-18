@@ -3,8 +3,7 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\Modules;
 
-use joker2620\Source\Setting\SustemConfig;
-use joker2620\Source\Setting\UserConfig;
+use joker2620\Source\Setting\Config;
 use MrKody\JsonDb\JsonDb;
 
 
@@ -29,7 +28,7 @@ class HTMessagesBase extends TrainingEdit
     {
 
         $return = false;
-        $height = UserConfig::getConfig()['MIN_PERCENT'];
+        $height = Config::getConfig()['MIN_PERCENT'];
         if ($file_base) {
             $this->scanTraining($height);
         } else {
@@ -52,7 +51,7 @@ class HTMessagesBase extends TrainingEdit
     public function scanTraining($height)
     {
         $json_db = new JsonDb();
-        $json_db->from(SustemConfig::getConfig()['FILE_TRAINING']);
+        $json_db->from(Config::getConfig()['FILE_TRAINING']);
         $result = $json_db->select('*')->get();
         if ($result) {
             foreach ($result as $lines) {
@@ -101,7 +100,7 @@ class HTMessagesBase extends TrainingEdit
      */
     public function scanMainBase($height)
     {
-        $fname  = SustemConfig::getConfig()['FILE_BASE'];
+        $fname  = Config::getConfig()['FILE_BASE'];
         $result = file(
             $fname,
             FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES

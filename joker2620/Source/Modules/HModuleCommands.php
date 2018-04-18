@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace joker2620\Source\Modules;
 
 use joker2620\Source\Interfaces\Modules\ModuleInterface;
-use joker2620\Source\Setting\SustemConfig;
+use joker2620\Source\Setting\Config;
 
 
 /**
@@ -22,8 +22,7 @@ class HModuleCommands extends CommandList implements ModuleInterface
      *
      * @return bool
      */
-    public
-    function getAnwser()
+    public function getAnwser()
     {
         $ansver = false;
         $this->loadCommand();
@@ -43,7 +42,7 @@ class HModuleCommands extends CommandList implements ModuleInterface
                         && $command->getPermission() == 1
                     ) {
                         return
-                            SustemConfig::getConfig()['MESSAGE']['TextCommand'][1];
+                            Config::getConfig()['MESSAGE']['TextCommand'][1];
                     }
                     $ansver = $command->runCommand($matches);
                 }

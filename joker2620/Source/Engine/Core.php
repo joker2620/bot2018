@@ -1,16 +1,12 @@
 <?php
 declare(strict_types = 1);
 
-namespace joker2620\Source;
+namespace joker2620\Source\Engine;
 
 use joker2620\Source\API\VKAPI;
-use joker2620\Source\DataFlow\DataFlow;
-use joker2620\Source\Functions\BotFunction;
-use joker2620\Source\Loger\Loger;
 use joker2620\Source\Modules\Modules;
+use joker2620\Source\Setting\Config;
 use joker2620\Source\Setting\ConfigValidation;
-use joker2620\Source\Setting\SustemConfig;
-use joker2620\Source\Setting\UserConfig;
 use joker2620\Source\User\User;
 use joker2620\Source\User\UserData;
 use VK\CallbackApi\Server\VKCallbackApiServerHandler;
@@ -57,7 +53,7 @@ class Core extends VKCallbackApiServerHandler
      */
     public function confirmation(int $group_id, ?string $secret)
     {
-        $this->flow->putData(UserConfig::getConfig()['CONFIRMATION_TOKEN']);
+        $this->flow->putData(Config::getConfig()['CONFIRMATION_TOKEN']);
         $this->loger->logger('confirmation send');
     }
 
@@ -88,7 +84,7 @@ class Core extends VKCallbackApiServerHandler
         }
         $attachments = false;
         if (empty($answer)) {
-            $message = SustemConfig::getConfig()['MESSAGE']['DefaultMessage'];
+            $message = Config::getConfig()['MESSAGE']['DefaultMessage'];
         } elseif (is_array($answer)) {
             $attachments = $answer[1];
             $message     = $answer[0];

@@ -1,12 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace joker2620\Source\Loger;
+namespace joker2620\Source\Engine;
 
-use joker2620\Source\Functions\BotFunction;
 use joker2620\Source\Interfaces\Loger\LogerInterface;
-use joker2620\Source\Setting\SustemConfig;
-use joker2620\Source\Setting\UserConfig;
+use joker2620\Source\Setting\Config;
 use joker2620\Source\User\User;
 
 
@@ -41,7 +39,7 @@ class Loger implements LogerInterface
         if (is_array($message)) {
             $message = json_encode($message, JSON_UNESCAPED_UNICODE);
         }
-        $log_file = $this->botFunction->buildPath(SustemConfig::getConfig()['DIR_LOG'], 'ErrorLog', 'log_' . date('j-m-Y') . '.log');
+        $log_file = $this->botFunction->buildPath(Config::getConfig()['DIR_LOG'], 'ErrorLog', 'log_' . date('j-m-Y') . '.log');
         self::writeLog($log_file, "{$message}\n");
     }
 
@@ -69,11 +67,11 @@ class Loger implements LogerInterface
      */
     public function message(string $message, string $answer): void
     {
-        if (UserConfig::getConfig()['SAVE_MESSAGE']) {
+        if (Config::getConfig()['SAVE_MESSAGE']) {
             $message       = $this->botFunction->filterString($message);
             $answer        = $this->botFunction->filterString($answer);
             $userid        = $this->userData->getId();
-            $log_file_chat = $this->botFunction->buildPath(SustemConfig::getConfig()['DIR_LOG'], "chats", "chat_id{$userid}.chat");
+            $log_file_chat = $this->botFunction->buildPath(Config::getConfig()['DIR_LOG'], "chats", "chat_id{$userid}.chat");
             self::writeLog($log_file_chat, "[{$message}]=>[{$answer}]" . "\n");
         }
     }

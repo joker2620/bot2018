@@ -15,9 +15,9 @@ use joker2620\Source\Modules\CommandsTemplate;
 class CGetvote extends CommandsTemplate
 {
 
-    protected $regexp = 'Оцени';
+    protected $regexp = 'оцени';
 
-    protected $display = ' - "Оацени" - оценит приклепленное вложение.';
+    protected $display = ' - "оцени" - оценит приклепленное вложение.';
 
     protected $permission = 0;
 

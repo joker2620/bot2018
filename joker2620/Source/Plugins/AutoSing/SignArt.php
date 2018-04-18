@@ -4,8 +4,7 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\Plugins\AutoSing;
 
-use joker2620\Source\Setting\SustemConfig;
-
+use joker2620\Source\Setting\Config;
 
 /**
  * Class SignArt
@@ -27,7 +26,7 @@ class SignArt
      */
     public function __construct()
     {
-        $this->imgDir = SustemConfig::getConfig()['DIR_IMAGES'] . '/sign/';
+        $this->imgDir = Config::getConfig()['DIR_IMAGES'] . '/sign/';
         $this->image  = null;
     }
 
@@ -60,7 +59,7 @@ class SignArt
             $fonts,
             $text
         );
-        $fileimage = SustemConfig::getConfig()['DIR_IMAGES'] . '/image' . date('his') . '.png';
+        $fileimage = $this->imgDir . date('his') . '.png';
         imagepng($this->image, $fileimage);
         imagedestroy($this->image);
         return $fileimage;

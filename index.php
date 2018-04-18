@@ -1,12 +1,15 @@
 <?php
+/*
+ * TODO: ТЫ НАХОЙ УДАЛИЛ КОНФИГИ, ЗАМЕНИЛ ИХ НА CONFIG, ДАЛЕЕ ТЕБЕ НАДА ПОВЕРИТЬ КОД, изаебато все сделать, помни еще че ты должен в кассе сигны картинки нормально сохранять в папку синг, еше доки проверь, весь код проверь, все, короче ты знаешь что делать.
+ */
 declare(strict_types = 1);
 
 setlocale(LC_CTYPE, "ru_RU");
 ini_set('date.timezone', 'Europe/Moscow');
 
-use joker2620\Source\DataFlow\DataFlow;
+use joker2620\Source\Engine\DataFlow;
+use joker2620\Source\Engine\Loger;
 use joker2620\Source\Exception\BotError;
-use joker2620\Source\Loger\Loger;
 
 if (!file_exists('vendor/autoload.php'))
     die('Composer not installed.');
@@ -16,21 +19,21 @@ else
 
 $data_flow = new DataFlow();
 try {
-    $handler   = new \joker2620\Source\Core();
+    $handler = new \joker2620\Source\Engine\Core();
     $handler->parse(
         $data_flow->readData(
-//            [
-//                'type' => 'message_new', 'object' =>
-//                [
-//                    'id' => 4520,
-//                    'date' => 1521303747,
-//                    'out' => 0,
-//                    'user_id' => 211984675,
-//                    'read_state' => 0,
-//                    'title' => '',
-//                    'body' => 'команды'
-//                ], 'group_id' => 324, 'secret' => 432
-//            ]
+            [
+                'type' => 'message_new', 'object' =>
+                [
+                    'id' => 4520,
+                    'date' => 1521303747,
+                    'out' => 0,
+                    'user_id' => 211984675,
+                    'read_state' => 0,
+                    'title' => '',
+                    'body' => 'вспомни'
+                ], 'group_id' => 324, 'secret' => 432
+            ]
         )
     );
 } catch (BotError $exception) {

@@ -5,8 +5,7 @@ namespace joker2620\Source\Commands;
 
 use joker2620\Source\API\YandexTTS;
 use joker2620\Source\Modules\CommandsTemplate;
-use joker2620\Source\Setting\ConfgFeatures;
-use joker2620\Source\Setting\SustemConfig;
+use joker2620\Source\Setting\Config;
 
 
 /**
@@ -33,7 +32,7 @@ class CTovoice extends CommandsTemplate
      */
     public function runCommand(array $matches)
     {
-        if (ConfgFeatures::getConfig()['YANDEX_SPEECH']) {
+        if (Config::getConfig()['YANDEX_SPEECH']) {
             $yandex_tts      = new YandexTTS();
             $messagefilename = $yandex_tts->getVoice(
                 $matches[1][0],
@@ -48,7 +47,7 @@ class CTovoice extends CommandsTemplate
                 ['doc' . $doccs['owner_id'] . '_' . $doccs['id']]
             ];
         } else {
-            $return = SustemConfig::getConfig()['MESSAGE']['FunctionDisabled'];
+            $return = Config::getConfig()['MESSAGE']['FunctionDisabled'];
         }
         return $return;
     }

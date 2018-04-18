@@ -1,10 +1,10 @@
 <?php
 declare(strict_types = 1);
 
-namespace joker2620\Source\Functions;
+namespace joker2620\Source\Engine;
 
-use joker2620\Source\Setting\SustemConfig;
-use joker2620\Source\Setting\UserConfig;
+
+use joker2620\Source\Setting\Config;
 use joker2620\Source\User\User;
 
 
@@ -52,19 +52,25 @@ class BotFunction
         $user_data = $this->user->getInfo();
         switch ($user_data['sex']) {
             case '1':
-                $sex_description = 'девушка';
+                $sex_description = Config::getConfig()['MESSAGE']['Women'];
                 break;
             case '2':
-                $sex_description = 'парень';
+                $sex_description = Config::getConfig()['MESSAGE']['Men'];
                 break;
             default:
-                $sex_description = 'WTF?';
+                $sex_description = 'I don\'t know';
                 break;
         }
         $trans = [
             '#uid#' => $this->user->getId(),
             '#first_name#' => $this->user->getFirstName(),
             '#last_name#' => $this->user->getLastName(),
+            '#what_day#' => date('d.m.Y'),
+            '#what_time#' => date('H:i:s'),
+            '#sex_dis#' => $sex_description,
+            '#name_bot#' => Config::getConfig()['BOT_NAME'],
+            '#version#' => Config::getConfig()['VERSION'],
+            '#build#' => Config::getConfig()['BUILD'],
 
             '#first_name_abl#' => $user_data['first_name_abl'],
             '#first_name_ins#' => $user_data['first_name_ins'],
@@ -76,14 +82,7 @@ class BotFunction
             '#last_name_ins#' => $user_data['last_name_ins'],
             '#last_name_acc#' => $user_data['last_name_acc'],
             '#last_name_dat#' => $user_data['last_name_dat'],
-            '#last_name_gen#' => $user_data['last_name_gen'],
-
-            '#sex_dis#' => $sex_description,
-            '#name_bot#' => UserConfig::getConfig()['BOT_NAME'],
-            '#what_day#' => date('d.m.Y'),
-            '#what_time#' => date('H:i:s'),
-            '#version#' => SustemConfig::getConfig()['VERSION'],
-            '#build#' => SustemConfig::getConfig()['BUILD']
+            '#last_name_gen#' => $user_data['last_name_gen']
         ];
         return strtr($message, $trans);
     }
@@ -100,7 +99,7 @@ class BotFunction
     {
         return array_search(
             $uid,
-            UserConfig::getConfig()['ADMINISTRATORS']
+            Config::getConfig()['ADMINISTRATORS']
         ) !== false ? true : false;
     }
 

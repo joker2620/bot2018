@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f0f0e0ab6d02e10e72b3f184cb1412ff",
+    "content-hash": "a561f3fcff9ccf5a42d4adbc798416a8",
     "packages": [
         {
             "name": "denissimon/formula-parser",
@@ -51,27 +51,27 @@
             "time": "2016-12-28T19:36:53+00:00"
         },
         {
-            "name": "mrkody/php-jsondb",
+            "name": "joker2620/php-jsondb",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/mrkody/php-jsondb.git",
-                "reference": "eba2ae4274a23ba8821b857f7edd5aa861170d2b"
+                "url": "https://github.com/joker2620/php-jsondb.git",
+                "reference": "439dc17c7dc84dcbde6b41d4e5ffcfddd6d48534"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mrkody/php-jsondb/zipball/eba2ae4274a23ba8821b857f7edd5aa861170d2b",
-                "reference": "eba2ae4274a23ba8821b857f7edd5aa861170d2b",
+                "url": "https://api.github.com/repos/joker2620/php-jsondb/zipball/439dc17c7dc84dcbde6b41d4e5ffcfddd6d48534",
+                "reference": "439dc17c7dc84dcbde6b41d4e5ffcfddd6d48534",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": ">=5.3.0"
+                "php": ">=5.6.0"
             },
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "MrKody\\JsonDb\\": "src"
+                    "joker2620\\JsonDb\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -86,17 +86,21 @@
                 {
                     "name": "donjajo",
                     "email": "me@donjajo.com"
+                },
+                {
+                    "name": "joker2620",
+                    "email": "naz.bav@list.ru"
                 }
             ],
-            "description": "Simple JSON-file-database PHP library",
-            "homepage": "https://github.com/mrkody/php-jsondb",
+            "description": "Simple JSON-file-database PHP library. Forked from donjajo/php-jsondb",
+            "homepage": "https://github.com/joker2620/php-jsondb",
             "keywords": [
+                "joker2620",
                 "json",
                 "jsondb",
-                "mrkody",
                 "php"
             ],
-            "time": "2018-02-27T08:47:46+00:00"
+            "time": "2018-04-18T21:54:39+00:00"
         },
         {
             "name": "vkcom/vk-php-sdk",
@@ -142,7 +146,7 @@
     "aliases": [],
     "minimum-stability": "alpha",
     "stability-flags": {
-        "mrkody/php-jsondb": 20
+        "joker2620/php-jsondb": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

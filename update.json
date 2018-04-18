@@ -1,9 +1,9 @@
 {
   "status": "done",
   "joker2620/bot2018": {
-    "version": "0.2.1-alpha2",
-    "build": "17.04.18",
-    "source": "https://github.com/joker2620/bot2018/tree/0.2.1-alpha2",
+    "version": "1.0.0",
+    "build": "18.04.18",
+    "source": "https://github.com/joker2620/bot2018/tree/1.0.0",
     "stability": "normal"
   }
 }

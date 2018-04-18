@@ -3,9 +3,10 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\Modules;
 
-use joker2620\Source\Setting\SustemConfig;
+
+use joker2620\Source\Setting\Config;
 use joker2620\Source\User\User;
-use MrKody\JsonDb\JsonDb;
+use joker2620\JsonDb\JsonDb;
 
 
 /**
@@ -25,7 +26,7 @@ class TrainingEdit
      */
     public function __construct()
     {
-        $this->baseName = SustemConfig::getConfig()['FILE_TRAINING'];
+        $this->baseName = Config::getConfig()['FILE_TRAINING'];
         $this->jsonBD   = new JsonDb();
         //question answer training author
         $this->jsonBD->from($this->baseName);
@@ -35,11 +36,11 @@ class TrainingEdit
     /**
      * addAnswer()
      *
-     * @param bool $no
+     * @param bool $no_bool
      */
-    protected function addAnswer(bool $no = false)
+    protected function addAnswer(bool $no_bool = false)
     {
-        $no = $this->replLogic($no);
+        $no_bool = $this->replLogic($no_bool);
         //question answer training author
         $select = $this->jsonBD->select('question, answer, training')->where(
             [
@@ -53,7 +54,7 @@ class TrainingEdit
             $this->jsonBD->update(
                 [
                     'training' => self::FALSE,
-                    'answer' => $no == self::FALSE ? $this->user->getMessageData()['body'] : self::FALSE,
+                    'answer' => $no_bool == self::FALSE ? $this->user->getMessageData()['body'] : self::FALSE,
                 ]
             )
                 ->where(['answer' => self::FALSE, 'training' => $this->user->getId()], 'AND')
@@ -105,7 +106,7 @@ class TrainingEdit
      */
     protected function addTraining()
     {
-        $message = SustemConfig::getConfig()['MESSAGE']['HereIsEmpty'];
+        $message = Config::getConfig()['MESSAGE']['HereIsEmpty'];
         $select  = $this->jsonBD->select('question, answer, training')->where(
             [
                 'answer' => self::FALSE,
@@ -119,7 +120,7 @@ class TrainingEdit
                 ->where(['answer' => self::FALSE, 'training' => self::FALSE], 'AND')
                 ->trigger();
             $message = sprintf(
-                SustemConfig::getConfig()['MESSAGE']['HelpAnswer'],
+                Config::getConfig()['MESSAGE']['HelpAnswer'],
                 $select[0]['question']
             );
         }
@@ -129,12 +130,13 @@ class TrainingEdit
     /**
      * addQuestion()
      *
-     * @param bool $no
+     * @param bool $no_bool
+     *
      */
     protected function addQuestion(
-        bool $no = false
+        bool $no_bool = false
     ) {
-        $no      = $this->replLogic($no);
+        $no_bool = $this->replLogic($no_bool);
         $replace = $this->jsonBD->select('question')
             ->where(['question' => $this->user->getMessageData()['body']])
             ->get();
@@ -144,7 +146,7 @@ class TrainingEdit
                 [//question answer training author
                     'question' => $this->user->getMessageData()['body'],
                     'answer' => self::FALSE,
-                    'training' => $no == self::FALSE ? $this->user->getId() : self::FALSE,
+                    'training' => $no_bool == self::FALSE ? $this->user->getId() : self::FALSE,
                     'author' => $this->user->getId()
                 ]
             );

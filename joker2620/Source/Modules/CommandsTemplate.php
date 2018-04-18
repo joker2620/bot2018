@@ -4,7 +4,7 @@ declare(strict_types = 1);
 namespace joker2620\Source\Modules;
 
 use joker2620\Source\API\VKAPI;
-use joker2620\Source\Loger\Loger;
+use joker2620\Source\Engine\Loger;
 use joker2620\Source\User\User;
 use joker2620\Source\User\UserData;
 

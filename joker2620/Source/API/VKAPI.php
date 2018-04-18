@@ -3,9 +3,8 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\API;
 
-use joker2620\Source\Functions\BotFunction;
-use joker2620\Source\Setting\SustemConfig;
-use joker2620\Source\Setting\UserConfig;
+use joker2620\Source\Engine\BotFunction;
+use joker2620\Source\Setting\Config;
 use VK\Client\VKApiClient;
 use VK\TransportClient\Curl\CurlHttpClient;
 
@@ -27,7 +26,7 @@ class VKAPI extends VKApiClient
     {
         parent::__construct();
         $this->httpClient  = new CurlHttpClient(10);
-        $this->accessToken = UserConfig::getConfig()['ACCESS_TOKEN'];
+        $this->accessToken = Config::getConfig()['ACCESS_TOKEN'];
         $this->botFucntion = new BotFunction();
     }
 
@@ -236,7 +235,7 @@ class VKAPI extends VKApiClient
                 'peer_id' => $peer_id,
                 'message' => $message ?
                     $this->botFucntion->ucFirst($message) :
-                    SustemConfig::getConfig()['MESSAGE']['noAnswer'],
+                    Config::getConfig()['MESSAGE']['noAnswer'],
                 'attachment' => $attachment ?
                     implode(',', $attachment) : false,
             ]
