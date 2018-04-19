@@ -1,7 +1,7 @@
 {
   "status": "done",
   "joker2620/bot2018": {
-    "version": "1.0.1",
+    "version": "1.0.2",
     "build": "18.04.18",
     "source": "https://github.com/joker2620/bot2018/master",
     "stability": "normal"
