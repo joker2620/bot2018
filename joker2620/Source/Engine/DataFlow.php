@@ -31,7 +31,10 @@ class DataFlow implements DataFlowInterface
         if (empty($request)) {
             $request = json_decode(file_get_contents('php://input'), true);
         }
-        if (empty($request)) {
+        if (empty($request) ||
+            Config::getConfig()['GROUP_ID'] !== $request['group_id'] ||
+            Config::getConfig()['SECRET_KEY'] !== $request['secret']
+        ) {
             throw new BotError(Config::getConfig()['MESSAGE']['cameEmptyRequest']);
         }
         return (object)$request;

@@ -52,7 +52,7 @@ class Config extends ConfigGetter
     private static function getPath(&$config_dir, &$function, &$config = [])
     {
         $config['BUILD']         = '18.04.18';
-        $config['VERSION']       = '1.0.0';
+        $config['VERSION']       = '1.0.1';
         $config['DIR_DATA']      = $function->buildPath(
             $config_dir,
             'data'

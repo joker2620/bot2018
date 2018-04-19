@@ -1,11 +1,11 @@
 {
   "name": "joker2620/bot2018",
   "description": "Чат-бот для социальной сети VK.COM",
-  "minimum-stability": "alpha",
-  "version": "1.0.0",
+  "minimum-stability": "stable",
+  "version": "1.0.1",
   "type": "project",
-  "homepage": "https://vk.com/vkbotproject",
   "time": "2018-04-18",
+  "homepage": "https://vk.com/vkbotproject",
   "license": "MIT",
   "support": {
     "source": "https://vk.com/vkbotproject"
