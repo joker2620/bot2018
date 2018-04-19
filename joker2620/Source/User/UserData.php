@@ -70,9 +70,7 @@ class UserData implements UserDataInterface
         if (!isset($users[0])) {
             $uvars        = Config::getConfig()['DEFAULT_USER_VARS'];
             $uvars['uid'] = $this->user->getId();
-            return $this->dataBase->insert(
-                $this->userFile, $uvars
-            );
+            return $this->dataBase->insert($uvars);
         }
         return [];
     }
@@ -87,9 +85,8 @@ class UserData implements UserDataInterface
      */
     public function write($name, $param)
     {
-        $data = [$name => $param];
         return $this->dataBase
-            ->update($data)
+            ->update([$name => $param])
             ->where(['uid' => $this->user->getId()])
             ->trigger();
     }

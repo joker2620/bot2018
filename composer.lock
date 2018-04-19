@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "409e75363b8553e75e7e460f7f421423",
+    "content-hash": "4c3959d5017218ba2a72b283e018845b",
     "packages": [
         {
             "name": "denissimon/formula-parser",
@@ -52,21 +52,21 @@
         },
         {
             "name": "joker2620/php-jsondb",
-            "version": "dev-master",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/joker2620/php-jsondb.git",
-                "reference": "439dc17c7dc84dcbde6b41d4e5ffcfddd6d48534"
+                "reference": "8a4f529c840c7ac344efce5211cc7803238095ea"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joker2620/php-jsondb/zipball/439dc17c7dc84dcbde6b41d4e5ffcfddd6d48534",
-                "reference": "439dc17c7dc84dcbde6b41d4e5ffcfddd6d48534",
+                "url": "https://api.github.com/repos/joker2620/php-jsondb/zipball/8a4f529c840c7ac344efce5211cc7803238095ea",
+                "reference": "8a4f529c840c7ac344efce5211cc7803238095ea",
                 "shasum": ""
             },
             "require": {
                 "ext-json": "*",
-                "php": ">=5.6.0"
+                "php": ">=7.1"
             },
             "type": "library",
             "autoload": {
@@ -100,7 +100,7 @@
                 "jsondb",
                 "php"
             ],
-            "time": "2018-04-18T21:54:39+00:00"
+            "time": "2018-04-19T20:39:56+00:00"
         },
         {
             "name": "vkcom/vk-php-sdk",
@@ -145,9 +145,7 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "joker2620/php-jsondb": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

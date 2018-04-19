@@ -24,6 +24,6 @@
     "php": ">=7.1",
     "vkcom/vk-php-sdk": "0.2.0",
     "denissimon/formula-parser": "v2.5.0",
-    "joker2620/php-jsondb": ">=dev-master"
+    "joker2620/php-jsondb": "1.0.0"
   }
 }
