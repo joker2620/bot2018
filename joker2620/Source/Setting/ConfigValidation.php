@@ -58,7 +58,7 @@ class ConfigValidation implements ConfigValid
             ->noSettings('SAVE_MESSAGE', 'bool')
             ->noSettings('COMMANDS_LIST_LIMIT', 'int')
             ->noSettings('GROUP_ID', 'int')
-            ->noSettings('SECRET_KEY', 'int')
+            ->noSettings('SECRET_KEY', 'string')
             ->noSettings('MIN_PERCENT', 'int');
     }
 

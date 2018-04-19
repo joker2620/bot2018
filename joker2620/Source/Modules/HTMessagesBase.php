@@ -3,8 +3,8 @@ declare(strict_types = 1);
 
 namespace joker2620\Source\Modules;
 
+use joker2620\JsonDb\JsonDb;
 use joker2620\Source\Setting\Config;
-use MrKody\JsonDb\JsonDb;
 
 
 /**

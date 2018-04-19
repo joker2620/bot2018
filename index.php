@@ -32,7 +32,7 @@ try {
 //                    'read_state' => 0,
 //                    'title' => '',
 //                    'body' => 'вспомни'
-//                ], 'group_id' => 324, 'secret' => 432
+//                ], 'group_id' => \joker2620\Source\Setting\Config::getConfig()['GROUP_ID'], 'secret' => \joker2620\Source\Setting\Config::getConfig()['SECRET_KEY']
 //            ]
         )
     );
