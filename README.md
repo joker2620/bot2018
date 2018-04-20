@@ -11,6 +11,7 @@
 
 * [Главная страница][0];
 * [Структура][1];
+* [Список изменений][15];
 * [Установка][2];
 * [Подключение группы][3];
 * [База ответов][4]:
@@ -38,6 +39,7 @@
 [12]: https://vk.com/
 [13]: LICENSE/
 [14]: https://php.net/
+[15]: docs/CHANGELOG.md
 [IMGPHP]: https://img.shields.io/badge/PHP-7.1%5E-brightgreen.svg?style=for-the-badge
 [IMGLICENSE]: https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=for-the-badge
 [IMGVERSION]: https://img.shields.io/badge/LAST%20VERSION-1.0.2-blue.svg?style=for-the-badge
