@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "4c3959d5017218ba2a72b283e018845b",
+    "content-hash": "16a1e196bbfaf59fd3f4bee1aa65d3e5",
     "packages": [
         {
             "name": "denissimon/formula-parser",
