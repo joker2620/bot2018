@@ -44,7 +44,6 @@ class VKAPI extends VKApiClient
     public function curlGet(string $url, $noJsonDecode = false)
     {
         $curl_init_ = curl_init($url);
-
         curl_setopt_array(
             $curl_init_, [
                 CURLOPT_RETURNTRANSFER => true,
