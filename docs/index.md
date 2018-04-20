@@ -1,18 +1,18 @@
   [![PHP](https://img.shields.io/badge/PHP-7.1%5E-brightgreen.svg?style=for-the-badge)](https://php.net/)
   [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/blob/master/LICENSE/)
-  [![VERSION](https://img.shields.io/badge/LAST%20VERSION-1.0.1-blue.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
-  [![BUID](https://img.shields.io/badge/LAST%20BUILD-16.04.18-red.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
-
+  [![VERSION](https://img.shields.io/badge/LAST%20VERSION-1.0.2-blue.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
+  
 Информация
 ------------
 
-* Документ поддерживается в версиях(ии): 1.0.1;
+* Документ поддерживается в версиях(ии): 1.0.2;
 * [Главная страница][0].
 
 Навигация
 ------------
 
 * [Главная страница][0];
+* [Список изменений][11];
 * [Структура][1];
 * [Установка][2];
 * [Подключение группы][3];
@@ -46,3 +46,4 @@
 [8]: PosibilityCommands.md
 [9]: StandartMessages.md
 [10]: exampleCommand.md
+[11]: CHANGELOG.md

@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace joker2620\Source\API;
 
 use joker2620\Source\Engine\BotFunction;
+use joker2620\Source\Exception\BotError;
 use joker2620\Source\Setting\Config;
 use VK\Client\VKApiClient;
 use VK\TransportClient\Curl\CurlHttpClient;
@@ -35,16 +36,39 @@ class VKAPI extends VKApiClient
      *
      * @param string $url
      *
+     * @param bool   $noJsonDecode
+     *
      * @return CurlHttpClient
+     * @throws BotError
      */
-    public function curlGet(string $url)
+    public function curlGet(string $url, $noJsonDecode = false)
     {
-        $http_data    = $this->httpClient->get($url, []);
-        $decoded_body = json_decode($http_data->getBody(), true);
-        if ($decoded_body === null || !is_array($decoded_body)) {
-            $decoded_body = $http_data->getBody();
+        $curl_init_ = curl_init($url);
+
+        curl_setopt_array(
+            $curl_init_, [
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_SSL_VERIFYPEER => false
+            ]
+        );
+
+        $response        = curl_exec($curl_init_);
+        $curl_error_code = curl_errno($curl_init_);
+        $curl_error      = curl_error($curl_init_);
+
+        curl_close($curl_init_);
+
+        if ($curl_error || $curl_error_code) {
+            $error_msg = "Failed curl request. Curl error {$curl_error_code}";
+            if ($curl_error) {
+                $error_msg .= ": {$curl_error}";
+            }
+
+            $error_msg .= '.';
+
+            throw new BotError($error_msg);
         }
-        return $decoded_body;
+        return $noJsonDecode ? $response : json_decode($response, true);
     }
 
     /**

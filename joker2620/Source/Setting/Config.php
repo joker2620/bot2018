@@ -4,6 +4,7 @@ declare(strict_types = 1);
 namespace joker2620\Source\Setting;
 
 use joker2620\Source\Engine\BotFunction;
+use joker2620\Source\Exception\BotError;
 use joker2620\Source\Interfaces\Setting\ConfigGetter;
 
 
@@ -51,8 +52,7 @@ class Config extends ConfigGetter
      */
     private static function getPath(&$config_dir, &$function, &$config = [])
     {
-        $config['BUILD']         = '18.04.18';
-        $config['VERSION']       = '1.0.1';
+        $config['VERSION']       = '1.0.2';
         $config['DIR_DATA']      = $function->buildPath(
             $config_dir,
             'data'
@@ -102,18 +102,17 @@ class Config extends ConfigGetter
      * @param array $conf_arr
      *
      * @return array
-     *
+     * @throws BotError
      */
     private static function loadArrays(&$class, &$config_dir, &$function, &$conf_arr = [])
     {
         if (is_array($class)) {
             foreach ($class as $value) {
-                $conf_arr = array_merge(
-                    include $function->buildPath(
-                        $config_dir,
-                        '/Configuration/' . $value . '.php'
-                    ), $conf_arr
+                $config = include $function->buildPath(
+                    $config_dir,
+                    '/Configuration/' . $value . '.php'
                 );
+                $conf_arr = array_merge($config, $conf_arr);
             }
         }
         return $conf_arr;

@@ -3,6 +3,6 @@
 ### Example user template
 
 # IntelliJ project files
-.idea
+.idea/
 /joker2620/Configuration/UserConfig.php
 vendor/

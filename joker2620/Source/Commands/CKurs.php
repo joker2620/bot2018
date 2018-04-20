@@ -30,7 +30,7 @@ class CKurs extends CommandsTemplate
      */
     public function runCommand(array $matches)
     {
-        $filekurs = $this->vkapi->curlGet('http://www.cbr.ru/scripts/XML_daily.asp');
+        $filekurs = $this->vkapi->curlGet('http://www.cbr.ru/scripts/XML_daily.asp',1);
         preg_match(
             '/\<Valute ID=\"R01235\".*?\>(.*?)\<\/Valute\>/is',
             $filekurs,

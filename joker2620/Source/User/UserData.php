@@ -47,7 +47,7 @@ class UserData implements UserDataInterface
      *
      * @return string
      */
-    public function read($name): string
+    public function read($name)
     {
         $user_var = $this->dataBase
             ->select($name)

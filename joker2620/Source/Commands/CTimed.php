@@ -43,7 +43,7 @@ class CTimed extends CommandsTemplate
             '---------------',
             "Имя бота: #name_bot#",
             'Автор бота: @joker2620 (Назым Бавбеков)',
-            'Версия бота: #version# (сборка #build#)',
+            'Версия бота: #version#',
         ];
         return implode("\n", $return);
     }

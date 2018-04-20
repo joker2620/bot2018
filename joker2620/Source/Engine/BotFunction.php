@@ -70,7 +70,6 @@ class BotFunction
             '#sex_dis#' => $sex_description,
             '#name_bot#' => Config::getConfig()['BOT_NAME'],
             '#version#' => Config::getConfig()['VERSION'],
-            '#build#' => Config::getConfig()['BUILD'],
 
             '#first_name_abl#' => $user_data['first_name_abl'],
             '#first_name_ins#' => $user_data['first_name_ins'],

@@ -34,19 +34,17 @@ class CGetUpdate extends CommandsTemplate
     {
         $message = 'Обновлений нет';
         $result  = $this->vkapi->curlGet('https://raw.githubusercontent.com/joker2620/bot2018/master/update.json');
-        if ($result['status'] == 'done'
+        if (isset($result['status']) && $result['status'] == 'done'
             && isset($result)
             && isset($result["joker2620/bot2018"])
         ) {
             $this_bot = $result["joker2620/bot2018"];
             $version  = $this_bot['version'];
-            $build    = $this_bot['build'];
-            if ($this->scanVersion($version) ||
-                $this->scanBuild($build)
+            if ($this->scanVersion($version)
             ) {
-                $message = "Новая версия: $version; Сборка: $build\nСкачать: {$this_bot['source']}";
+                $message = "Новая версия: $version\nСкачать: {$this_bot['source']}";
             } else {
-                $message .= "\nВаша версия: $version; Сборка: $build";
+                $message .= "\nВаша версия:" . Config::getConfig()['VERSION'] . ', на сервере: ' . $version;
             }
         }
         return $message;
@@ -62,17 +60,5 @@ class CGetUpdate extends CommandsTemplate
     public function scanVersion(string $version)
     {
         return version_compare(Config::getConfig()['VERSION'], $version, '<');
-    }
-
-    /**
-     * scanBuild()
-     *
-     * @param $build
-     *
-     * @return bool
-     */
-    public function scanBuild(string $build)
-    {
-        return version_compare(Config::getConfig()['BUILD'], $build, '<');
     }
 }

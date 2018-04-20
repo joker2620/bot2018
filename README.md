@@ -1,7 +1,6 @@
 # bot2018 - Чат-бот для сообществ.
 
   [![VERSION][IMGVERSION]][11]
-  [![BUID][IMGBUID]][11]
   [![PHP][IMGPHP]][14]
   [![LICENSE][IMGLICENSE]][13]
   
@@ -41,5 +40,4 @@
 [14]: https://php.net/
 [IMGPHP]: https://img.shields.io/badge/PHP-7.1%5E-brightgreen.svg?style=for-the-badge
 [IMGLICENSE]: https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=for-the-badge
-[IMGVERSION]: https://img.shields.io/badge/LAST%20VERSION-1.0.1-blue.svg?style=for-the-badge
-[IMGBUID]: https://img.shields.io/badge/LAST%20BUILD-18.04.18-red.svg?style=for-the-badge
+[IMGVERSION]: https://img.shields.io/badge/LAST%20VERSION-1.0.2-blue.svg?style=for-the-badge

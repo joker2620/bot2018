@@ -46,7 +46,7 @@ class HModuleMessages extends HTMessagesBase implements ModuleInterface
         $return = false;
         if (Config::getConfig()['USER_TRAINING']) {
             if (preg_match(
-                '/^(\!' . Config::getConfig()['MESSAGE']['toLearn'] . ')$/iu',
+                '/^(' . Config::getConfig()['MESSAGE']['toLearn'] . ')$/iu',
                 $this->user->getMessageData()['body']
             )) {
                 $return = $this->addTraining();
