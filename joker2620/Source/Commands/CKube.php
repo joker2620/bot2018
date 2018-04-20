@@ -55,9 +55,20 @@ class CKube extends CommandsTemplate
         $rand_int = rand(1, 6);
         if ($matches[1][0] == $rand_int) {
             $message = "выиграли. \nЗа победу вам зачислено: " . $rand_int;
-            $this->dataBase->write('balance', $rand_int);
+            $this->addToBalance($rand_int);
         } else
             $message = 'проиграли';
         return 'Вы загадали ' . $matches[1][0] . ', выпало ' . $rand_int . ', вы ' . $message;
+    }
+
+    /**
+     * addToBalance()
+     *
+     * @param int $rand_int
+     */
+    public function addToBalance(int $rand_int)
+    {
+        $start = (int)$this->dataBase->read('balance');
+        $this->dataBase->write('balance', $rand_int + $start);
     }
 }
