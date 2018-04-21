@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "16a1e196bbfaf59fd3f4bee1aa65d3e5",
+    "content-hash": "51580782512ab9c7fcbc1c1d5d0b8cd0",
     "packages": [
         {
             "name": "denissimon/formula-parser",
@@ -101,6 +101,42 @@
                 "php"
             ],
             "time": "2018-04-19T20:39:56+00:00"
+        },
+        {
+            "name": "joker2620/sing-art",
+            "version": "v1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/joker2620/SignArt.git",
+                "reference": "647ee0e752dd05300794c1b332dcc1e179ef178a"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/joker2620/SignArt/zipball/647ee0e752dd05300794c1b332dcc1e179ef178a",
+                "reference": "647ee0e752dd05300794c1b332dcc1e179ef178a",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=7.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "joker2620\\SingArt\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "joker2620",
+                    "email": "joker2000joker@mail.ru"
+                }
+            ],
+            "description": "Генератор сигн",
+            "time": "2018-04-21T11:23:30+00:00"
         },
         {
             "name": "vkcom/vk-php-sdk",
