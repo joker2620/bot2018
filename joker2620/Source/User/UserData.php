@@ -38,6 +38,23 @@ class UserData implements UserDataInterface
             Config::getConfig()['DIR_BASE'], 'Users.json'
         );
         $this->dataBase->from($this->userFile);
+        $this->user();
+    }
+
+    /**
+     * user()
+     *
+     * @return array
+     */
+    public function user(): array
+    {
+        $users = $this->dataBase->select('uid')->where(['uid' => $this->user->getId()])->get();
+        if (!isset($users[0])) {
+            $uvars        = Config::getConfig()['DEFAULT_USER_VARS'];
+            $uvars['uid'] = $this->user->getId();
+            return $this->dataBase->insert($uvars);
+        }
+        return [];
     }
 
     /**
@@ -57,22 +74,6 @@ class UserData implements UserDataInterface
             return $user_var[0][$name];
         }
         return '';
-    }
-
-    /**
-     * user()
-     *
-     * @return array
-     */
-    public function user(): array
-    {
-        $users = $this->dataBase->select('uid')->where(['uid' => $this->user->getId()])->get();
-        if (!isset($users[0])) {
-            $uvars        = Config::getConfig()['DEFAULT_USER_VARS'];
-            $uvars['uid'] = $this->user->getId();
-            return $this->dataBase->insert($uvars);
-        }
-        return [];
     }
 
     /**

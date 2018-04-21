@@ -8,7 +8,6 @@ use joker2620\Source\Modules\Modules;
 use joker2620\Source\Setting\Config;
 use joker2620\Source\Setting\ConfigValidation;
 use joker2620\Source\User\User;
-use joker2620\Source\User\UserData;
 use VK\CallbackApi\Server\VKCallbackApiServerHandler;
 
 
@@ -25,7 +24,6 @@ class Core extends VKCallbackApiServerHandler
     private $loger;
     private $vkapi;
     private $botFunctions;
-    private $userBase;
 
     /**
      * Core constructor.
@@ -39,7 +37,6 @@ class Core extends VKCallbackApiServerHandler
         $this->userData     = new User();
         $this->loger        = new Loger();
         $config_valid       = new ConfigValidation();
-        $this->userBase     = new UserData();
         $config_valid->validationConfig();
         $this->modules->loadModules();
     }
@@ -73,7 +70,6 @@ class Core extends VKCallbackApiServerHandler
         $users          = max($users);
         $object['body'] = $this->botFunctions->filterString($object['body']);
         $this->userData->setUserData($users, $object);
-        $this->userBase->user();
         $answer = false;
         foreach ($this->modules->getModule() as $module) {
             $handler = $module->getAnwser();
