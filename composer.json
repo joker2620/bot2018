@@ -1,5 +1,5 @@
 {
-  "name": "joker2620/bot2018",
+  "name": "nazbav/bot2018",
   "description": "Чат-бот для социальной сети VK.COM",
   "version": "1.0.1",
   "type": "project",
@@ -11,8 +11,8 @@
   },
   "authors": [
     {
-      "name": "joker2620",
-      "email": "joker2000joker@mail.ru"
+      "name": "nazbav",
+      "email": "naz.bav@list.ru"
     }
   ],
   "autoload": {
