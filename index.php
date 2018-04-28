@@ -21,18 +21,18 @@ try {
     $handler = new \nazbav\Source\Engine\Core();
     $handler->parse(
         $data_flow->readData(
-            [
-                'type' => 'message_new', 'object' =>
-                [
-                    'id' => 4520,
-                    'date' => 1521303747,
-                    'out' => 0,
-                    'user_id' => 211984675,
-                    'read_state' => 0,
-                    'title' => '',
-                    'body' => 'update'
-                ], 'group_id' => \nazbav\Source\Setting\Config::getConfig()['GROUP_ID'], 'secret' => \nazbav\Source\Setting\Config::getConfig()['SECRET_KEY']
-            ]
+//            [
+//                'type' => 'message_new', 'object' =>
+//                [
+//                    'id' => 4520,
+//                    'date' => 1521303747,
+//                    'out' => 0,
+//                    'user_id' => 211984675,
+//                    'read_state' => 0,
+//                    'title' => '',
+//                    'body' => 'update'
+//                ], 'group_id' => \nazbav\Source\Setting\Config::getConfig()['GROUP_ID'], 'secret' => \nazbav\Source\Setting\Config::getConfig()['SECRET_KEY']
+//            ]
         )
     );
 } catch (BotError $exception) {

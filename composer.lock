@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "content-hash": "6be9deb5f73b7563ac065d23209e88a6",
+    "content-hash": "4c769d5959d235f79627a2473c79f323",
     "packages": [
         {
             "name": "denissimon/formula-parser",
