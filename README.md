@@ -35,11 +35,11 @@
 [8]: docs/PosibilityCommands.md
 [9]: docs/StandartMessages.md
 [10]: docs/exampleCommand.md
-[11]: https://github.com/joker2620/bot2018
+[11]: https://github.com/nazbav/bot2018
 [12]: https://vk.com/
 [13]: LICENSE/
 [14]: https://php.net/
 [15]: docs/CHANGELOG.md
 [IMGPHP]: https://img.shields.io/badge/PHP-7.1%5E-brightgreen.svg?style=for-the-badge
 [IMGLICENSE]: https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=for-the-badge
-[IMGVERSION]: https://img.shields.io/badge/LAST%20VERSION-1.0.2-blue.svg?style=for-the-badge
+[IMGVERSION]: https://img.shields.io/badge/LAST%20VERSION-1.1.0-blue.svg?style=for-the-badge

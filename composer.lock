@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "51580782512ab9c7fcbc1c1d5d0b8cd0",
+    "content-hash": "6be9deb5f73b7563ac065d23209e88a6",
     "packages": [
         {
             "name": "denissimon/formula-parser",
@@ -51,17 +51,17 @@
             "time": "2016-12-28T19:36:53+00:00"
         },
         {
-            "name": "joker2620/php-jsondb",
-            "version": "1.0.0",
+            "name": "nazbav/php-jsondb",
+            "version": "1.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/joker2620/php-jsondb.git",
-                "reference": "8a4f529c840c7ac344efce5211cc7803238095ea"
+                "url": "https://github.com/nazbav/php-jsondb.git",
+                "reference": "f755aa1ccfd2a8321d6cf803cbaac60b30011f2b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joker2620/php-jsondb/zipball/8a4f529c840c7ac344efce5211cc7803238095ea",
-                "reference": "8a4f529c840c7ac344efce5211cc7803238095ea",
+                "url": "https://api.github.com/repos/nazbav/php-jsondb/zipball/f755aa1ccfd2a8321d6cf803cbaac60b30011f2b",
+                "reference": "f755aa1ccfd2a8321d6cf803cbaac60b30011f2b",
                 "shasum": ""
             },
             "require": {
@@ -71,7 +71,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "joker2620\\JsonDb\\": "src"
+                    "nazbav\\JsonDb\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -88,32 +88,32 @@
                     "email": "me@donjajo.com"
                 },
                 {
-                    "name": "joker2620",
+                    "name": "nazbav",
                     "email": "naz.bav@list.ru"
                 }
             ],
             "description": "Simple JSON-file-database PHP library. Forked from donjajo/php-jsondb",
-            "homepage": "https://github.com/joker2620/php-jsondb",
+            "homepage": "https://github.com/nazbav/php-jsondb",
             "keywords": [
-                "joker2620",
                 "json",
                 "jsondb",
+                "nazbav",
                 "php"
             ],
-            "time": "2018-04-19T20:39:56+00:00"
+            "time": "2018-04-28T20:19:14+00:00"
         },
         {
-            "name": "joker2620/sing-art",
-            "version": "v1.0",
+            "name": "nazbav/sing-art",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/joker2620/SignArt.git",
-                "reference": "647ee0e752dd05300794c1b332dcc1e179ef178a"
+                "url": "https://github.com/nazbav/SignArt.git",
+                "reference": "d167bffb84592beb96de827bfc7cfdd7a231b397"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/joker2620/SignArt/zipball/647ee0e752dd05300794c1b332dcc1e179ef178a",
-                "reference": "647ee0e752dd05300794c1b332dcc1e179ef178a",
+                "url": "https://api.github.com/repos/nazbav/SignArt/zipball/d167bffb84592beb96de827bfc7cfdd7a231b397",
+                "reference": "d167bffb84592beb96de827bfc7cfdd7a231b397",
                 "shasum": ""
             },
             "require": {
@@ -122,7 +122,7 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "joker2620\\SingArt\\": "src/"
+                    "nazbav\\SingArt\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -131,12 +131,12 @@
             ],
             "authors": [
                 {
-                    "name": "joker2620",
+                    "name": "nazbav",
                     "email": "joker2000joker@mail.ru"
                 }
             ],
             "description": "Генератор сигн",
-            "time": "2018-04-21T11:23:30+00:00"
+            "time": "2018-04-28T20:41:17+00:00"
         },
         {
             "name": "vkcom/vk-php-sdk",
@@ -181,7 +181,9 @@
     "packages-dev": [],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "nazbav/sing-art": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

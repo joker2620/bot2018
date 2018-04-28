@@ -1,7 +1,7 @@
 {
-  "name": "joker2620/bot2018",
+  "name": "nazbav/bot2018",
   "description": "Чат-бот для социальной сети VK.COM",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "type": "project",
   "time": "2018-04-18",
   "homepage": "https://vk.com/vkbotproject",
@@ -11,20 +11,20 @@
   },
   "authors": [
     {
-      "name": "joker2620",
+      "name": "nazbav",
       "email": "joker2000joker@mail.ru"
     }
   ],
   "autoload": {
     "psr-4": {
-      "joker2620\\": "joker2620/"
+      "nazbav\\": "nazbav/"
     }
   },
   "require": {
     "php": ">=7.1",
     "vkcom/vk-php-sdk": "0.2.0",
     "denissimon/formula-parser": "v2.5.0",
-    "joker2620/php-jsondb": "1.0.0",
-    "joker2620/sing-art": "v1.0"
+    "nazbav/php-jsondb": "1.1.0",
+    "nazbav/sing-art": "dev-master"
   }
 }

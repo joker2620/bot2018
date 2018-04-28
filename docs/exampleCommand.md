@@ -2,28 +2,28 @@
 Информация
 ------------
 
-* Документ поддерживается в версиях(ии): 1.0.2;
+* Документ поддерживается в версиях(ии): 1.1.0;
 * [Создание команд][1];
 * [Главная страница][0].
 
  Пример класса команды
 ------------
 
-Файл: `joker2620/Source/Commands/CEncode.php`:
+Файл: `nazbav/Source/Commands/CEncode.php`:
 
 ```php
 <?php
 declare(strict_types = 1);
 
-namespace joker2620\Source\Commands;
+namespace nazbav\Source\Commands;
 
-use joker2620\Source\Modules\CommandsTemplate;
+use nazbav\Source\Modules\CommandsTemplate;
 
 
 /**
  * Class CEncode
  *
- * @package joker2620\Source\Commands
+ * @package nazbav\Source\Commands
  */
 class CEncode extends CommandsTemplate
 {

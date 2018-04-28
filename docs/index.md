@@ -1,11 +1,11 @@
   [![PHP](https://img.shields.io/badge/PHP-7.1%5E-brightgreen.svg?style=for-the-badge)](https://php.net/)
-  [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/blob/master/LICENSE/)
-  [![VERSION](https://img.shields.io/badge/LAST%20VERSION-1.0.2-blue.svg?style=for-the-badge)](https://github.com/joker2620/bot2018/master/)
+  [![LICENSE](https://img.shields.io/badge/LICENSE-MIT-yellow.svg?style=for-the-badge)](https://github.com/nazbav/bot2018/blob/master/LICENSE/)
+  [![VERSION](https://img.shields.io/badge/LAST%20VERSION-1.1.0-blue.svg?style=for-the-badge)](https://github.com/nazbav/bot2018/master/)
   
 Информация
 ------------
 
-* Документ поддерживается в версиях(ии): 1.0.2;
+* Документ поддерживается в версиях(ии): 1.1.0;
 * [Главная страница][0].
 
 Навигация

@@ -1,13 +1,13 @@
 Информация
 ------------
 
-* Документ поддерживается в версиях(ии): 1.0.2;
+* Документ поддерживается в версиях(ии): 1.1.0;
 * [Главная страница][0].
 
 Структура бота
 ------------
 
-joker2620/
+nazbav/
 * Configuration/
   * *Features*Config.php
   * *Sustem*Config.php
@@ -30,13 +30,13 @@ joker2620/
 Описание файлов и папок
 ------------
 
-* `joker2620/data/` - папка с файлами;
-* `joker2620/Configuration/` - папка с настройками бота;
-* `joker2620/data/log/` - папка с файлами логов (далее "логи");
-* `joker2620/data/base/` - папка с файлами баз данных;
-* `joker2620/Source/Commands/` - папка с командами бота;
-* `joker2620/Configuration/SustemConfig.php` - настройки системы;
-* `joker2620/Configuration/FeaturesConfig.php` - настройки требований;
-* `joker2620/Configuration/UserConfig.php` - настройки бота или пользовательские настройки.
+* `nazbav/data/` - папка с файлами;
+* `nazbav/Configuration/` - папка с настройками бота;
+* `nazbav/data/log/` - папка с файлами логов (далее "логи");
+* `nazbav/data/base/` - папка с файлами баз данных;
+* `nazbav/Source/Commands/` - папка с командами бота;
+* `nazbav/Configuration/SustemConfig.php` - настройки системы;
+* `nazbav/Configuration/FeaturesConfig.php` - настройки требований;
+* `nazbav/Configuration/UserConfig.php` - настройки бота или пользовательские настройки.
 
 [0]: index.md
