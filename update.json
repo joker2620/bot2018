@@ -1,9 +1,8 @@
 {
   "status": "done",
   "joker2620/bot2018": {
-    "version": "1.0.0",
-    "build": "18.04.18",
-    "source": "https://github.com/joker2620/bot2018/master",
+    "version": "1.1.0",
+    "source": "https://github.com/nazbav/bot2018/releases/tag/1.1.0",
     "stability": "normal"
   }
 }
