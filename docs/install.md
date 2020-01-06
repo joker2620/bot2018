@@ -18,10 +18,11 @@
 
 1. **PHP ^7.1**;
 1. Для корректной работы бота требуются следующие PHP расширения:
-   * `php_gd2.dll`;
-   * `php_curl.dll`;
-   * `php_mbstring.dll`;
-   * `php_openssl.dll`.
+   * `php-gd2`;
+   * `php-curl`;
+   * `php-mbstring`;
+   * `php-openssl`;
+   * `php-mysql`.
 1. Убедитесь что, все расширения включены.
 
 Установка на веб-сервер
