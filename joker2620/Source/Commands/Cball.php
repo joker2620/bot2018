@@ -1,19 +1,16 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Commands;
 
 use joker2620\Source\Modules\CommandsTemplate;
 
-
 /**
- * Class Cball
- *
- * @package joker2620\Source\Commands
+ * Class Cball.
  */
 class Cball extends CommandsTemplate
 {
-
     public $ansver
         = [
             'Бесспорно',
@@ -38,7 +35,7 @@ class Cball extends CommandsTemplate
             'Мой ответ — «нет»',
             'По моим данным — «нет»',
             'Перспективы не очень хорошие',
-            'Весьма сомнительно'
+            'Весьма сомнительно',
         ];
 
     protected $regexp = 'шар (.{1,})';
@@ -47,9 +44,8 @@ class Cball extends CommandsTemplate
 
     protected $permission = 0;
 
-
     /**
-     * runCommand()
+     * runCommand().
      *
      * @param array $matches
      *

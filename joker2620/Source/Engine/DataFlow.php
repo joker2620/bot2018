@@ -1,6 +1,6 @@
 <?php
-declare(strict_types = 1);
 
+declare(strict_types=1);
 
 namespace joker2620\Source\Engine;
 
@@ -8,23 +8,19 @@ use joker2620\Source\Exception\BotError;
 use joker2620\Source\Interfaces\DataFlow\DataFlowInterface;
 use joker2620\Source\Setting\Config;
 
-
 /**
- * Class DataFlow
- *
- * @package joker2620\Source\DataFlow
+ * Class DataFlow.
  */
 class DataFlow implements DataFlowInterface
 {
-
-
     /**
-     * readData()
+     * readData().
      *
      * @param array $request
      *
-     * @return object
      * @throws BotError
+     *
+     * @return object
      */
     public function readData(array $request = [])
     {
@@ -37,12 +33,12 @@ class DataFlow implements DataFlowInterface
         ) {
             throw new BotError(Config::getConfig()['MESSAGE']['cameEmptyRequest']);
         }
-        return (object)$request;
+
+        return (object) $request;
     }
 
-
     /**
-     * putData()
+     * putData().
      *
      * @param null|string $responce
      */

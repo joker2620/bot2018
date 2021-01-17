@@ -1,16 +1,13 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Interfaces\Modules;
 
-
 /**
- * Interface ModuleInterface
- *
- * @package joker2620\Source\Interfaces
+ * Interface ModuleInterface.
  */
 interface ModuleInterface
 {
-
     public function getAnwser();
 }

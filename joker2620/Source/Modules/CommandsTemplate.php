@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Modules;
 
@@ -8,11 +9,8 @@ use joker2620\Source\Engine\Loger;
 use joker2620\Source\User\User;
 use joker2620\Source\User\UserData;
 
-
 /**
- * Class CommandsTemplate
- *
- * @package joker2620\Source\ModuleCommand
+ * Class CommandsTemplate.
  */
 abstract class CommandsTemplate
 {
@@ -35,15 +33,14 @@ abstract class CommandsTemplate
      */
     public function __construct()
     {
-        $this->loger    = new Loger();
-        $this->vkapi    = new VKAPI();
-        $this->user     = new User();
+        $this->loger = new Loger();
+        $this->vkapi = new VKAPI();
+        $this->user = new User();
         $this->dataBase = new UserData();
     }
 
-
     /**
-     * runCommand()
+     * runCommand().
      *
      * @param array $matches
      *
@@ -51,15 +48,13 @@ abstract class CommandsTemplate
      */
     abstract public function runCommand(array $matches);
 
-
     public function getDisplay()
     {
         return $this->display;
     }
 
-
     /**
-     * getPermission()
+     * getPermission().
      *
      * @return int
      */
@@ -67,7 +62,6 @@ abstract class CommandsTemplate
     {
         return $this->permission;
     }
-
 
     public function getRegexp()
     {

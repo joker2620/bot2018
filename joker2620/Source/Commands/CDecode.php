@@ -1,28 +1,24 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Commands;
 
 use joker2620\Source\Modules\CommandsTemplate;
 
-
 /**
- * Class CDecode
- *
- * @package joker2620\Source\Commands
+ * Class CDecode.
  */
 class CDecode extends CommandsTemplate
 {
-
     protected $regexp = 'раскодируй (.{1,3000})';
 
     protected $display = ' - "раскодируй (до 3 тыс. символ)" - раскодирует сообщение.';
 
     protected $permission = 0;
 
-
     /**
-     * runCommand()
+     * runCommand().
      *
      * @param array $matches
      *
@@ -31,6 +27,7 @@ class CDecode extends CommandsTemplate
     public function runCommand(array $matches)
     {
         $message = base64_decode($matches[1][0]);
+
         return $message;
     }
 }

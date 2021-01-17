@@ -1,21 +1,16 @@
 <?php
-declare(strict_types = 1);
 
+declare(strict_types=1);
 
 namespace joker2620\Source\Interfaces\User;
 
-
 /**
- * Interface UserInterface
- *
- * @package joker2620\Source\Interfaces
+ * Interface UserInterface.
  */
 interface UserInterface
 {
-
-
     /**
-     * setUserData()
+     * setUserData().
      *
      * @param array $user_info
      * @param array $messageData
@@ -24,18 +19,13 @@ interface UserInterface
      */
     public function setUserData(array $user_info, array $messageData);
 
-
     public function getId();
-
 
     public function getFirstName();
 
-
     public function getLastName();
 
-
     public function getInfo();
-
 
     public function getMessageData();
 }

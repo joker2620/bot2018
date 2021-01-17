@@ -1,27 +1,22 @@
 <?php
-declare(strict_types = 1);
 
+declare(strict_types=1);
 
 namespace joker2620\Source\User;
 
 use joker2620\Source\Interfaces\User\UserInterface;
 
-
 /**
- * Class User
- *
- * @package joker2620\Source\User
+ * Class User.
  */
 class User implements UserInterface
 {
+    protected static $userInfo;
 
-    static protected $userInfo;
-
-    static protected $messageData;
-
+    protected static $messageData;
 
     /**
-     * setUserData()
+     * setUserData().
      *
      * @param array $user_info
      * @param array $messageData
@@ -31,11 +26,11 @@ class User implements UserInterface
     public function setUserData(array $user_info, array $messageData): void
     {
         self::$messageData = $messageData;
-        self::$userInfo    = $user_info;
+        self::$userInfo = $user_info;
     }
 
     /**
-     * getId()
+     * getId().
      *
      * @return int
      */
@@ -44,9 +39,8 @@ class User implements UserInterface
         return self::$userInfo['id'];
     }
 
-
     /**
-     * getFirstName()
+     * getFirstName().
      *
      * @return string
      */
@@ -55,9 +49,8 @@ class User implements UserInterface
         return self::$userInfo['first_name'];
     }
 
-
     /**
-     * getLastName()
+     * getLastName().
      *
      * @return string
      */
@@ -66,9 +59,8 @@ class User implements UserInterface
         return self::$userInfo['last_name'];
     }
 
-
     /**
-     * getInfo()
+     * getInfo().
      *
      * @return array
      */
@@ -77,9 +69,8 @@ class User implements UserInterface
         return self::$userInfo;
     }
 
-
     /**
-     * getMessageData()
+     * getMessageData().
      *
      * @return array
      */

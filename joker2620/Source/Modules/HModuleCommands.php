@@ -1,24 +1,19 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Modules;
 
 use joker2620\Source\Interfaces\Modules\ModuleInterface;
 use joker2620\Source\Setting\Config;
 
-
 /**
- * Class HTCommands
- *
- * @package joker2620\Source\ModuleCommand
+ * Class HTCommands.
  */
 class HModuleCommands extends CommandList implements ModuleInterface
-
 {
-
-
     /**
-     * getAnwser()
+     * getAnwser().
      *
      * @return bool
      */
@@ -29,9 +24,9 @@ class HModuleCommands extends CommandList implements ModuleInterface
         $commands = $this->getCommand();
         if (is_array($commands)) {
             foreach ($commands as $value) {
-                $command = new $value;
+                $command = new $value();
                 if (preg_match(
-                    '/^' . $command->getRegexp() . '$/iu',
+                    '/^'.$command->getRegexp().'$/iu',
                     $this->user->getMessageData()['body'],
                     $matches,
                     PREG_OFFSET_CAPTURE,
@@ -48,7 +43,7 @@ class HModuleCommands extends CommandList implements ModuleInterface
                 }
             }
         }
-        return $ansver;
 
+        return $ansver;
     }
 }

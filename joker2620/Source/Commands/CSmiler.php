@@ -1,29 +1,24 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Commands;
 
-
 use joker2620\Source\Modules\CommandsTemplate;
 
-
 /**
- * Class CSmiler
- *
- * @package joker2620\Source\Commands
+ * Class CSmiler.
  */
 class CSmiler extends CommandsTemplate
 {
-
     protected $regexp = '(см|смайл) (.{1,})';
 
     protected $display = ' - "см (текст)" или "смайл (текст)" - заменит смайлы на текcт.';
 
     protected $permission = 0;
 
-
     /**
-     * runCommand()
+     * runCommand().
      *
      * @param array $matches
      *
@@ -1031,8 +1026,9 @@ class CSmiler extends CommandsTemplate
             '✋' => '*Знак приветствия*',
             '✌' => '*Знак победы*',
             '✍' => '*Пишущая рука*',
-            '✏' => '*Карандаш*'
+            '✏' => '*Карандаш*',
         ];
+
         return strtr($matches[2][0], $smile);
     }
 }

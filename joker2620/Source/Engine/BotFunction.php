@@ -1,22 +1,18 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Engine;
-
 
 use joker2620\Source\Setting\Config;
 use joker2620\Source\User\User;
 
-
 /**
- * Class BotFunction
- *
- * @package joker2620\Source\Functions
+ * Class BotFunction.
  */
 class BotFunction
 {
     private $user;
-
 
     /**
      * BotFunction constructor.
@@ -26,9 +22,8 @@ class BotFunction
         $this->user = new User();
     }
 
-
     /**
-     * filterString()
+     * filterString().
      *
      * @param string $string
      *
@@ -39,9 +34,8 @@ class BotFunction
         return strtr($string, ["\n" => '']);
     }
 
-
     /**
-     * replace()
+     * replace().
      *
      * @param string $message
      *
@@ -62,15 +56,15 @@ class BotFunction
                 break;
         }
         $trans = [
-            '#uid#' => $this->user->getId(),
+            '#uid#'        => $this->user->getId(),
             '#first_name#' => $this->user->getFirstName(),
-            '#last_name#' => $this->user->getLastName(),
-            '#what_day#' => date('d.m.Y'),
-            '#what_time#' => date('H:i:s'),
-            '#sex_dis#' => $sex_description,
-            '#name_bot#' => Config::getConfig()['BOT_NAME'],
-            '#version#' => Config::getConfig()['VERSION'],
-            '#build#' => Config::getConfig()['BUILD'],
+            '#last_name#'  => $this->user->getLastName(),
+            '#what_day#'   => date('d.m.Y'),
+            '#what_time#'  => date('H:i:s'),
+            '#sex_dis#'    => $sex_description,
+            '#name_bot#'   => Config::getConfig()['BOT_NAME'],
+            '#version#'    => Config::getConfig()['VERSION'],
+            '#build#'      => Config::getConfig()['BUILD'],
 
             '#first_name_abl#' => $user_data['first_name_abl'],
             '#first_name_ins#' => $user_data['first_name_ins'],
@@ -82,14 +76,14 @@ class BotFunction
             '#last_name_ins#' => $user_data['last_name_ins'],
             '#last_name_acc#' => $user_data['last_name_acc'],
             '#last_name_dat#' => $user_data['last_name_dat'],
-            '#last_name_gen#' => $user_data['last_name_gen']
+            '#last_name_gen#' => $user_data['last_name_gen'],
         ];
+
         return strtr($message, $trans);
     }
 
-
     /**
-     * scanAdm()
+     * scanAdm().
      *
      * @param int $uid
      *
@@ -103,9 +97,8 @@ class BotFunction
         ) !== false ? true : false;
     }
 
-
     /**
-     * ucFirst()
+     * ucFirst().
      *
      * @param string $string
      *
@@ -113,12 +106,11 @@ class BotFunction
      */
     public function ucFirst(string $string)
     {
-        return mb_strtoupper(mb_substr($string, 0, 1)) . mb_substr($string, 1);
+        return mb_strtoupper(mb_substr($string, 0, 1)).mb_substr($string, 1);
     }
 
-
     /**
-     * buildPath()
+     * buildPath().
      *
      * @param array ...$segments
      *

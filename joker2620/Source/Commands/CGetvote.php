@@ -1,29 +1,24 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Commands;
 
-
 use joker2620\Source\Modules\CommandsTemplate;
 
-
 /**
- * Class CGetvote
- *
- * @package joker2620\Source\Commands
+ * Class CGetvote.
  */
 class CGetvote extends CommandsTemplate
 {
-
     protected $regexp = 'оцени';
 
     protected $display = ' - "оцени" - оценит приклепленное вложение.';
 
     protected $permission = 0;
 
-
     /**
-     * runCommand()
+     * runCommand().
      *
      * @param array $matches
      *
@@ -36,7 +31,7 @@ class CGetvote extends CommandsTemplate
             'великолепно', 'О боже, как-же это прекрасно, ах какие... Я влюблен!',
             'О боже, как ты вообще такое дерьмо нашел!',
             'Хуже только фото где срут понни',
-            'фу бл*ть, как это мерзко', 'дермище'
+            'фу бл*ть, как это мерзко', 'дермище',
         ];
         if (isset($this->user->getMessageData()['attachments'])) {
             return $array[array_rand($array)];

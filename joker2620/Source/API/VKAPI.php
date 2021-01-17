@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\API;
 
@@ -8,16 +9,16 @@ use joker2620\Source\Setting\Config;
 use VK\Client\VKApiClient;
 use VK\TransportClient\Curl\CurlHttpClient;
 
-
 /**
- * Class VKAPI
+ * Class VKAPI.
  *
  * @property CurlHttpClient http_client
- * @package joker2620\Source\API
  */
 class VKAPI extends VKApiClient
 {
-    private $accessToken, $botFucntion, $httpClient;
+    private $accessToken;
+    private $botFucntion;
+    private $httpClient;
 
     /**
      * VKAPI constructor.
@@ -25,13 +26,13 @@ class VKAPI extends VKApiClient
     public function __construct()
     {
         parent::__construct();
-        $this->httpClient  = new CurlHttpClient(10);
+        $this->httpClient = new CurlHttpClient(10);
         $this->accessToken = Config::getConfig()['ACCESS_TOKEN'];
         $this->botFucntion = new BotFunction();
     }
 
     /**
-     * curl()
+     * curl().
      *
      * @param string $url
      *
@@ -39,16 +40,17 @@ class VKAPI extends VKApiClient
      */
     public function curlGet(string $url)
     {
-        $http_data    = $this->httpClient->get($url, []);
+        $http_data = $this->httpClient->get($url, []);
         $decoded_body = json_decode($http_data->getBody(), true);
         if ($decoded_body === null || !is_array($decoded_body)) {
             $decoded_body = $http_data->getBody();
         }
+
         return $decoded_body;
     }
 
     /**
-     * uploadVoice()
+     * uploadVoice().
      *
      * @param int    $user_id
      * @param string $file_name
@@ -59,15 +61,15 @@ class VKAPI extends VKApiClient
     {
         $server_response = $this->docsGUServer($user_id, 'audio_message');
         $upload_response = $this->upload($server_response['upload_url'], $file_name, 'file');
-        $files           = $upload_response['file'];
-        $save_response   = $this->docsSave($files, 'Voice message');
-        $doccx           = max($save_response);
+        $files = $upload_response['file'];
+        $save_response = $this->docsSave($files, 'Voice message');
+        $doccx = max($save_response);
+
         return $doccx;
     }
 
-
     /**
-     * docsGUServer()
+     * docsGUServer().
      *
      * @param int    $peer_id
      * @param string $type
@@ -80,14 +82,13 @@ class VKAPI extends VKApiClient
             $this->accessToken,
             [
                 'peer_id' => $peer_id,
-                'type' => $type,
+                'type'    => $type,
             ]
         );
     }
 
-
     /**
-     * upload()
+     * upload().
      *
      * @param string $url
      * @param        $file_name
@@ -100,9 +101,8 @@ class VKAPI extends VKApiClient
         return $this->getRequest()->upload($url, $type, $file_name);
     }
 
-
     /**
-     * docsSave()
+     * docsSave().
      *
      * @param string $file
      * @param string $title
@@ -112,16 +112,16 @@ class VKAPI extends VKApiClient
     public function docsSave(string $file, string $title)
     {
         return $this->docs()->save(
-            $this->accessToken, [
-                'file' => $file,
+            $this->accessToken,
+            [
+                'file'  => $file,
                 'title' => $title,
             ]
         );
     }
 
-
     /**
-     * methodAPI()
+     * methodAPI().
      *
      * @param string $method
      * @param array  $params
@@ -131,12 +131,12 @@ class VKAPI extends VKApiClient
     public function methodAPI(string $method, array $params = [])
     {
         $access_token = $this->getToken($params);
+
         return $this->getRequest()->post($method, $access_token, $params);
     }
 
-
     /**
-     * getToken()
+     * getToken().
      *
      * @param array $parameters
      *
@@ -152,12 +152,12 @@ class VKAPI extends VKApiClient
                 $token = $parameters['access_token'];
             }
         }
+
         return $token;
     }
 
-
     /**
-     * uploadPhoto()
+     * uploadPhoto().
      *
      * @param int $peer_id
      * @param     $file_name
@@ -168,17 +168,17 @@ class VKAPI extends VKApiClient
     {
         $server_response = $this->photosGUServer($peer_id);
         $upload_response = $this->upload($server_response['upload_url'], $file_name);
-        $photo           = $upload_response['photo'];
-        $server          = $upload_response['server'];
-        $hashd           = $upload_response['hash'];
-        $save_response   = $this->photoSave($photo, $server, $hashd);
-        $photo           = max($save_response);
+        $photo = $upload_response['photo'];
+        $server = $upload_response['server'];
+        $hashd = $upload_response['hash'];
+        $save_response = $this->photoSave($photo, $server, $hashd);
+        $photo = max($save_response);
+
         return $photo;
     }
 
-
     /**
-     * photosGUServer()
+     * photosGUServer().
      *
      * @param int $peer_id
      *
@@ -194,9 +194,8 @@ class VKAPI extends VKApiClient
         );
     }
 
-
     /**
-     * photoSave()
+     * photoSave().
      *
      * @param string $photo
      * @param int    $server
@@ -209,16 +208,15 @@ class VKAPI extends VKApiClient
         return $this->photos()->saveMessagesPhoto(
             $this->accessToken,
             [
-                'photo' => $photo,
+                'photo'  => $photo,
                 'server' => $server,
-                'hash' => $hash,
+                'hash'   => $hash,
             ]
         );
     }
 
-
     /**
-     * messagesSend()
+     * messagesSend().
      *
      * @param int    $peer_id
      * @param string $message
@@ -227,7 +225,9 @@ class VKAPI extends VKApiClient
      * @return mixed
      */
     public function messagesSend(
-        int $peer_id, string $message = '', $attachment = []
+        int $peer_id,
+        string $message = '',
+        $attachment = []
     ) {
         return $this->messages()->send(
             $this->accessToken,
@@ -242,9 +242,8 @@ class VKAPI extends VKApiClient
         );
     }
 
-
     /**
-     * usersGet()
+     * usersGet().
      *
      * @param int        $peer_id
      * @param array|null $param
@@ -258,7 +257,7 @@ class VKAPI extends VKApiClient
             'first_name_abl', 'first_name_ins', 'first_name_acc',
             'first_name_dat', 'first_name_gen', 'last_name_abl',
             'last_name_ins', 'last_name_acc', 'last_name_dat',
-            'last_name_gen'
+            'last_name_gen',
         ]
     ) {
         if (empty($param)) {
@@ -266,10 +265,12 @@ class VKAPI extends VKApiClient
         } else {
             $param = array_merge($param, ['timezone', 'sex', 'photo_50', 'city']);
         }
+
         return $this->users()->get(
-            $this->accessToken, [
+            $this->accessToken,
+            [
                 'user_ids' => $peer_id,
-                'fields' => $param,
+                'fields'   => $param,
             ]
         );
     }

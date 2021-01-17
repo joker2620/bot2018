@@ -1,15 +1,13 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Commands;
 
 use joker2620\Source\Modules\CommandsTemplate;
 
-
 /**
- * Class Cball
- *
- * @package joker2620\Source\Commands
+ * Class Cball.
  */
 class CCSave extends CommandsTemplate
 {
@@ -19,9 +17,8 @@ class CCSave extends CommandsTemplate
 
     protected $permission = 0;
 
-
     /**
-     * runCommand()
+     * runCommand().
      *
      * @param array $matches
      *
@@ -29,8 +26,10 @@ class CCSave extends CommandsTemplate
      */
     public function runCommand(array $matches)
     {
-        if ($this->dataBase->write('var0',$matches[1][0]))
+        if ($this->dataBase->write('var0', $matches[1][0])) {
             return 'Запомниль!';
+        }
+
         return 'Не запомниль';
     }
 }

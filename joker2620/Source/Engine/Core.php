@@ -1,5 +1,6 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Engine;
 
@@ -11,11 +12,8 @@ use joker2620\Source\User\User;
 use joker2620\Source\User\UserData;
 use VK\CallbackApi\Server\VKCallbackApiServerHandler;
 
-
 /**
- * Class Core
- *
- * @package joker2620\Source
+ * Class Core.
  */
 class Core extends VKCallbackApiServerHandler
 {
@@ -33,20 +31,19 @@ class Core extends VKCallbackApiServerHandler
     public function __construct()
     {
         $this->botFunctions = new BotFunction();
-        $this->flow         = new DataFlow();
-        $this->vkapi        = new VKAPI();
-        $this->modules      = new Modules();
-        $this->userData     = new User();
-        $this->loger        = new Loger();
-        $config_valid       = new ConfigValidation();
-        $this->userBase     = new UserData();
+        $this->flow = new DataFlow();
+        $this->vkapi = new VKAPI();
+        $this->modules = new Modules();
+        $this->userData = new User();
+        $this->loger = new Loger();
+        $config_valid = new ConfigValidation();
+        $this->userBase = new UserData();
         $config_valid->validationConfig();
         $this->modules->loadModules();
     }
 
-
     /**
-     * confirmation()
+     * confirmation().
      *
      * @param int         $group_id
      * @param null|string $secret
@@ -57,20 +54,17 @@ class Core extends VKCallbackApiServerHandler
         $this->loger->logger('confirmation send');
     }
 
-
     /**
-     * messageNew()
+     * messageNew().
      *
      * @param int         $group_id
      * @param null|string $secret
      * @param array       $object
-     *
      */
     public function messageNew(int $group_id, ?string $secret, array $object)
     {
-
-        $users          = $this->vkapi->usersGet($object['user_id']);
-        $users          = max($users);
+        $users = $this->vkapi->usersGet($object['user_id']);
+        $users = max($users);
         $object['body'] = $this->botFunctions->filterString($object['body']);
         $this->userData->setUserData($users, $object);
         $this->userBase->user();
@@ -87,7 +81,7 @@ class Core extends VKCallbackApiServerHandler
             $message = Config::getConfig()['MESSAGE']['DefaultMessage'];
         } elseif (is_array($answer)) {
             $attachments = $answer[1];
-            $message     = $answer[0];
+            $message = $answer[0];
         } else {
             $message = $answer;
         }

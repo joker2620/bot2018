@@ -1,22 +1,19 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Modules;
 
 use joker2620\Source\Interfaces\Modules\ModuleInterface;
 use joker2620\Source\Setting\Config;
 
-
 /**
- * Class HTMessages
- *
- * @package joker2620\Source\ModuleMessage
+ * Class HTMessages.
  */
 class HModuleMessages extends HTMessagesBase implements ModuleInterface
 {
-
     /**
-     * getAnwser()
+     * getAnwser().
      *
      * @return array
      */
@@ -32,12 +29,12 @@ class HModuleMessages extends HTMessagesBase implements ModuleInterface
         if (!$return) {
             $return = $this->noAnswer();
         }
+
         return [$return, false];
     }
 
-
     /**
-     * scanAnswer()
+     * scanAnswer().
      *
      * @return bool|string
      */
@@ -46,19 +43,19 @@ class HModuleMessages extends HTMessagesBase implements ModuleInterface
         $return = false;
         if (Config::getConfig()['USER_TRAINING']) {
             if (preg_match(
-                '/^(\!' . Config::getConfig()['MESSAGE']['toLearn'] . ')$/iu',
+                '/^(\!'.Config::getConfig()['MESSAGE']['toLearn'].')$/iu',
                 $this->user->getMessageData()['body']
             )) {
                 $return = $this->addTraining();
             } elseif ($this->scanMsgUser()) {
                 if (preg_match(
-                    '/^(' . Config::getConfig()['MESSAGE']['not'] . ')$/ui',
+                    '/^('.Config::getConfig()['MESSAGE']['not'].')$/ui',
                     $this->user->getMessageData()['body']
                 )) {
                     $this->addAnswer(true);
                     $return = Config::getConfig()['MESSAGE']['AnswerNotGiven'];
                 } elseif (preg_match(
-                    '/^(' . Config::getConfig()['MESSAGE']['Clear'] . ')$/ui',
+                    '/^('.Config::getConfig()['MESSAGE']['Clear'].')$/ui',
                     $this->user->getMessageData()['body']
                 )) {
                     $this->delAnswer();
@@ -75,12 +72,12 @@ class HModuleMessages extends HTMessagesBase implements ModuleInterface
                 }
             }
         }
+
         return $return;
     }
 
-
     /**
-     * noAnswer()
+     * noAnswer().
      *
      * @return bool|string
      */
@@ -96,6 +93,7 @@ class HModuleMessages extends HTMessagesBase implements ModuleInterface
         } elseif (!($return)) {
             $return = Config::getConfig()['MESSAGE']['IDontKnowWhatToAnswer'];
         }
+
         return $return;
     }
 }

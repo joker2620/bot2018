@@ -1,20 +1,22 @@
 <?php
-declare(strict_types = 1);
 
-setlocale(LC_CTYPE, "ru_RU");
+declare(strict_types=1);
+
+setlocale(LC_CTYPE, 'ru_RU');
 ini_set('date.timezone', 'Europe/Moscow');
 
 use joker2620\Source\Engine\DataFlow;
 use joker2620\Source\Engine\Loger;
 use joker2620\Source\Exception\BotError;
 
-if (!file_exists('vendor/autoload.php'))
-    die('Composer not installed.');
-else
+if (!file_exists('vendor/autoload.php')) {
+    exit('Composer not installed.');
+} else {
     require 'vendor/autoload.php';
-
+}
 
 $data_flow = new DataFlow();
+
 try {
     $handler = new \joker2620\Source\Engine\Core();
     $handler->parse(

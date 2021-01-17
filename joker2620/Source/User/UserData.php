@@ -1,10 +1,11 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 /**
  * File: UserData.php;
  * Author: Joker2620;
  * Date: 14.04.2018;
- * Time: 21:41;
+ * Time: 21:41;.
  */
 
 namespace joker2620\Source\User;
@@ -15,9 +16,7 @@ use joker2620\Source\Interfaces\User\UserDataInterface;
 use joker2620\Source\Setting\Config;
 
 /**
- * Class UserData
- *
- * @package joker2620\Source\User
+ * Class UserData.
  */
 class UserData implements UserDataInterface
 {
@@ -31,17 +30,18 @@ class UserData implements UserDataInterface
      */
     public function __construct()
     {
-        $this->dataBase    = new JsonDb();
+        $this->dataBase = new JsonDb();
         $this->botFunction = new BotFunction();
-        $this->user        = new User();
-        $this->userFile    = $this->botFunction->buildPath(
-            Config::getConfig()['DIR_BASE'], 'Users.json'
+        $this->user = new User();
+        $this->userFile = $this->botFunction->buildPath(
+            Config::getConfig()['DIR_BASE'],
+            'Users.json'
         );
         $this->dataBase->from($this->userFile);
     }
 
     /**
-     * getVar()
+     * getVar().
      *
      * @param $name
      *
@@ -56,11 +56,12 @@ class UserData implements UserDataInterface
         if (isset($user_var[0])) {
             return $user_var[0][$name];
         }
+
         return '';
     }
 
     /**
-     * user()
+     * user().
      *
      * @return array
      */
@@ -68,15 +69,17 @@ class UserData implements UserDataInterface
     {
         $users = $this->dataBase->select('uid')->where(['uid' => $this->user->getId()])->get();
         if (!isset($users[0])) {
-            $uvars        = Config::getConfig()['DEFAULT_USER_VARS'];
+            $uvars = Config::getConfig()['DEFAULT_USER_VARS'];
             $uvars['uid'] = $this->user->getId();
+
             return $this->dataBase->insert($uvars);
         }
+
         return [];
     }
 
     /**
-     * write()
+     * write().
      *
      * @param $name
      * @param $param

@@ -1,23 +1,20 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Modules;
-
 
 use joker2620\JsonDb\JsonDb;
 use joker2620\Source\Setting\Config;
 use joker2620\Source\User\User;
 
-
 /**
- * Class TrainingEdit
- *
- * @package joker2620\Source\ModuleMessage
+ * Class TrainingEdit.
  */
 class TrainingEdit
 {
     const FALSE = 'false';
-    public  $user;
+    public $user;
     private $baseName;
     private $jsonBD;
 
@@ -27,14 +24,14 @@ class TrainingEdit
     public function __construct()
     {
         $this->baseName = Config::getConfig()['FILE_TRAINING'];
-        $this->jsonBD   = new JsonDb();
+        $this->jsonBD = new JsonDb();
         //question answer training author
         $this->jsonBD->from($this->baseName);
         $this->user = new User();
     }
 
     /**
-     * addAnswer()
+     * addAnswer().
      *
      * @param bool $no_bool
      */
@@ -44,8 +41,8 @@ class TrainingEdit
         //question answer training author
         $select = $this->jsonBD->select('question, answer, training')->where(
             [
-                'answer' => self::FALSE,
-                'training' => $this->user->getId()
+                'answer'   => self::FALSE,
+                'training' => $this->user->getId(),
             ],
             'AND'
         )->get();
@@ -54,7 +51,7 @@ class TrainingEdit
             $this->jsonBD->update(
                 [
                     'training' => self::FALSE,
-                    'answer' => $no_bool == self::FALSE ? $this->user->getMessageData()['body'] : self::FALSE,
+                    'answer'   => $no_bool == self::FALSE ? $this->user->getMessageData()['body'] : self::FALSE,
                 ]
             )
                 ->where(['answer' => self::FALSE, 'training' => $this->user->getId()], 'AND')
@@ -63,13 +60,13 @@ class TrainingEdit
     }
 
     /**
-     * replLogic()
+     * replLogic().
      *
      * @param bool $bool
      *
      * @return string
      */
-    function replLogic(bool $bool)
+    public function replLogic(bool $bool)
     {
         $return = self::FALSE;
         switch ($bool) {
@@ -80,37 +77,37 @@ class TrainingEdit
                 $return = 'false';
                 break;
         }
+
         return $return;
     }
 
     /**
-     * delAnswer()
-     *
+     * delAnswer().
      */
     protected function delAnswer()
     {
         //question answer training author
         $this->jsonBD->delete()->where(
             [
-                'answer' => self::FALSE,
-                'training' => $this->user->getId()
+                'answer'   => self::FALSE,
+                'training' => $this->user->getId(),
             ],
             'AND'
         )->trigger();
     }
 
     /**
-     * addTraining()
+     * addTraining().
      *
      * @return string
      */
     protected function addTraining()
     {
         $message = Config::getConfig()['MESSAGE']['HereIsEmpty'];
-        $select  = $this->jsonBD->select('question, answer, training')->where(
+        $select = $this->jsonBD->select('question, answer, training')->where(
             [
-                'answer' => self::FALSE,
-                'training' => self::FALSE
+                'answer'   => self::FALSE,
+                'training' => self::FALSE,
             ],
             'AND'
         )->get();
@@ -124,14 +121,14 @@ class TrainingEdit
                 $select[0]['question']
             );
         }
+
         return $message;
     }
 
     /**
-     * addQuestion()
+     * addQuestion().
      *
      * @param bool $no_bool
-     *
      */
     protected function addQuestion(
         bool $no_bool = false
@@ -144,16 +141,16 @@ class TrainingEdit
             $this->jsonBD->insert(
                 [//question answer training author
                     'question' => $this->user->getMessageData()['body'],
-                    'answer' => self::FALSE,
+                    'answer'   => self::FALSE,
                     'training' => $no_bool == self::FALSE ? $this->user->getId() : self::FALSE,
-                    'author' => $this->user->getId()
+                    'author'   => $this->user->getId(),
                 ]
             );
         }
     }
 
     /**
-     * uniqueMultiArray()
+     * uniqueMultiArray().
      *
      * @param array $array
      * @param int   $key
@@ -161,27 +158,28 @@ class TrainingEdit
      * @return array
      */
     protected function uniqueMultiArray(
-        array $array, int $key
+        array $array,
+        int $key
     ) {
         $temp_array = [];
         if (is_array($array)) {
-            $inter     = 0;
+            $inter = 0;
             $key_array = [];
 
             foreach ($array as $value) {
                 if (!in_array($value[$key], $key_array)) {
-                    $key_array[$inter]  = $value[$key];
+                    $key_array[$inter] = $value[$key];
                     $temp_array[$inter] = $value;
                 }
                 $inter++;
             }
         }
+
         return $temp_array;
     }
 
-
     /**
-     * scanMsgUser()
+     * scanMsgUser().
      *
      * @return bool
      */

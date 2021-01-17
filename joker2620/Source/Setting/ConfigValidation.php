@@ -1,6 +1,6 @@
 <?php
-declare(strict_types = 1);
 
+declare(strict_types=1);
 
 namespace joker2620\Source\Setting;
 
@@ -8,15 +8,11 @@ use joker2620\Source\Engine\Loger;
 use joker2620\Source\Exception\BotError;
 use joker2620\Source\Interfaces\Setting\ConfigValid;
 
-
 /**
- * Class ConfigValidation
- *
- * @package joker2620\Source\Setting
+ * Class ConfigValidation.
  */
 class ConfigValidation implements ConfigValid
 {
-
     private $loger;
 
     /**
@@ -27,9 +23,8 @@ class ConfigValidation implements ConfigValid
         $this->loger = new Loger();
     }
 
-
     /**
-     * validationConfig()
+     * validationConfig().
      */
     public function validationConfig(): void
     {
@@ -38,9 +33,8 @@ class ConfigValidation implements ConfigValid
         }
     }
 
-
     /**
-     * checkConfig()
+     * checkConfig().
      *
      * @internal param array $config_feat
      */
@@ -62,15 +56,15 @@ class ConfigValidation implements ConfigValid
             ->noSettings('MIN_PERCENT', 'int');
     }
 
-
     /**
-     * noSettings()
+     * noSettings().
      *
      * @param string $param_name
      * @param string $type
      *
-     * @return $this
      * @throws BotError
+     *
+     * @return $this
      */
     private function noSettings(string $param_name, string $type)
     {
@@ -91,7 +85,7 @@ class ConfigValidation implements ConfigValid
                 $result = is_bool(Config::getConfig()[$param_name]) ? true : false;
                 break;
             default:
-                $result       = Config::getConfig()[$param_name] === $type ? true : false;
+                $result = Config::getConfig()[$param_name] === $type ? true : false;
                 $requirements = 'compliance';
                 break;
         }
@@ -100,11 +94,13 @@ class ConfigValidation implements ConfigValid
                 Config::getConfig()['MESSAGE'][$requirements],
                 $type
             );
+
             throw new BotError(
-                'Параметр "' . $param_name .
-                '" не отвечает требованиям: ' . $requirements
+                'Параметр "'.$param_name.
+                '" не отвечает требованиям: '.$requirements
             );
         }
+
         return $this;
     }
 }

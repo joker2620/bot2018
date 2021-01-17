@@ -1,15 +1,13 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Commands;
 
 use joker2620\Source\Modules\CommandsTemplate;
 
-
 /**
- * Class Cball
- *
- * @package joker2620\Source\Commands
+ * Class Cball.
  */
 class CCGet extends CommandsTemplate
 {
@@ -19,9 +17,8 @@ class CCGet extends CommandsTemplate
 
     protected $permission = 0;
 
-
     /**
-     * runCommand()
+     * runCommand().
      *
      * @param array $matches
      *
@@ -30,6 +27,7 @@ class CCGet extends CommandsTemplate
     public function runCommand(array $matches)
     {
         $reads = $this->dataBase->read('var0');
-        return 'Ты говорил: ' . $reads;
+
+        return 'Ты говорил: '.$reads;
     }
 }

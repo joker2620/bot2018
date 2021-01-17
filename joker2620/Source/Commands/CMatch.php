@@ -1,26 +1,23 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Commands;
 
 use FormulaParser\FormulaParser;
 use joker2620\Source\Modules\CommandsTemplate;
 
-
 /**
- * Class CToMorse
- *
- * @package joker2620\Source\Commands
+ * Class CToMorse.
  */
 class CMatch extends CommandsTemplate
 {
-    protected $regexp     = 'вч (.{1,})';
-    protected $display    = ' - "вч (выражение)" - Вычислит выражение.';
+    protected $regexp = 'вч (.{1,})';
+    protected $display = ' - "вч (выражение)" - Вычислит выражение.';
     protected $permission = 0;
 
-
     /**
-     * runCommand()
+     * runCommand().
      *
      * @param array $matches
      *
@@ -28,11 +25,12 @@ class CMatch extends CommandsTemplate
      */
     public function runCommand(array $matches)
     {
-        $parser = new FormulaParser($matches[1][0]);//'3+4*2/(1-5)^8');
+        $parser = new FormulaParser($matches[1][0]); //'3+4*2/(1-5)^8');
         $result = $parser->getResult(); // [0 => 'done', 1 => 3.0001]
-        if ($result[0] == 'done')
-            return 'Ответ: ' . $result[1];
-        else
-            return 'Возникла ошибка: ' . $result[1];
+        if ($result[0] == 'done') {
+            return 'Ответ: '.$result[1];
+        } else {
+            return 'Возникла ошибка: '.$result[1];
+        }
     }
 }

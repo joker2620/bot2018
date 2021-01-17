@@ -1,30 +1,25 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Commands;
-
 
 use joker2620\Source\Modules\CommandsTemplate;
 use joker2620\Source\Setting\Config;
 
-
 /**
- * Class CPhprun
- *
- * @package joker2620\Source\Commands
+ * Class CPhprun.
  */
 class CGetUpdate extends CommandsTemplate
 {
-
     protected $regexp = 'update';
 
     protected $display = 'update - проверет наличие обновления';
 
     protected $permission = 1;
 
-
     /**
-     * runCommand()
+     * runCommand().
      *
      * @param array $matches
      *
@@ -33,14 +28,14 @@ class CGetUpdate extends CommandsTemplate
     public function runCommand(array $matches)
     {
         $message = 'Обновлений нет';
-        $result  = $this->vkapi->curlGet('https://raw.githubusercontent.com/joker2620/bot2018/master/update.json');
+        $result = $this->vkapi->curlGet('https://raw.githubusercontent.com/joker2620/bot2018/master/update.json');
         if ($result['status'] == 'done'
             && isset($result)
-            && isset($result["joker2620/bot2018"])
+            && isset($result['joker2620/bot2018'])
         ) {
-            $this_bot = $result["joker2620/bot2018"];
-            $version  = $this_bot['version'];
-            $build    = $this_bot['build'];
+            $this_bot = $result['joker2620/bot2018'];
+            $version = $this_bot['version'];
+            $build = $this_bot['build'];
             if ($this->scanVersion($version) ||
                 $this->scanBuild($build)
             ) {
@@ -49,11 +44,12 @@ class CGetUpdate extends CommandsTemplate
                 $message .= "\nВаша версия: $version; Сборка: $build";
             }
         }
+
         return $message;
     }
 
     /**
-     * scanVersion()
+     * scanVersion().
      *
      * @param $version
      *
@@ -65,7 +61,7 @@ class CGetUpdate extends CommandsTemplate
     }
 
     /**
-     * scanBuild()
+     * scanBuild().
      *
      * @param $build
      *

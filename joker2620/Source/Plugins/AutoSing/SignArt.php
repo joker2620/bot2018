@@ -1,38 +1,33 @@
 <?php
-declare(strict_types = 1);
 
+declare(strict_types=1);
 
 namespace joker2620\Source\Plugins\AutoSing;
 
 use joker2620\Source\Setting\Config;
 
 /**
- * Class SignArt
- *
- * @package joker2620\Source\Plugins\AutoSing
+ * Class SignArt.
  */
 class SignArt
 {
-
     private $imgDir;
 
     private $image;
 
     private $data;
 
-
     /**
      * SignArt constructor.
      */
     public function __construct()
     {
-        $this->imgDir = Config::getConfig()['DIR_IMAGES'] . '/sign/';
-        $this->image  = null;
+        $this->imgDir = Config::getConfig()['DIR_IMAGES'].'/sign/';
+        $this->image = null;
     }
 
-
     /**
-     * generate()
+     * generate().
      *
      * @param string $text
      * @param array  $color
@@ -45,7 +40,7 @@ class SignArt
         array $color = [0, 0, 0],
         string $fonts = 'PFKidsPro-GradeOne.ttf'
     ) {
-        $fonts = $this->imgDir . $fonts;
+        $fonts = $this->imgDir.$fonts;
         $this->getRandImg();
         $color = imagecolorallocate($this->image, $color[0], $color[1], $color[2]);
         $sizof = round($this->data[1] / mb_strlen($text));
@@ -59,25 +54,24 @@ class SignArt
             $fonts,
             $text
         );
-        $fileimage = $this->imgDir . date('his') . '.png';
+        $fileimage = $this->imgDir.date('his').'.png';
         imagepng($this->image, $fileimage);
         imagedestroy($this->image);
+
         return $fileimage;
     }
 
-
     public function getRandImg()
     {
-        $base_art    = include 'Config.php';
-        $datas       = $base_art[array_rand($base_art)];
-        $files       = $this->imgDir . $datas[0];
+        $base_art = include 'Config.php';
+        $datas = $base_art[array_rand($base_art)];
+        $files = $this->imgDir.$datas[0];
         $this->image = imagecreatefrompng($files);
-        $this->data  = $datas;
+        $this->data = $datas;
     }
 
-
     /**
-     * imageDestroy()
+     * imageDestroy().
      *
      * @param string $file_image
      */

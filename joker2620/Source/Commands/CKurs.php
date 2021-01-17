@@ -1,28 +1,24 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
 
 namespace joker2620\Source\Commands;
 
 use joker2620\Source\Modules\CommandsTemplate;
 
-
 /**
- * Class CKurs
- *
- * @package joker2620\Source\Commands
+ * Class CKurs.
  */
 class CKurs extends CommandsTemplate
 {
-
     protected $regexp = 'курс';
 
     protected $display = ' - "курс" - показывает курс валют.';
 
     protected $permission = 0;
 
-
     /**
-     * runCommand()
+     * runCommand().
      *
      * @param array $matches
      *
@@ -51,10 +47,11 @@ class CKurs extends CommandsTemplate
         preg_match('/<Value>(.*?)<\/Value>/is', $ukraines[1], $ukraine);
         $message = [
             '💰Курс валют💰',
-            '💵 Доллар $ - ' . str_replace(',', '.', $rouble[1]) . ' 💵',
-            '💶 Евро € - ' . str_replace(',', '.', $euroc[1]) . ' 💶',
-            '🔰 Гривна - ' . str_replace(',', '.', $ukraine[1]) . ' 🔰'
+            '💵 Доллар $ - '.str_replace(',', '.', $rouble[1]).' 💵',
+            '💶 Евро € - '.str_replace(',', '.', $euroc[1]).' 💶',
+            '🔰 Гривна - '.str_replace(',', '.', $ukraine[1]).' 🔰',
         ];
+
         return implode("\n", $message);
     }
 }
